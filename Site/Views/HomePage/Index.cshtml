@@ -1,0 +1,49 @@
+﻿@model Site.Models.Pages.HomePage
+
+@{
+    Layout = "/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<div id="homepage">
+    <h1>Unified search</h1>
+    <form class="form-inline">
+        <div class="form-group">
+            <input type="text" class="form-control" data-bind="value: searchQuery">
+        </div>
+        <button data-bind="click: searchButtonClicked" class="btn btn-default">Search</button>
+    </form>
+    <div class="container-separator" data-bind="visible: results().length > 0">
+        <a class="btn btn-primary" role="button" data-toggle="collapse" href="#search-result" aria-expanded="false" aria-controls="search-result">
+            Result
+        </a>
+        <div class="collapse" id="search-result">
+            <div data-bind="text: resultJson" class="well json-code">
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-striped" data-bind="visible: results().length > 0">
+        <thead>
+            <tr>
+                <th>Results</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: results">
+            <tr>
+                <td>
+                    <strong data-bind="html: title"></strong> - <strong data-bind="text: section"></strong>
+                    <p data-bind="html: excerpt"></p>
+                    <p>
+                        <i data-bind="text: originalobjecttype"></i>
+                    </p>
+                    <a data-bind="attr: { href: url }, visible: url != null">Read more</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+@section Scripts
+{
+    <script src="/Static/ViewModels/homeviewmodel.js"></script>
+}

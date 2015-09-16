@@ -1,0 +1,12 @@
+﻿@using EPiServer.Framework.Web
+@using EPiServer.Framework.Web.Mvc.Html
+@model Site.Models.Pages.ArticlePage
+
+@{
+    Layout = "/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<h1>@Model.PageName</h1>
+<p>@Html.PropertyFor(x => x.BodyText)</p>
+
+

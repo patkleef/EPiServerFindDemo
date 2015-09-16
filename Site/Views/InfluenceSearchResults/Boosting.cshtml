@@ -1,0 +1,50 @@
+﻿@{
+    Layout = "/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<h1>Boosting</h1>
+
+<div id="results-boosting" class="search-container-separator">
+
+    <form class="form-inline">
+        <div class="form-group">
+            <input type="text" class="form-control" data-bind="value: searchQuery">
+        </div>
+        <button type="submit" class="btn btn-default" data-bind="click: searchButtonClicked">Search</button>
+    </form>
+
+    <div class="container-separator" data-bind="visible: results().length > 0">
+        <a class="btn btn-primary" role="button" data-toggle="collapse" href="#boosting-result" aria-expanded="false" aria-controls="boosting-result">
+            Result
+        </a>
+        <div class="collapse" id="boosting-result">
+            <div class="well" data-bind="text: resultJson">
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-striped" data-bind="visible: results().length > 0">
+        <thead>
+            <tr>
+                <th>Results</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: results">
+            <tr>
+                <td>
+                    <strong data-bind="html: title"></strong> - <strong data-bind="text: section"></strong>
+                    <p data-bind="html: excerpt"></p>
+                    <p>
+                        <i data-bind="text: originalobjecttype"></i>
+                    </p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+@section Scripts
+{
+    <script src="/Static/ViewModels/InfluenceResults/boostingviewmodel.js"></script>
+}
+

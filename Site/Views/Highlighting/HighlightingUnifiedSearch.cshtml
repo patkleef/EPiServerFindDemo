@@ -1,0 +1,75 @@
+﻿@{
+    Layout = "/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<h1>Highlighting unified search</h1>
+
+<div id="result-highlight">
+    <form class="form-inline">
+        <div class="form-group">
+            <input type="text" class="form-control" data-bind="value: searchQuery">
+        </div>
+        <button type="submit" data-bind="click: searchButtonClicked" class="btn btn-default">Search</button>
+        <div class="form-group">
+            <a data-toggle="collapse" href="#unified-search-configurations" aria-expanded="false" aria-controls="unified-search-configurations">Configuration options</a>
+        </div>
+    </form>
+
+    <div id="unified-search-configurations" class="panel panel-default collapse container-separator">
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="numberOfFragmentsInput">Number of fragments</label>
+                <input data-bind="value: numberOfFragments" type="number" class="form-control" id="numberOfFragmentsInput" placeholder="2">
+            </div>
+            <div class="form-group">
+                <label for="fragmentSizeInput">Fragment size</label>
+                <input data-bind="value: fragmentSize" type="number" class="form-control" id="fragmentSizeInput" placeholder="200">
+            </div>
+            <div class="form-group">
+                <label for="PreTagInput">Pre tag</label>
+                <input data-bind="value: preTag" type="text" class="form-control" id="PreTagInput" placeholder="<em>">
+            </div>
+            <div class="form-group">
+                <label for="PostTagInput">Post tag</label>
+                <input data-bind="value: postTag" type="text" class="form-control" id="PostTagInput" placeholder="></em>">
+            </div>
+            <div class="form-group">
+                <label for="ConcatenationInput">Concatentation</label>
+                <input data-bind="value: concatentation" type="text" class="form-control" id="ConcatenationInput" placeholder=" ... ">
+            </div>
+        </div>
+    </div>
+
+    <div class="container-separator" data-bind="visible: results().length > 0">
+        <a class="btn btn-primary" role="button" data-toggle="collapse" href="#highlight-result" aria-expanded="false" aria-controls="highlight-result">
+            Show JSON result
+        </a>
+        <div class="collapse" id="highlight-result">
+            <div class="well" data-bind="text: resultJson">
+            </div>
+        </div>
+    </div>
+    <table class="table table-striped" data-bind="visible: results().length > 0">
+        <thead>
+        <tr>
+            <th>Result</th>
+        </tr>
+        </thead>
+        <tbody data-bind="foreach: results">
+        <tr>
+            <td>
+                <strong data-bind="html: title"></strong> - <strong data-bind="text: section"></strong>
+                <p data-bind="html: excerpt"></p>
+                <p>
+                    <i data-bind="text: originalobjecttype"></i>
+                </p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+@section Scripts
+{
+    <script src="/Static/ViewModels/Highlighting/highlightingunifiedsearchviewmodel.js"></script>
+}

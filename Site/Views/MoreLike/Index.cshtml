@@ -1,0 +1,82 @@
+﻿@{
+    Layout = "/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<h1>More/ like</h1>
+
+<div id="results-morelike" class="search-container-separator">
+    <form class="form-inline">
+        <div class="form-group">
+            <select class="form-control" data-bind="options: articles, optionsText: 'Title', value: Id, optionsCaption: 'Choose an article', value: selectedArticle"></select>
+        </div>
+        <button type="submit" class="btn btn-default" data-bind="click: searchButtonClicked">Search for related articles</button>
+        <div class="form-group">
+            <a data-toggle="collapse" href="#morelike-configurations" aria-expanded="false" aria-controls="morelike-configurations">Configuration options</a>
+        </div>
+    </form>
+
+    <div id="morelike-configurations" class="panel panel-default collapse container-separator">
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="minimumDocumentFrequencyInput">Minimum document frequency</label> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="The minimum document frequency below which the terms will be ignored from the input document. Defaults to 5."></span>
+                <input data-bind="value: minimumDocumentFrequency" type="number" class="form-control" id="minimumDocumentFrequencyInput" placeholder="5">
+            </div>
+            <div class="form-group">
+                <label for="maximumDocumentFrequencyInput">Maximum document frequency</label> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="The maximum document frequency above which the terms will be ignored from the input document. This could be useful in order to ignore highly frequent words such as stop words. Defaults to unbounded (0)."></span>
+                <input data-bind="value: maximumDocumentFrequency" type="number" class="form-control" id="maximumDocumentFrequencyInput" placeholder="25">
+            </div>
+            <div class="form-group">
+                <label for="percentTermsToMatchInput">PercentTermsToMatch</label> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="The percentage of terms to match on. Defaults to 30 (percent)."></span>
+                <input data-bind="value: percentTermsToMatch" type="text" class="form-control" id="percentTermsToMatchInput" placeholder="30">
+            </div>
+            <div class="form-group">
+                <label for="minimumTermFrequencyInput">Minimum term frequency</label> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="The minimum term frequency below which the terms will be ignored from the input document. Defaults to 2."></span>
+                <input data-bind="value: minimumTermFrequency" type="text" class="form-control" id="minimumTermFrequencyInput" placeholder="2">
+            </div>
+            <div class="form-group">
+                <label for="minimumWordLengthInput">Minimum word length</label> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="The minimum word length below which the terms will be ignored. Defaults to 0."></span>
+                <input data-bind="value: minimumWordLength" type="text" class="form-control" id="minimumWordLengthInput" placeholder="0">
+            </div>
+            <div class="form-group">
+                <label for="maximumWordLengthInput">Maximum word length</label> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="The maximum word length above which the terms will be ignored. Defaults to unbounded (0)."></span>
+                <input data-bind="value: maximumWordLength" type="text" class="form-control" id="maximumWordLengthInput" placeholder="0">
+            </div>
+            <div class="form-group">
+                <label for="maximumQueryTermsInput">Maximum query terms</label> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="The maximum number of query terms that will be selected. Increasing this value gives greater accuracy at the expense of query execution speed. Defaults to 25."></span>
+                <input data-bind="value: maximumQueryTerms" type="text" class="form-control" id="maximumQueryTermsInput" placeholder="25">
+            </div>
+            <div class="form-group">
+                <label for="stopWordsInput">StopWords</label> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title="An array of stop words. Any word in this set is considered 'uninteresting' and ignored. if the analyzer allows for stop words, you might want to tell mlt to explicitly ignore them, as for the purposes of document similarity it seems reasonable to assume that 'a stop word is never interesting'."></span>
+                <input data-bind="value: stopWords" type="text" class="form-control" id="stopWordsInput" placeholder="">
+            </div>
+        </div>
+    </div>
+
+    <div class="container-separator" data-bind="visible: results().length > 0">
+        <a class="btn btn-primary" role="button" data-toggle="collapse" href="#morelike-result" aria-expanded="false" aria-controls="morelike-result">
+            Results
+        </a>
+        <div class="collapse" id="morelike-result">
+            <div class="well json-code" data-bind="text: resultJson">
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-striped" data-bind="visible: results().length > 0">
+        <thead>
+        <tr>
+            <th>Results</th>
+        </tr>
+        </thead>
+        <tbody data-bind="foreach: results">
+        <tr>
+            <td data-bind="text: title"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+@section Scripts
+{
+<script src="/Static/ViewModels/morelikeviewmodel.js"></script>
+}

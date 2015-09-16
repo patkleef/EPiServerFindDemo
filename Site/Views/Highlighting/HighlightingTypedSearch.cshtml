@@ -1,0 +1,47 @@
+﻿@{
+    Layout = "/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<h1>Highlighting typed search</h1>
+
+<div id="result-highlight-typedsearch" class="search-container-separator">
+    <form class="form-inline">
+        <div class="form-group">
+            <input type="text" class="form-control" data-bind="value: searchQuery">
+        </div>
+        <button type="submit" data-bind="click: searchButtonClicked" class="btn btn-default">Search</button>
+    </form>
+    <div class="container-separator" data-bind="visible: results().length > 0">
+        <a class="btn btn-primary" role="button" data-toggle="collapse" href="#highlight-result-typedsearch" aria-expanded="false" aria-controls="highlight-result-typedsearch">
+            Result
+        </a>
+        <div class="collapse" id="highlight-result-typedsearch">
+            <div class="well" data-bind="text: resultJson">
+            </div>
+        </div>
+    </div>
+    <table class="table table-striped" data-bind="visible: results().length > 0">
+        <thead>
+            <tr>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: results">
+            <tr>
+                <td>
+                    <strong data-bind="html: title"></strong>
+                    <p data-bind="html: text"></p>
+                    <p>
+                        <i data-bind="text: originalobjecttype"></i>
+                    </p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+@section Scripts
+{
+    <script src="/Static/ViewModels/Highlighting/highlightingtypedsearchviewmodel.js"></script>
+}

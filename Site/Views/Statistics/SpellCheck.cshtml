@@ -1,0 +1,45 @@
+﻿@{
+    Layout = "/Views/Shared/Layout/_Layout.cshtml";
+}
+<h1>Spellcheck</h1>
+
+<div id="statistics-spellcheck" class="search-container-separator">
+    <form class="form-inline">
+        <div class="form-group">
+            <input type="text" class="form-control" data-bind="event:{ keyup: inputFieldKeyPressed }, value: searchQuery">
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" data-bind="checked: useJavascript"> Use Javascript
+            </label>
+        </div>
+        <button type="submit" class="btn btn-default">Search</button>
+    </form>
+    <div class="container-separator" data-bind="visible: results().length > 0">
+        <a class="btn btn-primary" role="button" data-toggle="collapse" href="#spellcheck-result" aria-expanded="false" aria-controls="spellcheck-result">
+            Result
+        </a>
+        <div class="collapse" id="spellcheck-result">
+            <div class="well json-code" data-bind="text: resultJson">
+            </div>
+        </div>
+    </div>
+    <table class="table table-striped" data-bind="visible: results().length > 0">
+        <thead>
+            <tr>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: results">
+            <tr>
+                <td data-bind="text: suggestion"></td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+@section Scripts
+{
+<script src="/Static/ViewModels/Statistics/spellcheckviewmodel.js"></script>
+}
