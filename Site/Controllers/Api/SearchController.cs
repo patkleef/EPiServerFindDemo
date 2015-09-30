@@ -14,6 +14,7 @@ using EPiServer.Find.UnifiedSearch;
 using EPiServer.ServiceLocation;
 using EPiServer.Web;
 using EPiServer.Web.Routing;
+using Site.Business.Content;
 using Site.Models.Pages;
 
 namespace Site.Controllers.Api
@@ -26,28 +27,38 @@ namespace Site.Controllers.Api
         private readonly IClient _client;
         private readonly UrlResolver _urlResolver;
 
+        /// <summary>
+        /// Public constructor
+        /// </summary>
         public SearchController()
         {
             _client = SearchClient.Instance;
             _urlResolver = ServiceLocator.Current.GetInstance<UrlResolver>();
         }
 
-        // GET api/<controller>
+        /// <summary>
+        /// Unified search
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/Search/")]
         public IHttpActionResult Search(string query)
         {
             var hitSpecification = new HitSpecification();
 
-            var result = _client.UnifiedSearchFor(query)
-                .Track()
+            var result = _client.UnifiedSearchFor(query).StatisticsTrack()
                 .Take(100)
                 .GetResult(hitSpecification, false);
             
             return Json(result);
         }
 
-        // GET api/<controller>
+        /// <summary>
+        /// Typed search
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/TypedSearch/")]
         public IHttpActionResult TypedSearch(string query)
@@ -57,6 +68,17 @@ namespace Site.Controllers.Api
             var result = _client.Search<ArticlePage>()
                 .For(query)
                 .GetContentResult();
+
+            _client.Search<ArticlePage>()
+                .For(query)
+                .Track()
+                .Take(100)
+                .GetContentResult();
+
+            _client.Search<ArticlePage>().For(query)
+                .Track()
+                .Take(100)
+                .GetResult();
 
             return Json(result.Items.Select((x, i) => new
             {
@@ -160,31 +182,6 @@ namespace Site.Controllers.Api
             return Json(result);
         }
 
-        //[HttpGet]
-        //[Route("api/Search/MoreLike")]
-        //public IHttpActionResult MoreLike(int articleId)
-        //{
-        //    var articlePage = _client.Search<ArticlePage>().Filter(x => x.ContentLink.ID.Match(articleId)).GetContentResult().FirstOrDefault();
-
-        //    if (articlePage != null)
-        //    {
-        //        var result = _client.Search<ArticlePage>()
-        //            .MoreLike(articlePage.PageName)
-        //            .MinimumTermFrequency(1)
-        //            //The minimum term frequency below which the terms will be ignored from the input document. Defaults to 2
-        //            .MaximumQueryTerms(12)
-        //            //The maximum number of query terms that will be selected. Increasing this value gives greater accuracy at the expense of query execution speed. Defaults to 25.
-        //            .Select(a => new
-        //            {
-        //                Title = a.PageName
-        //            })
-        //            .GetResult();
-
-        //        return Json(result);
-        //    }
-        //    return Json(string.Empty);
-        //}
-
         [HttpGet]
         [Route("api/Search/RelatedArticles")]
         public IHttpActionResult RelatedArticles(
@@ -202,6 +199,11 @@ namespace Site.Controllers.Api
 
             if (article != null)
             {
+                _client.Search<ArticlePage>()
+                    .MoreLike(article.BodyText.ToString())
+                    .Filter(x => !x.ContentLink.ID.Match(articleId))
+                    .GetContentResult();
+
                 var result = _client.Search<ArticlePage>()
                 .MoreLike(article.BodyText.ToString())
                 .MinimumDocumentFrequency(minimumDocumentFrequency)
@@ -229,16 +231,97 @@ namespace Site.Controllers.Api
 
         [HttpGet]
         [Route("api/Search/Boosting")]
-        public IHttpActionResult Boosting(string query)
+        public IHttpActionResult Boosting(
+            string query,
+            bool useAutoBoosting,
+            int decayScale,
+            int decayOffset,
+            double decayShape,
+            DateTime decayOrigin,
+            double decayMinimum,
+            double hitBoostScale,
+            double hitBoostOffset)
         {
-            var result = _client.UnifiedSearch().For(query)
-                .UsingUnifiedWeights(new UnifiedWeightsValues
-                {
-                    SearchTitle = 1,
-                    
-                }).GetResult();
+            if (!useAutoBoosting)
+            {
+                var result3 = _client.UnifiedSearch().For(query).GetResult();
+
+                return Json(result3);
+            }
+            var result = 
+                _client.UnifiedSearch().For(query)
+                .UsingAutoBoost
+                (
+                    TimeSpan.FromDays(decayScale),
+                    TimeSpan.FromDays(decayOffset),
+                    decayShape,
+                    decayMinimum,
+                    decayOrigin,
+                    hitBoostScale,
+                    hitBoostOffset
+                )
+                .GetResult();
+
+            /*var result4 =
+                 _client.UnifiedSearch().For(query).UsingAutoBoost().GetResult();*/
 
             return Json(result);
+        }
+
+        [HttpGet]
+        [Route("api/Search/BoostingWithWeights")]
+        public IHttpActionResult BoostingWithWeights(
+            string query,
+            bool useBoostingWithWeights,
+            double searchTitle,
+            double searchText,
+            double searchSummary,
+            double searchAttachment)
+        {
+            if (!useBoostingWithWeights)
+            {
+                var result = _client.UnifiedSearch().For(query).GetResult();
+
+                return Json(result);
+            }
+            var weights = new UnifiedWeightsValues()
+            {
+                SearchTitle = searchTitle,
+                SearchText = searchText,
+                SearchSummary = searchSummary,
+                SearchAttachment = searchAttachment
+            };
+
+            var result1 =
+                _client.UnifiedSearch().For(query)
+                .UsingUnifiedWeights(weights)
+                .GetResult();
+
+            return Json(result1);
+        }
+
+        [HttpGet]
+        [Route("api/Search/BoostingWithFilters")]
+        public IHttpActionResult BoostingWithFilters(
+            string query,
+            bool useBoostingWithFilters,
+            DateTime startDate,
+            DateTime endDate,
+            double boostFactor)
+        {
+            if (!useBoostingWithFilters)
+            {
+                var result = _client.UnifiedSearch().For(query).GetResult();
+
+                return Json(result);
+            }
+
+            var result1 =
+                _client.UnifiedSearch().For(query)
+                .BoostMatching(p => p.SearchUpdateDate.InRange(startDate, endDate), boostFactor)
+                .GetResult();
+
+            return Json(result1);
         }
 
         #endregion
@@ -254,8 +337,7 @@ namespace Site.Controllers.Api
             string preTag,
             string postTag, 
             string concatentation)
-        {
-            
+        {    
             var hitSpecification = new HitSpecification();
             hitSpecification.HighlightExcerpt = true;
             hitSpecification.HighlightTitle = true;
@@ -286,6 +368,23 @@ namespace Site.Controllers.Api
 
             var result = _client.UnifiedSearchFor(query)
                 .GetResult(hitSpecification);
+
+            _client.UnifiedSearchFor(query)
+                .GetResult(new HitSpecification
+                {
+                    HighlightExcerpt = true,
+                    HighlightTitle = true,
+                    ExcerptHighlightSpecAction = x =>
+                    {
+                        x.FragmentSize = 2;
+                        x.NumberOfFragments = 200;
+                        x.PreTag = "<em>";
+                        x.PostTag = "</em>";
+                        x.Concatenation = fragments => fragments.Concatenate(" ... ");
+                    },
+                    PreTagForAllHighlights = "<em>",
+                    PostTagForAllHighlights = "</em>"
+                });
 
             return Json(result);
         }

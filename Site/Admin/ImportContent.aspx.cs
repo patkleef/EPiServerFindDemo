@@ -1,8 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
+using System.IO;
 using System.Net;
+using System.Web;
 using System.Web.UI;
+using System.Xml.Linq;
+using System.Xml.XPath;
 using EPiServer;
 using EPiServer.Core;
 using EPiServer.DataAccess;
@@ -120,8 +125,8 @@ namespace Site.Admin
         private int ImportArticles(int articlesPageId)
         {
             var number = 0;
-            var articleList = new List<ArticlePage>();
-            if (!string.IsNullOrEmpty(Rss1TextBox.Text))
+            var articleList = GetDemoArticlePages(articlesPageId);
+            /*if (!string.IsNullOrEmpty(Rss1TextBox.Text))
             {
                 articleList.AddRange(GetArticles(Rss1TextBox.Text, articlesPageId));
             }
@@ -140,7 +145,7 @@ namespace Site.Admin
             if (!string.IsNullOrEmpty(Rss5TextBox.Text))
             {
                 articleList.AddRange(GetArticles(Rss5TextBox.Text, articlesPageId));
-            }
+            */
             // Save all articles
             foreach (var articlePage in articleList)
             {
@@ -178,6 +183,27 @@ namespace Site.Admin
 
                     pages.Add(articlePage);
                 }
+            }
+            return pages;
+        }
+
+        private IEnumerable<ArticlePage> GetDemoArticlePages(int parentPageId)
+        {
+            //http://www.articlesbase.com/technology-articles/6/
+            var pages = new List<ArticlePage>();
+
+            var xmlFile = HttpContext.Current.Server.MapPath("~/App_Data/articles.xml");
+
+            var xml = XDocument.Load(xmlFile);
+
+            foreach (var item in xml.XPathSelectElements("/articles/article"))
+            {
+                var articlePage = _contentRepository.GetDefault<ArticlePage>(new ContentReference(parentPageId));
+                articlePage.PageName = item.Element("title").Value;
+                articlePage.BodyText = new XhtmlString(item.Element("text").Value);
+                articlePage.Date = DateTime.ParseExact(item.Element("date").Value, "dd-MM-yyyy",
+                    CultureInfo.InvariantCulture);
+                pages.Add(articlePage);
             }
             return pages;
         }

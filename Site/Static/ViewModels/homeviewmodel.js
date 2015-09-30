@@ -10,7 +10,7 @@
         $.get('/api/Search?query=' + self.searchQuery(), function(data) {
             var jsonString = JSON.stringify(data, null, 4).toLocaleLowerCase();
             self.resultJson(jsonString);
-            self.results(JSON.parse(jsonString.toLocaleLowerCase()));
+            self.results(data);
         });
     }
 }

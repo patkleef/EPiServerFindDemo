@@ -31,12 +31,12 @@
         <tbody data-bind="foreach: results">
             <tr>
                 <td>
-                    <strong data-bind="html: title"></strong> - <strong data-bind="text: section"></strong>
-                    <p data-bind="html: excerpt"></p>
+                    <strong data-bind="html: Title"></strong> - <strong data-bind="text: Section"></strong>
+                    <p data-bind="html: Excerpt"></p>
                     <p>
-                        <i data-bind="text: originalobjecttype"></i>
+                        <i data-bind="text: OriginalObjectType"></i>
                     </p>
-                    <a data-bind="attr: { href: url }, visible: url != null">Read more</a>
+                    <span data-bind="text: UpdateDate"></span> - <a data-bind="attr: { href: Url }, visible: Url != null">Read more</a>
                 </td>
             </tr>
         </tbody>

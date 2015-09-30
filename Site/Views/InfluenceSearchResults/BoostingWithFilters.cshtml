@@ -1,0 +1,76 @@
+﻿@{
+    Layout = "/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<h1>Boosting with filtes</h1>
+
+<div id="results-boosting" class="search-container-separator">
+
+    <form class="form-inline">
+        <div class="form-group">
+            <input type="text" class="form-control" data-bind="value: searchQuery">
+        </div>
+        <button type="submit" class="btn btn-default" data-bind="click: searchButtonClicked">Search</button>
+        <div class="form-group">
+            <a data-toggle="collapse" href="#boosting-configurations" aria-expanded="false" aria-controls="boosting-configurations">Configuration options</a>
+        </div>
+    </form>
+
+    <div id="boosting-configurations" class="panel panel-default collapse container-separator">
+        <div class="panel-body">
+            <div class="form-group">
+                <input data-bind="checked: useBoostingWithFilters" type="checkbox" id="useBoostingWithFilters" />
+                <label for="useBoostingWithFilters">Use boosting with filters</label> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title=""></span>
+            </div>
+            <h3>Start date</h3>
+            <div class="form-group">
+                <label for="startDate">Start date</label> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title=""></span>
+                <input data-bind="value: startDate, enable: useBoostingWithFilters" type="date" class="form-control" id="startDate" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="endDate">End date</label> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title=""></span>
+                <input data-bind="value: endDate, enable: useBoostingWithFilters" type="date" class="form-control" id="endDate" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="boostFactor">Boost factor </label> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title=""></span>
+                <input data-bind="value: boostFactor, enable: useBoostingWithFilters" type="number" class="form-control" id="boostFactor" placeholder="1">
+            </div>
+        </div>
+    </div>
+
+    <div class="container-separator" data-bind="visible: results().length > 0">
+        <a class="btn btn-primary" role="button" data-toggle="collapse" href="#boosting-result" aria-expanded="false" aria-controls="boosting-result">
+            Result
+        </a>
+        <div class="collapse" id="boosting-result">
+            <div class="well" data-bind="text: resultJson">
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-striped" data-bind="visible: results().length > 0">
+        <thead>
+            <tr>
+                <th>Results</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: results">
+            <tr>
+                <td>
+                    <strong data-bind="html: title"></strong> - <strong data-bind="text: section"></strong>
+                    <p data-bind="html: excerpt"></p>
+                    <p>
+                        <i data-bind="text: originalobjecttype"></i>
+                    </p>
+                    <span data-bind="text: updatedate"></span> - <a data-bind="attr: { href: url }, visible: url != null">Read more</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+@section Scripts
+{
+    <script src="/Static/ViewModels/InfluenceResults/boostingwithfiltersviewmodel.js"></script>
+}
+

@@ -1,0 +1,93 @@
+﻿@{
+    Layout = "/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<h1>Auto Boosting</h1>
+
+<div id="results-boosting" class="search-container-separator">
+
+    <form class="form-inline">
+        <div class="form-group">
+            <input type="text" class="form-control" data-bind="value: searchQuery">
+        </div>
+        <button type="submit" class="btn btn-default" data-bind="click: searchButtonClicked">Search</button>
+        <div class="form-group">
+            <a data-toggle="collapse" href="#boosting-configurations" aria-expanded="false" aria-controls="boosting-configurations">Configuration options</a>
+        </div>
+    </form>
+
+    <div id="boosting-configurations" class="panel panel-default collapse container-separator">
+        <div class="panel-body">
+            <div class="form-group">
+                <input data-bind="checked: useAutoBoosting" type="checkbox" id="useAutoBoosting"/>
+                <label for="useAutoBoosting">Use auto boosting</label> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title=""></span>
+            </div>
+            <h3>Decay configuration settings</h3>
+            <div class="form-group">
+                <label for="decayScale">Decay scale (days)</label> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title=""></span>
+                <input data-bind="value: decayScale, enable: useAutoBoosting" type="number" class="form-control" id="decayScale" placeholder="14">
+            </div>
+            <div class="form-group">
+                <label for="decayOffset">Decay offset (days)</label> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title=""></span>
+                <input data-bind="value: decayOffset, enable: useAutoBoosting" type="number" class="form-control" id="decayOffset" placeholder="1">
+            </div>
+            <div class="form-group">
+                <label for="decayShape">Decay shape </label> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title=""></span>
+                <input data-bind="value: decayShape, enable: useAutoBoosting" type="number" class="form-control" id="decayShape" placeholder="1">
+            </div>
+            <div class="form-group">
+                <label for="decayOrigin">Decay origin </label> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title=""></span>
+                <input data-bind="value: decayOrigin, enable: useAutoBoosting" type="date" class="form-control" id="decayOrigin" placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="decayMinimum">Decay minimum </label> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title=""></span>
+                <input data-bind="value: decayMinimum, enable: useAutoBoosting" type="number" class="form-control" id="decayMinimum" placeholder="1">
+            </div>
+            <h3>Hit boost settings</h3>
+            <div class="form-group">
+                <label for="hitBoostScale">Hit boost scale</label> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title=""></span>
+                <input data-bind="value: hitBoostScale, enable: useAutoBoosting" type="number" class="form-control" id="hitBoostScale" placeholder="14">
+            </div>
+            <div class="form-group">
+                <label for="hitBoostOffset">Hit boost offset</label> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title=""></span>
+                <input data-bind="value: hitBoostOffset, enable: useAutoBoosting" type="number" class="form-control" id="hitBoostOffset" placeholder="14">
+            </div>
+        </div>
+    </div>
+
+    <div class="container-separator" data-bind="visible: results().length > 0">
+        <a class="btn btn-primary" role="button" data-toggle="collapse" href="#boosting-result" aria-expanded="false" aria-controls="boosting-result">
+            Result
+        </a>
+        <div class="collapse" id="boosting-result">
+            <div class="well" data-bind="text: resultJson">
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-striped" data-bind="visible: results().length > 0">
+        <thead>
+            <tr>
+                <th>Results</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: results">
+            <tr>
+                <td>
+                    <strong data-bind="html: title"></strong> - <strong data-bind="text: section"></strong>
+                    <p data-bind="html: excerpt"></p>
+                    <p>
+                        <i data-bind="text: originalobjecttype"></i>
+                    </p>
+                    <span data-bind="text: updatedate"></span> - <a data-bind="attr: { href: url }, visible: url != null">Read more</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+@section Scripts
+{
+    <script src="/Static/ViewModels/InfluenceResults/boostingviewmodel.js"></script>
+}
+

@@ -29,7 +29,8 @@ namespace Site.Business.Initialization
         public void Initialize(InitializationEngine context)
         {
             SearchClient.Instance.Conventions.UnifiedSearchRegistry.Add<User>();
-            SearchClient.Instance.Conventions.UnifiedSearchRegistry.Add<Company>();
+            SearchClient.Instance.Conventions.UnifiedSearchRegistry
+                .Add<Company>();
         }
 
         /// <summary>

@@ -44,8 +44,14 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Influence search results <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="/InfluenceSearchResults/BestBets">Best bets</a></li>
-                            <li><a href="/InfluenceSearchResults/Synonyms">Synonyms</a></li>
-                            <li><a href="/InfluenceSearchResults/Boosting">Boosting</a></li>
+                            <li>
+                                <a href="/InfluenceSearchResults/Synonyms">Synonyms</a>
+                            </li>
+                            <li>
+                                <a href="/InfluenceSearchResults/AutoBoosting">Auto boosting</a>
+                                <a href="/InfluenceSearchResults/BoostingWithWeights">Boosting with weights</a>
+                                <a href="/InfluenceSearchResults/BoostingWithFilters">Boosting with filters</a>
+                            </li>
                         </ul>
                     </li>
                     <li class="@(Request.Url.AbsolutePath == "/MoreLike" ? "active" : "")"><a href="/MoreLike">More like</a></li>

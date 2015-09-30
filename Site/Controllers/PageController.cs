@@ -25,9 +25,17 @@ namespace Site.Controllers
         {
             return View("~/Views/InfluenceSearchResults/Synonyms.cshtml");
         }
-        public ViewResult Boosting()
+        public ViewResult AutoBoosting()
         {
-            return View("~/Views/InfluenceSearchResults/Boosting.cshtml");
+            return View("~/Views/InfluenceSearchResults/AutoBoosting.cshtml");
+        }
+        public ViewResult BoostingWithWeights()
+        {
+            return View("~/Views/InfluenceSearchResults/BoostingWithWeights.cshtml");
+        }
+        public ViewResult BoostingWithFilters()
+        {
+            return View("~/Views/InfluenceSearchResults/BoostingWithFilters.cshtml");
         }
 
         public ViewResult MoreLike()

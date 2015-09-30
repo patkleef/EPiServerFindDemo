@@ -20,5 +20,10 @@ namespace Site.Models.Pages
             GroupName = SystemTabNames.Content,
             Order = 20)]
         public virtual DateTime Date { get; set; }
+
+        public virtual DateTime? SearchUpdateDate
+        {
+            get { return Date; }
+        }
     }
 }

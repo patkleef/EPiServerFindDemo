@@ -59,127 +59,120 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="EPiServer, Version=8.11.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
+    <Reference Include="EPiServer, Version=9.0.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\EPiServer.CMS.Core.8.11.0\lib\net45\EPiServer.dll</HintPath>
+      <HintPath>packages\EPiServer.CMS.Core.9.0.0\lib\net45\EPiServer.dll</HintPath>
     </Reference>
-    <Reference Include="EPiServer.ApplicationModules, Version=8.11.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
+    <Reference Include="EPiServer.ApplicationModules, Version=9.0.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\EPiServer.Framework.8.11.0\lib\net45\EPiServer.ApplicationModules.dll</HintPath>
+      <HintPath>packages\EPiServer.Framework.9.0.0\lib\net45\EPiServer.ApplicationModules.dll</HintPath>
     </Reference>
-    <Reference Include="EPiServer.BaseLibrary, Version=8.11.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
+    <Reference Include="EPiServer.Cms.Shell.UI, Version=9.0.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\EPiServer.CMS.Core.8.11.0\lib\net45\EPiServer.BaseLibrary.dll</HintPath>
+      <HintPath>packages\EPiServer.CMS.UI.Core.9.0.0\lib\net45\EPiServer.Cms.Shell.UI.dll</HintPath>
     </Reference>
-    <Reference Include="EPiServer.Cms.Shell.UI, Version=8.6.1.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
+    <Reference Include="EPiServer.Configuration, Version=9.0.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\EPiServer.CMS.UI.Core.8.6.1\lib\net45\EPiServer.Cms.Shell.UI.dll</HintPath>
+      <HintPath>packages\EPiServer.CMS.Core.9.0.0\lib\net45\EPiServer.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="EPiServer.Configuration, Version=8.11.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
+    <Reference Include="EPiServer.Data, Version=9.0.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\EPiServer.CMS.Core.8.11.0\lib\net45\EPiServer.Configuration.dll</HintPath>
+      <HintPath>packages\EPiServer.Framework.9.0.0\lib\net45\EPiServer.Data.dll</HintPath>
     </Reference>
-    <Reference Include="EPiServer.Data, Version=8.11.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
+    <Reference Include="EPiServer.Data.Cache, Version=9.0.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\EPiServer.Framework.8.11.0\lib\net45\EPiServer.Data.dll</HintPath>
+      <HintPath>packages\EPiServer.Framework.9.0.0\lib\net45\EPiServer.Data.Cache.dll</HintPath>
     </Reference>
-    <Reference Include="EPiServer.Data.Cache, Version=8.11.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
+    <Reference Include="EPiServer.Enterprise, Version=9.0.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\EPiServer.Framework.8.11.0\lib\net45\EPiServer.Data.Cache.dll</HintPath>
+      <HintPath>packages\EPiServer.CMS.Core.9.0.0\lib\net45\EPiServer.Enterprise.dll</HintPath>
     </Reference>
-    <Reference Include="EPiServer.Enterprise, Version=8.11.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
+    <Reference Include="EPiServer.Events, Version=9.0.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\EPiServer.CMS.Core.8.11.0\lib\net45\EPiServer.Enterprise.dll</HintPath>
+      <HintPath>packages\EPiServer.Framework.9.0.0\lib\net45\EPiServer.Events.dll</HintPath>
     </Reference>
-    <Reference Include="EPiServer.Events, Version=8.11.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
+    <Reference Include="EPiServer.Find, Version=10.0.0.3291, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\EPiServer.Framework.8.11.0\lib\net45\EPiServer.Events.dll</HintPath>
+      <HintPath>packages\EPiServer.Find.10.0.0.3291\lib\net45\EPiServer.Find.dll</HintPath>
     </Reference>
-    <Reference Include="EPiServer.Find">
-      <HintPath>packages\EPiServer.Find.9.5.0.2999\lib\net45\EPiServer.Find.dll</HintPath>
-    </Reference>
-    <Reference Include="EPiServer.Find.Blocks">
-      <HintPath>packages\EPiServer.Find.Cms.9.5.0.2999\lib\net45\EPiServer.Find.Blocks.dll</HintPath>
-    </Reference>
-    <Reference Include="EPiServer.Find.Cms">
-      <HintPath>packages\EPiServer.Find.Cms.9.5.0.2999\lib\net45\EPiServer.Find.Cms.dll</HintPath>
-    </Reference>
-    <Reference Include="EPiServer.Find.Framework">
-      <HintPath>packages\EPiServer.Find.Framework.9.5.0.2999\lib\net45\EPiServer.Find.Framework.dll</HintPath>
-    </Reference>
-    <Reference Include="EPiServer.Find.Optimizations">
-      <HintPath>packages\EPiServer.Find.Cms.9.5.0.2999\lib\net45\EPiServer.Find.Optimizations.dll</HintPath>
-    </Reference>
-    <Reference Include="EPiServer.Find.Statistics">
-      <HintPath>packages\EPiServer.Find.Cms.9.5.0.2999\lib\net45\EPiServer.Find.Statistics.dll</HintPath>
-    </Reference>
-    <Reference Include="EPiServer.Find.UI">
-      <HintPath>packages\EPiServer.Find.Cms.9.5.0.2999\lib\net45\EPiServer.Find.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="EPiServer.Framework, Version=8.11.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
+    <Reference Include="EPiServer.Find.Blocks, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\EPiServer.Framework.8.11.0\lib\net45\EPiServer.Framework.dll</HintPath>
+      <HintPath>packages\EPiServer.Find.Cms.10.0.0.3291\lib\net45\EPiServer.Find.Blocks.dll</HintPath>
     </Reference>
-    <Reference Include="EPiServer.ImageLibrary, Version=8.11.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
+    <Reference Include="EPiServer.Find.Cms, Version=10.0.0.3291, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\EPiServer.CMS.Core.8.11.0\lib\net45\EPiServer.ImageLibrary.dll</HintPath>
+      <HintPath>packages\EPiServer.Find.Cms.10.0.0.3291\lib\net45\EPiServer.Find.Cms.dll</HintPath>
     </Reference>
-    <Reference Include="EPiServer.Implementation, Version=8.11.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
+    <Reference Include="EPiServer.Find.Framework, Version=10.0.0.3291, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\EPiServer.CMS.Core.8.11.0\lib\net45\EPiServer.Implementation.dll</HintPath>
+      <HintPath>packages\EPiServer.Find.Framework.10.0.0.3291\lib\net45\EPiServer.Find.Framework.dll</HintPath>
     </Reference>
-    <Reference Include="EPiServer.Licensing, Version=8.11.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
+    <Reference Include="EPiServer.Find.Optimizations, Version=10.0.0.3291, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\EPiServer.Framework.8.11.0\lib\net45\EPiServer.Licensing.dll</HintPath>
+      <HintPath>packages\EPiServer.Find.Cms.10.0.0.3291\lib\net45\EPiServer.Find.Optimizations.dll</HintPath>
     </Reference>
-    <Reference Include="EPiServer.LinkAnalyzer, Version=8.11.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
+    <Reference Include="EPiServer.Find.Statistics, Version=10.0.0.3291, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\EPiServer.CMS.Core.8.11.0\lib\net45\EPiServer.LinkAnalyzer.dll</HintPath>
+      <HintPath>packages\EPiServer.Find.Cms.10.0.0.3291\lib\net45\EPiServer.Find.Statistics.dll</HintPath>
     </Reference>
-    <Reference Include="EPiServer.Logging.Log4Net">
-      <HintPath>packages\EPiServer.Logging.Log4Net.1.0.0\lib\net45\EPiServer.Logging.Log4Net.dll</HintPath>
-    </Reference>
-    <Reference Include="EPiServer.Packaging, Version=3.2.2.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
+    <Reference Include="EPiServer.Find.UI, Version=10.0.0.3291, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\EPiServer.Packaging.3.2.2\lib\net45\EPiServer.Packaging.dll</HintPath>
+      <HintPath>packages\EPiServer.Find.Cms.10.0.0.3291\lib\net45\EPiServer.Find.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="EPiServer.Framework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\EPiServer.Framework.9.0.0\lib\net45\EPiServer.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="EPiServer.ImageLibrary, Version=9.0.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\EPiServer.CMS.Core.9.0.0\lib\net45\EPiServer.ImageLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="EPiServer.Licensing, Version=9.0.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\EPiServer.Framework.9.0.0\lib\net45\EPiServer.Licensing.dll</HintPath>
+    </Reference>
+    <Reference Include="EPiServer.LinkAnalyzer, Version=9.0.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\EPiServer.CMS.Core.9.0.0\lib\net45\EPiServer.LinkAnalyzer.dll</HintPath>
+    </Reference>
+    <Reference Include="EPiServer.Logging.Log4Net, Version=1.1.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\EPiServer.Logging.Log4Net.1.1.0\lib\net45\EPiServer.Logging.Log4Net.dll</HintPath>
+    </Reference>
+    <Reference Include="EPiServer.Packaging, Version=3.2.3.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>packages\EPiServer.Packaging.3.2.3\lib\net45\EPiServer.Packaging.dll</HintPath>
     </Reference>
     <Reference Include="EPiServer.Packaging.CmdAPI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\EPiServer.Packaging.3.2.2\lib\net45\EPiServer.Packaging.CmdAPI.dll</HintPath>
+      <HintPath>packages\EPiServer.Packaging.3.2.3\lib\net45\EPiServer.Packaging.CmdAPI.dll</HintPath>
     </Reference>
-    <Reference Include="EPiServer.Packaging.UI, Version=3.2.2.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
+    <Reference Include="EPiServer.Packaging.UI, Version=3.2.3.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\EPiServer.Packaging.UI.3.2.2\lib\net45\EPiServer.Packaging.UI.dll</HintPath>
+      <HintPath>packages\EPiServer.Packaging.UI.3.2.3\lib\net45\EPiServer.Packaging.UI.dll</HintPath>
     </Reference>
-    <Reference Include="EPiServer.Shell, Version=8.11.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
+    <Reference Include="EPiServer.Shell, Version=9.0.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\EPiServer.Framework.8.11.0\lib\net45\EPiServer.Shell.dll</HintPath>
+      <HintPath>packages\EPiServer.Framework.9.0.0\lib\net45\EPiServer.Shell.dll</HintPath>
     </Reference>
-    <Reference Include="EPiServer.Shell.UI, Version=8.6.1.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
+    <Reference Include="EPiServer.Shell.UI, Version=9.0.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\EPiServer.CMS.UI.Core.8.6.1\lib\net45\EPiServer.Shell.UI.dll</HintPath>
+      <HintPath>packages\EPiServer.CMS.UI.Core.9.0.0\lib\net45\EPiServer.Shell.UI.dll</HintPath>
     </Reference>
-    <Reference Include="EPiServer.UI, Version=8.6.1.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
+    <Reference Include="EPiServer.UI, Version=9.0.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\EPiServer.CMS.UI.Core.8.6.1\lib\net45\EPiServer.UI.dll</HintPath>
+      <HintPath>packages\EPiServer.CMS.UI.Core.9.0.0\lib\net45\EPiServer.UI.dll</HintPath>
     </Reference>
-    <Reference Include="EPiServer.Web.WebControls, Version=8.11.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
+    <Reference Include="EPiServer.Web.WebControls, Version=9.0.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\EPiServer.CMS.Core.8.11.0\lib\net45\EPiServer.Web.WebControls.dll</HintPath>
+      <HintPath>packages\EPiServer.CMS.Core.9.0.0\lib\net45\EPiServer.Web.WebControls.dll</HintPath>
     </Reference>
-    <Reference Include="EPiServer.WorkflowFoundation, Version=8.11.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
+    <Reference Include="EPiServer.XForms, Version=9.0.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\EPiServer.CMS.Core.8.11.0\lib\net45\EPiServer.WorkflowFoundation.dll</HintPath>
-    </Reference>
-    <Reference Include="EPiServer.XForms, Version=8.11.0.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\EPiServer.CMS.Core.8.11.0\lib\net45\EPiServer.XForms.dll</HintPath>
+      <HintPath>packages\EPiServer.CMS.Core.9.0.0\lib\net45\EPiServer.XForms.dll</HintPath>
     </Reference>
     <Reference Include="Faker.NET4">
       <HintPath>packages\Faker.Net.1.0.3\lib\net40\Faker.NET4.dll</HintPath>
-    </Reference>
-    <Reference Include="Ionic.Zip">
-      <HintPath>packages\DotNetZip.1.9.1.8\lib\net20\Ionic.Zip.dll</HintPath>
     </Reference>
     <Reference Include="log4net, Version=1.2.10.0, Culture=neutral, PublicKeyToken=1b44e1d426115821, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -198,9 +191,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>packages\NuGet.Core.2.5.0\lib\net40-Client\NuGet.Core.dll</HintPath>
     </Reference>
-    <Reference Include="StructureMap, Version=2.6.4.0, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
+    <Reference Include="StructureMap, Version=3.1.6.186, Culture=neutral, PublicKeyToken=e60ad81abae3c223, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>packages\structuremap.2.6.4.1\lib\net40\StructureMap.dll</HintPath>
+      <HintPath>packages\structuremap-signed.3.1.6.186\lib\net40\StructureMap.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.Net4">
+      <HintPath>packages\structuremap-signed.3.1.6.186\lib\net40\StructureMap.Net4.dll</HintPath>
+    </Reference>
+    <Reference Include="StructureMap.Web">
+      <HintPath>packages\structuremap.web-signed.3.1.6.186\lib\net40\StructureMap.Web.dll</HintPath>
     </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Net.Http.Formatting, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -307,6 +306,8 @@
   <ItemGroup>
     <Content Include="Admin\ImportContent.aspx" />
     <Content Include="Static\ViewModels\Highlighting\highlightingunifiedsearchviewmodel.js" />
+    <Content Include="Static\ViewModels\InfluenceResults\boostingwithfiltersviewmodel.js" />
+    <Content Include="Static\ViewModels\InfluenceResults\boostingwithweightsviewmodel.js" />
     <Content Include="Static\ViewModels\typedsearchviewmodel.js" />
     <Content Include="Static\ViewModels\InfluenceResults\boostingviewmodel.js" />
     <Content Include="Static\ViewModels\InfluenceResults\synonymsviewmodel.js" />
@@ -335,12 +336,6 @@
     <Content Include="packages.config" />
     <Content Include="Views\HomePage\Index.cshtml" />
     <Content Include="Views\Shared\Layout\_Layout.cshtml" />
-    <Content Include="modules\_protected\Shell\web.config" />
-    <Content Include="modules\_protected\Shell\EPiServer.Shell.UI.zip" />
-    <Content Include="modules\_protected\CMS\web.config" />
-    <Content Include="modules\_protected\CMS\EPiServer.Cms.Shell.UI.zip" />
-    <Content Include="modules\_protected\EPiServer.Packaging.UI\web.config" />
-    <Content Include="modules\_protected\EPiServer.Packaging.UI\EPiServer.Packaging.UI.zip" />
     <Content Include="Static\Style\css\bootstrap-theme.css.map" />
     <Content Include="Static\Style\css\bootstrap.css.map" />
     <Content Include="Static\Style\fonts\glyphicons-halflings-regular.eot" />
@@ -353,11 +348,19 @@
     <Content Include="Views\Statistics\SpellCheck.cshtml" />
     <Content Include="Views\Statistics\DidYouMean.cshtml" />
     <Content Include="Views\InfluenceSearchResults\Synonyms.cshtml" />
-    <Content Include="Views\InfluenceSearchResults\Boosting.cshtml" />
+    <Content Include="Views\InfluenceSearchResults\AutoBoosting.cshtml" />
     <Content Include="Views\MoreLike\Index.cshtml" />
     <Content Include="Views\Highlighting\HighlightingUnifiedSearch.cshtml" />
     <Content Include="Views\TypedSearch\Index.cshtml" />
     <Content Include="Views\ArticlePage\Index.cshtml" />
+    <Content Include="modules\_protected\Shell\web.config" />
+    <Content Include="modules\_protected\Shell\Shell.zip" />
+    <Content Include="modules\_protected\CMS\web.config" />
+    <Content Include="modules\_protected\CMS\CMS.zip" />
+    <Content Include="modules\_protected\EPiServer.Packaging.UI\web.config" />
+    <Content Include="modules\_protected\EPiServer.Packaging.UI\EPiServer.Packaging.UI.zip" />
+    <Content Include="Views\InfluenceSearchResults\BoostingWithWeights.cshtml" />
+    <Content Include="Views\InfluenceSearchResults\BoostingWithFilters.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

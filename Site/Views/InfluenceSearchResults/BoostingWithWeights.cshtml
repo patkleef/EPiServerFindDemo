@@ -1,0 +1,79 @@
+﻿@{
+    Layout = "/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<h1>Boosting with Weights</h1>
+
+<div id="results-boosting" class="search-container-separator">
+
+    <form class="form-inline">
+        <div class="form-group">
+            <input type="text" class="form-control" data-bind="value: searchQuery">
+        </div>
+        <button type="submit" class="btn btn-default" data-bind="click: searchButtonClicked">Search</button>
+        <div class="form-group">
+            <a data-toggle="collapse" href="#boosting-configurations" aria-expanded="false" aria-controls="boosting-configurations">Configuration options</a>
+        </div>
+    </form>
+
+    <div id="boosting-configurations" class="panel panel-default collapse container-separator">
+        <div class="panel-body">
+            <div class="form-group">
+                <input data-bind="checked: useBoostingWithWeights" type="checkbox" id="useBoostingWithWeights"/>
+                <label for="useBoostingWithWeights">Use boosting with weights</label> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title=""></span>
+            </div>
+            <div class="form-group">
+                <label for="searchTitle">Search title </label> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title=""></span>
+                <input data-bind="value: searchTitle, enable: useBoostingWithWeights" type="number" class="form-control" id="searchTitle" placeholder="14">
+            </div>
+            <div class="form-group">
+                <label for="searchText">Search text </label> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title=""></span>
+                <input data-bind="value: searchText, enable: useBoostingWithWeights" type="number" class="form-control" id="searchText" placeholder="1">
+            </div>
+            <div class="form-group">
+                <label for="searchSummary">Search summary </label> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title=""></span>
+                <input data-bind="value: searchSummary, enable: useBoostingWithWeights" type="number" class="form-control" id="searchSummary" placeholder="1">
+            </div>
+            <div class="form-group">
+                <label for="searchAttachment">Search attachment </label> <span class="glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="right" title=""></span>
+                <input data-bind="value: searchAttachment, enable: useBoostingWithWeights" type="number" class="form-control" id="searchAttachment" placeholder="">
+            </div>
+        </div>
+    </div>
+
+    <div class="container-separator" data-bind="visible: results().length > 0">
+        <a class="btn btn-primary" role="button" data-toggle="collapse" href="#boosting-result" aria-expanded="false" aria-controls="boosting-result">
+            Result
+        </a>
+        <div class="collapse" id="boosting-result">
+            <div class="well" data-bind="text: resultJson">
+            </div>
+        </div>
+    </div>
+
+    <table class="table table-striped" data-bind="visible: results().length > 0">
+        <thead>
+            <tr>
+                <th>Results</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: results">
+            <tr>
+                <td>
+                    <strong data-bind="html: title"></strong> - <strong data-bind="text: section"></strong>
+                    <p data-bind="html: excerpt"></p>
+                    <p>
+                        <i data-bind="text: originalobjecttype"></i>
+                    </p>
+                    <span data-bind="text: updatedate"></span> - <a data-bind="attr: { href: url }, visible: url != null">Read more</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+@section Scripts
+{
+    <script src="/Static/ViewModels/InfluenceResults/boostingwithweightsviewmodel.js"></script>
+}
+

@@ -15,12 +15,6 @@ namespace Site
             AreaRegistration.RegisterAllAreas();
 
             GlobalConfiguration.Configure(WebApiConfig.Register);
-
-
-            var config = GlobalConfiguration.Configuration;
-            var settings = new JsonSerializerSettings();
-            settings.ContractResolver = new LowercaseContractResolver();
-            config.Formatters.JsonFormatter.SerializerSettings = settings;
         }
 
         protected override void RegisterRoutes(RouteCollection routes)
@@ -54,10 +48,21 @@ namespace Site
                      new { controller = "Page", action = "Synonyms" }
                  );
             routes.MapRoute(
-                     "InfluenceSearchResults-Boosting",
-                     "InfluenceSearchResults/Boosting",
-                     new { controller = "Page", action = "Boosting" }
+                     "InfluenceSearchResults-AutoBoosting",
+                     "InfluenceSearchResults/AutoBoosting",
+                     new { controller = "Page", action = "AutoBoosting" }
                  );
+            routes.MapRoute(
+                     "InfluenceSearchResults-BoostingWithWeights",
+                     "InfluenceSearchResults/BoostingWithWeights",
+                     new { controller = "Page", action = "BoostingWithWeights" }
+                 );
+            routes.MapRoute(
+                     "InfluenceSearchResults-BoostingWithFilters",
+                     "InfluenceSearchResults/BoostingWithFilters",
+                     new { controller = "Page", action = "BoostingWithFilters" }
+                 );
+
             routes.MapRoute(
                      "MoreLike",
                      "MoreLike",
@@ -78,14 +83,6 @@ namespace Site
                      "TypedSearch",
                      new { controller = "Page", action = "TypedSearch" }
                  );
-        }
-    }
-
-    public class LowercaseContractResolver : DefaultContractResolver
-    {
-        protected override string ResolvePropertyName(string propertyName)
-        {
-            return propertyName.ToLower();
         }
     }
 
