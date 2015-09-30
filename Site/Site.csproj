@@ -281,6 +281,7 @@
     <Compile Include="Business\Content\Geo.cs" />
     <Compile Include="Business\Content\User.cs" />
     <Compile Include="Business\Initialization\FindInitialization.cs" />
+    <Compile Include="Business\Log\TraceListener.cs" />
     <Compile Include="Business\Search\SearchService.cs" />
     <Compile Include="Controllers\Api\SearchController.cs" />
     <Compile Include="Controllers\PageController.cs" />
