@@ -36,6 +36,9 @@
       <HintPath>packages\EPiServer.Find.10.0.0.3291\lib\net45\EPiServer.Find.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EPiServer.Sample.Hotels">
+      <HintPath>C:\Users\mari.GETA\Documents\GitHub\HotelFinderSite\Source\References\EPiServer.Sample.Hotels.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>packages\Newtonsoft.Json.5.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
@@ -51,9 +54,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Importer.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Store.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -62,6 +67,7 @@
     <None Include="JsonSampleData\knitwear.json" />
     <None Include="JsonSampleData\shirts.json" />
     <None Include="JsonSampleData\jackets.json" />
+    <None Include="JsonSampleData\stores.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

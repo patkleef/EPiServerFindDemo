@@ -18,6 +18,7 @@ namespace FindDemo
         public double OfferedPrice { get; set; }
         public bool IsOnSale { get; set; }
         public object CampaignLabel { get; set; }
+        public string Color { get; set; }
         public bool Available { get; set; }
         public Sku[] Skus { get; set; }
         public bool NewArrival { get; set; }
