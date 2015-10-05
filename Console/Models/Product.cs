@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EPiServer.Find;
+using Newtonsoft.Json;
 
 namespace FindDemo
 {
@@ -19,6 +20,7 @@ namespace FindDemo
         public bool IsOnSale { get; set; }
         public object CampaignLabel { get; set; }
         public string Color { get; set; }
+        [JsonIgnore]
         public bool Available { get; set; }
         public Sku[] Skus { get; set; }
         public bool NewArrival { get; set; }

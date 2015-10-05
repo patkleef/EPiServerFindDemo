@@ -22,14 +22,14 @@ namespace FindDemo
 
             //Importer.ClearIndex(client);
 
-            Importer.AddDemoContentFromFiles(client);
+            //Importer.AddDemoContentFromFiles(client);
 
             #endregion
 
             #region Filtering
 
             /************* FILTERING *****************/
-            //var query = client.Search<Product>();
+            var query = client.Search<Product>();
 
             //query = FilterString(query);
 
@@ -37,7 +37,7 @@ namespace FindDemo
 
             //query = FilteringComplexCollections(query);
 
-            //query = FiltersCombinedExample(query);
+            query = FiltersCombinedExample(query);
 
 
             //Console.WriteLine("What sizes should we filter on? (Use ',' to separate.) ");
@@ -53,13 +53,13 @@ namespace FindDemo
 
             #region Facets
 
-            //query = FacetsExample(query);
+            query = FacetsExample(query);
 
             #endregion
 
-            //var result = query.GetResult();
+            var result = query.GetResult();
 
-            //ShowResults(result);
+            ShowResults(result);
         }
 
 
@@ -179,6 +179,7 @@ namespace FindDemo
         {
             return q
                 .TermsFacetFor(p => p.Sizes) //Size
+                .TermsFacetFor(p => p.Color) //Color
                 .RangeFacetFor(p => p.Price, new NumericRange(20, 50), new NumericRange(51, 100), new NumericRange(101, 500)) //Price
                 .FilterFacet("Womens", p => p.Gender.Match(Gender.Womens))
                 .FilterFacet("Jeans", p => p.Collection.Match(Collection.Jeans))
