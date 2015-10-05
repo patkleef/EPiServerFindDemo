@@ -22,7 +22,6 @@ namespace FindDemo
         public bool Available { get; set; }
         public Sku[] Skus { get; set; }
         public bool NewArrival { get; set; }
-        public Productimages ProductImages { get; set; }
         public Collection Collection { get; set; }
         public Gender Gender { get; set; }
 
@@ -30,7 +29,7 @@ namespace FindDemo
         {
             get
             {
-                return string.Format("{0} {1}", VariantCode, Name);
+                return string.Format("{0} {1} {2}", VariantCode, Name, Color);
             }
         }
 
@@ -61,14 +60,6 @@ namespace FindDemo
         public string Size { get; set; }
     }
 
-
-    public class Productimages
-    {
-        public string ListImage { get; set; }
-        public string MainImage { get; set; }
-        public string[] AdditionalImages { get; set; }
-    }
-
     public enum Gender
     {
         Womens, Mens
@@ -76,6 +67,6 @@ namespace FindDemo
 
     public enum Collection
     {
-        Outerwear, Tops, Jeans, Shorts, Pants, Knitwear, Accessories, Shirts, Polos, Sweaters, Tees, Dresses, Jackets
+        Underwear, Tops, Jeans, Shorts, Pants, Knitwear, Accessories, Shirts, Polos, Sweaters, Tees, Dresses, Jackets
     }
 }

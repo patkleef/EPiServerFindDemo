@@ -20,9 +20,9 @@ namespace FindDemo
 
             /************* INDEXING *****************/
 
-            Importer.ClearIndex(client);
+            //Importer.ClearIndex(client);
 
-            //Importer.AddDemoContentFromFiles(client);
+            Importer.AddDemoContentFromFiles(client);
 
             #endregion
 

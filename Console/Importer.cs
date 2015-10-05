@@ -22,20 +22,20 @@ namespace FindDemo
             #region Parsing Json to Product and Store items
 
             // Product
-            var bbKnitwear = ParseJsonAsProducts("knitwear.json").ToList();
-            productsToIndex.AddRange(AddCollectionAndGender(bbKnitwear, Collection.Knitwear, Gender.Womens));
+            var womenKnitwear = ParseJsonAsProducts("knitwear.json").ToList();
+            productsToIndex.AddRange(AddCollection(womenKnitwear, Collection.Knitwear));
 
-            var bbJeans = ParseJsonAsProducts("jeans.json").ToList();
-            productsToIndex.AddRange(AddCollectionAndGender(bbJeans, Collection.Jeans, Gender.Womens));
+            var womenJeans = ParseJsonAsProducts("jeans.json").ToList();
+            productsToIndex.AddRange(AddCollection(womenJeans, Collection.Jeans));
 
-            var bbShirts = ParseJsonAsProducts("shirts.json").ToList();
-            productsToIndex.AddRange(AddCollectionAndGender(bbShirts, Collection.Shirts, Gender.Womens));
+            var womenShirts = ParseJsonAsProducts("shirts.json").ToList();
+            productsToIndex.AddRange(AddCollection(womenShirts, Collection.Shirts));
 
-            var dmJackets = ParseJsonAsProducts("jackets.json").ToList();
-            productsToIndex.AddRange(AddCollectionAndGender(dmJackets, Collection.Jackets, Gender.Mens));
+            var menBoxers = ParseJsonAsProducts("boxers.json").ToList();
+            productsToIndex.AddRange(AddCollection(menBoxers, Collection.Underwear));
 
-            var dmShirts = ParseJsonAsProducts("cashualshirts.json").ToList();
-            productsToIndex.AddRange(AddCollectionAndGender(dmShirts, Collection.Shirts, Gender.Mens));
+            var menTShirts = ParseJsonAsProducts("thirts.json").ToList();
+            productsToIndex.AddRange(AddCollection(menTShirts, Collection.Tees));
 
             // Stores
             var stores = ParseJsonAsStores("stores.json").ToList();
@@ -71,7 +71,7 @@ namespace FindDemo
                 return new List<Product>();
             }
 
-            var jsonReader = new JsonTextReader(new StreamReader(path));
+            var jsonReader = new JsonTextReader(new StreamReader(path, new UTF8Encoding()));
             var jsonSerializer = new JsonSerializer();
             var products = jsonSerializer.Deserialize<IEnumerable<Product>>(jsonReader);
 
@@ -87,17 +87,16 @@ namespace FindDemo
                 return new List<Store>();
             }
 
-            var jsonReader = new JsonTextReader(new StreamReader(path));
+            var jsonReader = new JsonTextReader(new StreamReader(path, new UTF8Encoding()));
             var jsonSerializer = new JsonSerializer();
             return jsonSerializer.Deserialize<IEnumerable<Store>>(jsonReader);
         }
 
-        private static List<Product> AddCollectionAndGender(List<Product> products, Collection collection, Gender gender)
+        private static List<Product> AddCollection(List<Product> products, Collection collection)
         {
             foreach (var product in products)
             {
                 product.Collection = collection;
-                product.Gender = gender;
             }
             return products;
         }
