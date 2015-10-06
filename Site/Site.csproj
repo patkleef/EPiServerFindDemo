@@ -276,13 +276,10 @@
     <Compile Include="Admin\ImportContent.aspx.designer.cs">
       <DependentUpon>ImportContent.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Business\Content\Address.cs" />
     <Compile Include="Business\Content\Company.cs" />
-    <Compile Include="Business\Content\Geo.cs" />
     <Compile Include="Business\Content\User.cs" />
     <Compile Include="Business\Initialization\FindInitialization.cs" />
     <Compile Include="Business\Log\TraceListener.cs" />
-    <Compile Include="Business\Search\SearchService.cs" />
     <Compile Include="Controllers\Api\SearchController.cs" />
     <Compile Include="Controllers\PageController.cs" />
     <Compile Include="Controllers\DefaultPageController.cs" />
@@ -292,18 +289,11 @@
     </Compile>
     <Compile Include="Models\Pages\ArticlesPage.cs" />
     <Compile Include="Models\Pages\ContainerPage.cs" />
-    <Compile Include="Models\Pages\InfluenceSearchResultsPage.cs" />
     <Compile Include="Models\Pages\ArticlePage.cs" />
-    <Compile Include="Models\Pages\HighlightPage.cs" />
     <Compile Include="Models\Pages\HomePage.cs" />
-    <Compile Include="Models\Pages\CommentPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\Blocks\" />
-    <Folder Include="Models\Media\" />
-    <Folder Include="Models\Properties\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Admin\ImportContent.aspx" />
     <Content Include="Static\ViewModels\Highlighting\highlightingunifiedsearchviewmodel.js" />
@@ -362,6 +352,7 @@
     <Content Include="modules\_protected\EPiServer.Packaging.UI\EPiServer.Packaging.UI.zip" />
     <Content Include="Views\InfluenceSearchResults\BoostingWithWeights.cshtml" />
     <Content Include="Views\InfluenceSearchResults\BoostingWithFilters.cshtml" />
+    <Content Include="Views\Shared\UnifiedSearchResults.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

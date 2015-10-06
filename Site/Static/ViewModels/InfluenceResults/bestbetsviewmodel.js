@@ -8,9 +8,9 @@
     self.searchButtonClicked = function (data, event) {
         if (self.searchQuery() != "") {
             $.get('/api/Search/BestBets?query=' + self.searchQuery(), function (data) {
-                var jsonString = JSON.stringify(data, null, 4).toLocaleLowerCase();
+                var jsonString = JSON.stringify(data, null, 4);
                 self.resultJson(jsonString);
-                self.results(JSON.parse(jsonString));
+                self.results(data);
             });
         }
         else {

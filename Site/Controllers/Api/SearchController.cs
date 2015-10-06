@@ -14,7 +14,6 @@ using EPiServer.Find.UnifiedSearch;
 using EPiServer.ServiceLocation;
 using EPiServer.Web;
 using EPiServer.Web.Routing;
-using Site.Business.Content;
 using Site.Models.Pages;
 
 namespace Site.Controllers.Api
@@ -36,8 +35,11 @@ namespace Site.Controllers.Api
             _urlResolver = ServiceLocator.Current.GetInstance<UrlResolver>();
         }
 
+        #region Unified Search
+
         /// <summary>
         /// Unified search
+        /// http://world.episerver.com/documentation/Items/Developers-Guide/EPiServer-Find/10/DotNET-Client-API/Searching/Unified-search/
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
@@ -47,15 +49,20 @@ namespace Site.Controllers.Api
         {
             var hitSpecification = new HitSpecification();
 
-            var result = _client.UnifiedSearchFor(query).StatisticsTrack()
+            var result = _client.UnifiedSearchFor(query).Track()
                 .Take(100)
                 .GetResult(hitSpecification, false);
             
             return Json(result);
         }
 
+        #endregion
+
+        #region Typed search
+
         /// <summary>
         /// Typed search
+        /// http://world.episerver.com/documentation/Items/Developers-Guide/EPiServer-Find/10/DotNET-Client-API/Searching/Searching/
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
@@ -68,17 +75,6 @@ namespace Site.Controllers.Api
             var result = _client.Search<ArticlePage>()
                 .For(query)
                 .GetContentResult();
-
-            _client.Search<ArticlePage>()
-                .For(query)
-                .Track()
-                .Take(100)
-                .GetContentResult();
-
-            _client.Search<ArticlePage>().For(query)
-                .Track()
-                .Take(100)
-                .GetResult();
 
             return Json(result.Items.Select((x, i) => new
             {
@@ -111,8 +107,15 @@ namespace Site.Controllers.Api
                 (index + 1));
         }
 
-        #region Searching statistics
+        #endregion
 
+        #region Auto complete
+
+        /// <summary>
+        /// Auto complete
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/Search/AutoComplete")]
         public IHttpActionResult AutoComplete(string query)
@@ -126,6 +129,16 @@ namespace Site.Controllers.Api
             return Json(result);
         }
 
+        #endregion
+
+        #region Did you mean
+
+        /// <summary>
+        /// Did you mean
+        /// 
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/Search/DidYouMean")]
         public IHttpActionResult DidYouMean(string query)
@@ -139,6 +152,15 @@ namespace Site.Controllers.Api
             return Json(result);
         }
 
+        #endregion
+
+        #region Spell check
+
+        /// <summary>
+        /// Spell check
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/Search/SpellCheck")]
         public IHttpActionResult SpellCheck(string query)
@@ -154,8 +176,14 @@ namespace Site.Controllers.Api
 
         #endregion
 
-        #region Influence search results
+        #region Best bets
 
+        /// <summary>
+        /// Best bets
+        /// http://world.episerver.com/documentation/Items/Developers-Guide/EPiServer-Find/10/DotNET-Client-API/Searching/Best-Bets/
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/Search/BestBets")]
         public IHttpActionResult BestBets(string query)
@@ -169,6 +197,16 @@ namespace Site.Controllers.Api
             return Json(result);
         }
 
+        #endregion
+
+        #region Synonyms
+
+        /// <summary>
+        /// Synonyms
+        /// http://world.episerver.com/documentation/Items/Developers-Guide/EPiServer-Find/10/DotNET-Client-API/Searching/Synonyms/
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/Search/Synonyms")]
         public IHttpActionResult Synonyms(string query)
@@ -182,56 +220,27 @@ namespace Site.Controllers.Api
             return Json(result);
         }
 
+        #endregion
+
+        #region Auto boosting
+
+        /// <summary>
+        /// Auto boosting
+        /// http://world.episerver.com/documentation/Items/Developers-Guide/EPiServer-Find/10/DotNET-Client-API/Searching/auto-boosting/
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="useAutoBoosting"></param>
+        /// <param name="decayScale"></param>
+        /// <param name="decayOffset"></param>
+        /// <param name="decayShape"></param>
+        /// <param name="decayOrigin"></param>
+        /// <param name="decayMinimum"></param>
+        /// <param name="hitBoostScale"></param>
+        /// <param name="hitBoostOffset"></param>
+        /// <returns></returns>
         [HttpGet]
-        [Route("api/Search/RelatedArticles")]
-        public IHttpActionResult RelatedArticles(
-            int articleId,
-            int minimumDocumentFrequency,
-            int maximumDocumentFrequency,
-            int percentTermsToMatch,
-            int minimumTermFrequency,
-            int minimumWordLength,
-            int maximumWordLength,
-            int maximumQueryTerms,
-            string stopWords)
-        {
-            var article = _client.Search<ArticlePage>().Filter(x => x.ContentLink.ID.Match(articleId)).GetContentResult().FirstOrDefault();
-
-            if (article != null)
-            {
-                _client.Search<ArticlePage>()
-                    .MoreLike(article.BodyText.ToString())
-                    .Filter(x => !x.ContentLink.ID.Match(articleId))
-                    .GetContentResult();
-
-                var result = _client.Search<ArticlePage>()
-                .MoreLike(article.BodyText.ToString())
-                .MinimumDocumentFrequency(minimumDocumentFrequency)
-                .MaximumDocumentFrequency(maximumDocumentFrequency)
-                .PercentTermsToMatch(percentTermsToMatch)
-                .MinimumTermFrequency(minimumTermFrequency)
-                .MinimumWordLength(minimumWordLength)
-                .MaximumWordLength(maximumWordLength)
-                .MaximumQueryTerms(maximumQueryTerms)
-                .StopWords((!string.IsNullOrEmpty(stopWords) ? stopWords.Split(',') : Enumerable.Empty<string>()))
-
-                //.MinimumTermFrequency(4) //The minimum term frequency below which the terms will be ignored from the input document. Defaults to 2
-                //.MaximumQueryTerms(12) //The maximum number of query terms that will be selected. Increasing this value gives greater accuracy at the expense of query execution speed. Defaults to 25.
-                .Filter(x => !x.ContentLink.ID.Match(articleId))
-                .Select(a => new
-                {
-                    Title = a.PageName
-                })
-                .GetResult();
-
-                return Json(result);
-            }
-            return Json(string.Empty);
-        }
-
-        [HttpGet]
-        [Route("api/Search/Boosting")]
-        public IHttpActionResult Boosting(
+        [Route("api/Search/AutoBoosting")]
+        public IHttpActionResult AutoBoosting(
             string query,
             bool useAutoBoosting,
             int decayScale,
@@ -244,30 +253,44 @@ namespace Site.Controllers.Api
         {
             if (!useAutoBoosting)
             {
-                var result3 = _client.UnifiedSearch().For(query).GetResult();
+                var result = _client.UnifiedSearch().For(query).GetResult();
 
-                return Json(result3);
+                return Json(result);
             }
-            var result = 
-                _client.UnifiedSearch().For(query)
-                .UsingAutoBoost
-                (
-                    TimeSpan.FromDays(decayScale),
-                    TimeSpan.FromDays(decayOffset),
-                    decayShape,
-                    decayMinimum,
-                    decayOrigin,
-                    hitBoostScale,
-                    hitBoostOffset
-                )
-                .GetResult();
+            else
+            {
+                var result = _client.UnifiedSearch().For(query)
+                                .UsingAutoBoost
+                                (
+                                    TimeSpan.FromDays(decayScale),
+                                    TimeSpan.FromDays(decayOffset),
+                                    decayShape,
+                                    decayMinimum,
+                                    decayOrigin,
+                                    hitBoostScale,
+                                    hitBoostOffset
+                                )
+                                .GetResult();
 
-            /*var result4 =
-                 _client.UnifiedSearch().For(query).UsingAutoBoost().GetResult();*/
-
-            return Json(result);
+                return Json(result);
+            }
         }
 
+        #endregion
+
+        #region Boosting with weights
+
+        /// <summary>
+        /// Boosting weights
+        /// http://world.episerver.com/documentation/Items/Developers-Guide/EPiServer-Find/10/DotNET-Client-API/Searching/Boosting-with-weights/
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="useBoostingWithWeights"></param>
+        /// <param name="searchTitle"></param>
+        /// <param name="searchText"></param>
+        /// <param name="searchSummary"></param>
+        /// <param name="searchAttachment"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/Search/BoostingWithWeights")]
         public IHttpActionResult BoostingWithWeights(
@@ -284,22 +307,39 @@ namespace Site.Controllers.Api
 
                 return Json(result);
             }
-            var weights = new UnifiedWeightsValues()
+            else
             {
-                SearchTitle = searchTitle,
-                SearchText = searchText,
-                SearchSummary = searchSummary,
-                SearchAttachment = searchAttachment
-            };
+                var weights = new UnifiedWeightsValues()
+                {
+                    SearchTitle = searchTitle,
+                    SearchText = searchText,
+                    SearchSummary = searchSummary,
+                    SearchAttachment = searchAttachment
+                };
 
-            var result1 =
-                _client.UnifiedSearch().For(query)
-                .UsingUnifiedWeights(weights)
-                .GetResult();
+                var result =
+                    _client.UnifiedSearch().For(query)
+                        .UsingUnifiedWeights(weights)
+                        .GetResult();
 
-            return Json(result1);
+                return Json(result);
+            }
         }
 
+        #endregion
+
+        #region Boosting with filters
+
+        /// <summary>
+        /// Boosting with filters
+        /// http://world.episerver.com/documentation/Items/Developers-Guide/EPiServer-Find/10/DotNET-Client-API/Searching/Boosting-with-filters/
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="useBoostingWithFilters"></param>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="boostFactor"></param>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/Search/BoostingWithFilters")]
         public IHttpActionResult BoostingWithFilters(
@@ -315,22 +355,93 @@ namespace Site.Controllers.Api
 
                 return Json(result);
             }
+            else
+            {
+                var result = _client.UnifiedSearch().For(query)
+                                .BoostMatching(p => p.SearchUpdateDate.InRange(startDate, endDate), boostFactor)
+                                .GetResult();
 
-            var result1 =
-                _client.UnifiedSearch().For(query)
-                .BoostMatching(p => p.SearchUpdateDate.InRange(startDate, endDate), boostFactor)
-                .GetResult();
-
-            return Json(result1);
+                return Json(result);
+            }
         }
 
         #endregion
 
-        #region Highlight
+        #region More like/related
 
+        /// <summary>
+        /// Related articles
+        /// http://world.episerver.com/documentation/Items/Developers-Guide/EPiServer-Find/10/DotNET-Client-API/Searching/More-LikeRelated/
+        /// </summary>
+        /// <param name="articleId"></param>
+        /// <param name="minimumDocumentFrequency"></param>
+        /// <param name="maximumDocumentFrequency"></param>
+        /// <param name="percentTermsToMatch"></param>
+        /// <param name="minimumTermFrequency"></param>
+        /// <param name="minimumWordLength"></param>
+        /// <param name="maximumWordLength"></param>
+        /// <param name="maximumQueryTerms"></param>
+        /// <param name="stopWords"></param>
+        /// <returns></returns>
         [HttpGet]
-        [Route("api/Search/Highlight")]
-        public IHttpActionResult Highlight(
+        [Route("api/Search/RelatedArticles")]
+        public IHttpActionResult RelatedArticles(
+            int articleId,
+            int minimumDocumentFrequency,
+            int maximumDocumentFrequency,
+            int percentTermsToMatch,
+            int minimumTermFrequency,
+            int minimumWordLength,
+            int maximumWordLength,
+            int maximumQueryTerms,
+            string stopWords)
+        {
+            var article = _client.Search<ArticlePage>()
+                                .Filter(x => x.ContentLink.ID.Match(articleId))
+                                .GetContentResult().FirstOrDefault();
+
+            if (article != null)
+            {
+                var result = _client.Search<ArticlePage>()
+                .MoreLike(article.BodyText.ToString())
+                .MinimumDocumentFrequency(minimumDocumentFrequency)
+                .MaximumDocumentFrequency(maximumDocumentFrequency)
+                .PercentTermsToMatch(percentTermsToMatch)
+                .MinimumTermFrequency(minimumTermFrequency)
+                .MinimumWordLength(minimumWordLength)
+                .MaximumWordLength(maximumWordLength)
+                .MaximumQueryTerms(maximumQueryTerms)
+                .StopWords((!string.IsNullOrEmpty(stopWords) ? stopWords.Split(',') : Enumerable.Empty<string>()))
+                .Filter(x => !x.ContentLink.ID.Match(articleId))
+                .Select(a => new
+                {
+                    Title = a.PageName
+                })
+                .GetResult();
+
+                return Json(result);
+            }
+            return Json(string.Empty);
+        }
+
+        #endregion
+
+        #region Highlighting unified search
+
+        /// <summary>
+        /// Highlight
+        /// http://world.episerver.com/documentation/Items/Developers-Guide/EPiServer-Find/10/DotNET-Client-API/Searching/Highlightning/
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="numberOfFragments"></param>
+        /// <param name="fragmentSize"></param>
+        /// <param name="preTag"></param>
+        /// <param name="postTag"></param>
+        /// <param name="concatentation"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/Search/HighlightUnifiedSearch")]
+        public IHttpActionResult HighlightUnifiedSearch(
             string query,
             int numberOfFragments,
             int fragmentSize,
@@ -369,29 +480,22 @@ namespace Site.Controllers.Api
             var result = _client.UnifiedSearchFor(query)
                 .GetResult(hitSpecification);
 
-            _client.UnifiedSearchFor(query)
-                .GetResult(new HitSpecification
-                {
-                    HighlightExcerpt = true,
-                    HighlightTitle = true,
-                    ExcerptHighlightSpecAction = x =>
-                    {
-                        x.FragmentSize = 2;
-                        x.NumberOfFragments = 200;
-                        x.PreTag = "<em>";
-                        x.PostTag = "</em>";
-                        x.Concatenation = fragments => fragments.Concatenate(" ... ");
-                    },
-                    PreTagForAllHighlights = "<em>",
-                    PostTagForAllHighlights = "</em>"
-                });
-
             return Json(result);
         }
 
+        #endregion
+
+        #region Highlighting typed search
+
+        /// <summary>
+        /// Highlight typed search
+        /// http://world.episerver.com/documentation/Items/Developers-Guide/EPiServer-Find/10/DotNET-Client-API/Searching/Highlightning/
+        /// </summary>
+        /// <param name="query"></param>
+        /// <returns></returns>
         [HttpGet]
-        [Route("api/Search/HighlightTypedSearch")]
-        public IHttpActionResult HighlightTypedSearch(string query)
+        [Route("api/Search/HighlightingTypedSearch")]
+        public IHttpActionResult HighlightingTypedSearch(string query)
         {
             var result = _client.Search<ArticlePage>()
                 .For(query)
@@ -418,6 +522,12 @@ namespace Site.Controllers.Api
 
         #endregion
 
+        #region Others
+
+        /// <summary>
+        /// Get all article types
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("api/Search/AllArticles")]
         public IHttpActionResult AllArticles()
@@ -432,5 +542,7 @@ namespace Site.Controllers.Api
 
             return Json(result);
         }
+
+        #endregion
     }
 }

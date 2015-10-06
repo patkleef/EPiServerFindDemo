@@ -30,10 +30,10 @@ var boostingViewModel = function () {
                 ticks: $.now()
         };
 
-            $.get('/api/Search/Boosting', json, function (data) {
-                var jsonString = JSON.stringify(data, null, 4).toLocaleLowerCase();
+            $.get('/api/Search/AutoBoosting', json, function (data) {
+                var jsonString = JSON.stringify(data, null, 4);
                 self.resultJson(jsonString);
-                self.results(JSON.parse(jsonString));
+                self.results(data);
             });
         }
         else {

@@ -22,24 +22,7 @@
         </div>
     </div>
 
-    <table class="table table-striped" data-bind="visible: results().length > 0">
-        <thead>
-        <tr>
-            <th>Results</th>
-        </tr>
-        </thead>
-        <tbody data-bind="foreach: results">
-        <tr>
-            <td>
-                <strong data-bind="html: title"></strong> - <strong data-bind="text: section"></strong>
-                <p data-bind="html: excerpt"></p>
-                <p>
-                    <i data-bind="text: originalobjecttype"></i>
-                </p>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    @Html.Partial("~/Views/Shared/UnifiedSearchResults.cshtml")
 </div>
 
 @section Scripts

@@ -13,51 +13,6 @@ namespace Site.Admin {
     public partial class ContentMigration {
         
         /// <summary>
-        /// Rss1TextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Rss1TextBox;
-        
-        /// <summary>
-        /// Rss2TextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Rss2TextBox;
-        
-        /// <summary>
-        /// Rss3TextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Rss3TextBox;
-        
-        /// <summary>
-        /// Rss4TextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Rss4TextBox;
-        
-        /// <summary>
-        /// Rss5TextBox control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox Rss5TextBox;
-        
-        /// <summary>
         /// ImportButton control.
         /// </summary>
         /// <remarks>

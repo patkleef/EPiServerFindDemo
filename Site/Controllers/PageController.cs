@@ -2,6 +2,9 @@
 
 namespace Site.Controllers
 {
+    /// <summary>
+    /// Page controller
+    /// </summary>
     public class PageController : Controller
     {
         public ViewResult AutoComplete()

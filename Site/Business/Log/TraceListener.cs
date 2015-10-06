@@ -5,6 +5,9 @@ using log4net;
 
 namespace Site.Business.Log
 {
+    /// <summary>
+    /// Sample used from: https://github.com/episerver/find-tracing-log4net
+    /// </summary>
     public class TraceListener : ITraceListener
     {
         private ILog log = LogManager.GetLogger("EPiServer.Find");

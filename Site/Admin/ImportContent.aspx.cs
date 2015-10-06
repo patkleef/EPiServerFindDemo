@@ -23,6 +23,9 @@ using Company = Site.Business.Content.Company;
 
 namespace Site.Admin
 {
+    /// <summary>
+    /// Content migration
+    /// </summary>
     [GuiPlugIn(DisplayName = "Import content", Description = "", Area = PlugInArea.AdminMenu, Url = "~/Admin/ImportContent.aspx")]
     public partial class ContentMigration : Page
     {
@@ -39,6 +42,11 @@ namespace Site.Admin
             _client = Client.CreateFromConfig();
         }
 
+        /// <summary>
+        /// Reindex object button click event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void ReindexExternObjectButton_Click(object sender, EventArgs e)
         {
             _client.Delete<User>(x => x.GetType().Name.Exists() | !x.GetType().Name.Exists());
@@ -48,6 +56,11 @@ namespace Site.Admin
             ImportCompanies();
         }
 
+        /// <summary>
+        /// Import button click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         protected void ImportButton_Click(object sender, EventArgs e)
         {
             // Clear index
@@ -126,26 +139,7 @@ namespace Site.Admin
         {
             var number = 0;
             var articleList = GetDemoArticlePages(articlesPageId);
-            /*if (!string.IsNullOrEmpty(Rss1TextBox.Text))
-            {
-                articleList.AddRange(GetArticles(Rss1TextBox.Text, articlesPageId));
-            }
-            if (!string.IsNullOrEmpty(Rss2TextBox.Text))
-            {
-                articleList.AddRange(GetArticles(Rss2TextBox.Text, articlesPageId));
-            }
-            if (!string.IsNullOrEmpty(Rss3TextBox.Text))
-            {
-                articleList.AddRange(GetArticles(Rss3TextBox.Text, articlesPageId));
-            }
-            if (!string.IsNullOrEmpty(Rss4TextBox.Text))
-            {
-                articleList.AddRange(GetArticles(Rss4TextBox.Text, articlesPageId));
-            }
-            if (!string.IsNullOrEmpty(Rss5TextBox.Text))
-            {
-                articleList.AddRange(GetArticles(Rss5TextBox.Text, articlesPageId));
-            */
+
             // Save all articles
             foreach (var articlePage in articleList)
             {
@@ -155,38 +149,11 @@ namespace Site.Admin
             return number;
         }
 
-        private DateTime GetRandomDateTime()
-        {
-            var dt1 = new DateTime(2010, 1, 1);
-            var dt2 = new DateTime(2015, 12, 31);
-            int cdayRange = (dt2 - dt1).Days;
-            Random rand = new Random();
-            return dt1.AddDays(rand.NextDouble() * cdayRange);
-        }
-
-        private IEnumerable<ArticlePage> GetArticles(string url, int parentPageId)
-        {
-            var pages = new List<ArticlePage>();
-
-            var rssFeed = (HttpWebRequest)WebRequest.Create(url);
-
-            using (DataSet rssData = new DataSet())
-            {
-                rssData.ReadXml(rssFeed.GetResponse().GetResponseStream());
-
-                foreach (DataRow dataRow in rssData.Tables["item"].Rows)
-                {
-                    var articlePage = _contentRepository.GetDefault<ArticlePage>(new ContentReference(parentPageId));
-                    articlePage.PageName = Convert.ToString(dataRow["title"]);
-                    articlePage.BodyText = new XhtmlString(Convert.ToString(dataRow["description"]));
-                    articlePage.Date = Convert.ToDateTime(dataRow["pubDate"]);
-
-                    pages.Add(articlePage);
-                }
-            }
-            return pages;
-        }
-
+        /// <summary>
+        /// Get demo article pages
+        /// </summary>
+        /// <param name="parentPageId"></param>
+        /// <returns></returns>
         private IEnumerable<ArticlePage> GetDemoArticlePages(int parentPageId)
         {
             //http://www.articlesbase.com/technology-articles/6/

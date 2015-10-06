@@ -21,9 +21,9 @@ var boostingWithFiltersViewModel = function () {
         };
 
             $.get('/api/Search/BoostingWithFilters', json, function (data) {
-                var jsonString = JSON.stringify(data, null, 4).toLocaleLowerCase();
+                var jsonString = JSON.stringify(data, null, 4);
                 self.resultJson(jsonString);
-                self.results(JSON.parse(jsonString));
+                self.results(data);
             });
         }
         else {
