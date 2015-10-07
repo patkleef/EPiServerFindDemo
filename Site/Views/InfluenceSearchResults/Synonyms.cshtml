@@ -12,15 +12,7 @@
         <button type="submit" class="btn btn-default" data-bind="click: searchButtonClicked">Search</button>
     </form>
 
-    <div class="container-separator" data-bind="visible: results().length > 0">
-        <a class="btn btn-primary" role="button" data-toggle="collapse" href="#synonyms-result" aria-expanded="false" aria-controls="synonyms-result">
-            Result
-        </a>
-        <div class="collapse" id="synonyms-result">
-            <div class="well" data-bind="text: resultJson">
-            </div>
-        </div>
-    </div>
+    @Html.Partial("~/Views/Shared/SearchJsonResult.cshtml")
 
     @Html.Partial("~/Views/Shared/UnifiedSearchResults.cshtml")
 </div>

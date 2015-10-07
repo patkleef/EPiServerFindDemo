@@ -52,15 +52,7 @@
         </div>
     </div>
 
-    <div class="container-separator" data-bind="visible: results().length > 0">
-        <a class="btn btn-primary" role="button" data-toggle="collapse" href="#morelike-result" aria-expanded="false" aria-controls="morelike-result">
-            Results
-        </a>
-        <div class="collapse" id="morelike-result">
-            <div class="well json-code" data-bind="text: resultJson">
-            </div>
-        </div>
-    </div>
+    @Html.Partial("~/Views/Shared/SearchJsonResult.cshtml")
 
     <table class="table table-striped" data-bind="visible: results().length > 0">
         <thead>

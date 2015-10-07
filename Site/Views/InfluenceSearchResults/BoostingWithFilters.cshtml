@@ -38,15 +38,7 @@
         </div>
     </div>
 
-    <div class="container-separator" data-bind="visible: results().length > 0">
-        <a class="btn btn-primary" role="button" data-toggle="collapse" href="#boosting-result" aria-expanded="false" aria-controls="boosting-result">
-            Result
-        </a>
-        <div class="collapse" id="boosting-result">
-            <div class="well" data-bind="text: resultJson">
-            </div>
-        </div>
-    </div>
+    @Html.Partial("~/Views/Shared/SearchJsonResult.cshtml")
 
     @Html.Partial("~/Views/Shared/UnifiedSearchResults.cshtml")
 </div>
