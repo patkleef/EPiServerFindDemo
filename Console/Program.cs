@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EPiServer.Find;
+using EPiServer.Find.Api;
 using EPiServer.Find.Api.Facets;
-using Newtonsoft.Json;
+using EPiServer.Find.Api.Querying.Filters;
 
 namespace FindDemo
 {
@@ -29,7 +27,7 @@ namespace FindDemo
             #region Filtering
 
             /************* FILTERING *****************/
-            var query = client.Search<Product>();
+            //var query = client.Search<Product>();
 
             //query = FilterString(query);
 
@@ -37,8 +35,7 @@ namespace FindDemo
 
             //query = FilteringComplexCollections(query);
 
-            query = FiltersCombinedExample(query);
-
+            //query = FiltersCombinedExample(query);
 
             //Console.WriteLine("What sizes should we filter on? (Use ',' to separate.) ");
             //string sizes = Console.ReadLine();
@@ -53,13 +50,17 @@ namespace FindDemo
 
             #region Facets
 
-            query = FacetsExample(query);
+            //query = FacetsExample(query);
+
+            // Geo facets demo
+            var storeQuery = StoresWithin10KfromOsloNorway(client);
+            ShowStoreResults(storeQuery.GetResult());
 
             #endregion
 
-            var result = query.GetResult();
+            //var result = query.GetResult();
 
-            ShowResults(result);
+            //ShowProductResults(result);
         }
 
 
@@ -166,9 +167,10 @@ namespace FindDemo
         #endregion
 
         #region Facet method
+
         /// <summary>
         /// Adds facets for specific parameters that gets aggregated across all results
-        /// NB: Notice the difference in use of Filter and FilterHits. 
+        /// NB: Make sure you know the difference in use of Filter and FilterHits. 
         /// Filters added using Filter are applied BEFORE calculating facets, while FilterHits are added AFTER calculating facets
         /// Filter is better performance wise.
         /// 
@@ -181,27 +183,97 @@ namespace FindDemo
                 .TermsFacetFor(p => p.Sizes) //Size
                 .TermsFacetFor(p => p.Color) //Color
                 .RangeFacetFor(p => p.Price, new NumericRange(20, 50), new NumericRange(51, 100), new NumericRange(101, 500)) //Price
+                //.HistogramFacetFor(p => p.Price, 50) //Price
                 .FilterFacet("Womens", p => p.Gender.Match(Gender.Womens))
                 .FilterFacet("Jeans", p => p.Collection.Match(Collection.Jeans))
                 .FilterFacet("Sold out", p => p.InStock.Match(false)); //Filterfacet
         }
+
+        /// <summary>
+        /// Geographic distance facets: grouping documents with a GeoLocation type property by distance from a location.
+        /// Request the number of stores within 1, 5, and 10 kilometers of a location via the GeoDistanceFacetFor method
+        /// </summary>
+        /// <returns></returns>
+        private static ITypeSearch<Store> StoresWithin10KfromOsloNorway(IClient client)
+        {
+            var locationOfOsloNorway = new GeoLocation(59.916667, 10.75); // Location of Oslo, Norway
+
+            var ranges = new List<NumericRange> {
+                new NumericRange {From = 0, To = 1},
+                new NumericRange {From = 0, To = 5},
+                new NumericRange {From = 0, To = 10}
+            };
+
+            return client.Search<Store>()
+                .Filter(s => s.Location.WithinDistanceFrom(locationOfOsloNorway, new Kilometers(10)))
+                .GeoDistanceFacetFor(s => s.Location, locationOfOsloNorway, ranges.ToArray());
+        }
+
+        #endregion
+
+        #region multi search
+
+
+        
         #endregion
 
 
         /// <summary>
-        /// Helper method that outputs both facets and results
+        /// Helper method that outputs both facets and results for Product search results
         /// </summary>
         /// <param name="res"></param>
-        static void ShowResults(SearchResults<Product> res)
+        static void ShowProductResults(SearchResults<Product> res)
         {
             Console.WriteLine("RESULTS Showing {0} out of {1}. Search took {2} ms", res.Hits.Count(), res.TotalMatching, res.ProcessingInfo.ServerDuration);
             Console.WriteLine("--------------------------------------------------------------");
 
-            #region print facet data
+            PrintFacets(res.Facets);
 
-            if (res.Facets != null)
+            Console.WriteLine();
+            Console.WriteLine("Products found: ");
+            foreach (var p in res.Hits)
             {
-                foreach (var f in res.Facets)
+                Console.WriteLine("\t{0} ({1})", p.Document.Name.ToUpper(), p.Document.VariantCode);
+                Console.WriteLine("\tCollection: {0}", p.Document.Collection);
+                Console.WriteLine("\tPrice: {0}", p.Document.Price);
+                Console.WriteLine("\tSizes: {0}", string.Join(",", p.Document.Sizes.ToArray()));
+                Console.WriteLine("");
+            }
+
+        }
+
+        /// <summary>
+        /// Helper method that outputs both facets and results for Store search results
+        /// </summary>
+        /// <param name="res"></param>
+        static void ShowStoreResults(SearchResults<Store> results)
+        {
+            Console.WriteLine("RESULTS Showing {0} out of {1}. Search took {2} ms", results.Hits.Count(), results.TotalMatching, results.ProcessingInfo.ServerDuration);
+            Console.WriteLine("--------------------------------------------------------------");
+
+            var facet = results.GeoDistanceFacetFor(x => x.Location);
+
+            foreach (var range in facet)
+            {
+                Console.WriteLine("There are " + range.TotalCount + " stores within " + range.To + " km radius of Oslo city center.");
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("Stores found: ");
+            foreach (var store in results)
+            {
+                Console.WriteLine("\tName: {0}", store.Name);
+                Console.WriteLine("\tAddress: {0}", store.Address);
+                Console.WriteLine("");
+            }
+
+        }
+
+        private static void PrintFacets(FacetResults facets)
+        {
+            if (facets != null)
+            {
+                foreach (var f in facets)
                 {
                     Console.WriteLine("Facet: {0}", f.Name);
                     if (f is TermsFacet)
@@ -218,7 +290,8 @@ namespace FindDemo
                     else if (f is StatisticalFacet)
                     {
                         var sf = f as StatisticalFacet;
-                        Console.WriteLine("\tMean: {0}\n\tMax: {1}\n\tMin: {2}\n\tTotal: {3}\n\tVariance: {4}\n", sf.Mean, sf.Max, sf.Min, sf.Total, sf.Variance);
+                        Console.WriteLine("\tMean: {0}\n\tMax: {1}\n\tMin: {2}\n\tTotal: {3}\n\tVariance: {4}\n", sf.Mean,
+                            sf.Max, sf.Min, sf.Total, sf.Variance);
                     }
                     else if (f is NumericRangeFacet)
                     {
@@ -244,23 +317,6 @@ namespace FindDemo
                     Console.WriteLine();
                 }
             }
-
-            #endregion
-
-            Console.WriteLine();
-            Console.WriteLine("Hits: ");
-            foreach (var p in res.Hits)
-            {
-                Console.WriteLine("\t{0} ({1})", p.Document.Name.ToUpper(), p.Document.VariantCode);
-                Console.WriteLine("\tCollection: {0}", p.Document.Collection);
-                Console.WriteLine("\tPrice: {0}", p.Document.Price);
-                Console.WriteLine("\tSizes: {0}", string.Join(",", p.Document.Sizes.ToArray()));
-                Console.WriteLine("\n");
-            }
-
         }
-
-
-        
     }
 }
