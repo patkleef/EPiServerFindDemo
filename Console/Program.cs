@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Text;
 using EPiServer.Find;
 using EPiServer.Find.Api;
 using EPiServer.Find.Api.Facets;
 using EPiServer.Find.Api.Querying.Filters;
+using FindDemo.Models;
 
 namespace FindDemo
 {
@@ -20,7 +24,7 @@ namespace FindDemo
 
             //Importer.ClearIndex(client);
 
-            //Importer.AddDemoContentFromFiles(client);
+            Importer.AddDemoContentFromFiles(client);
 
             #endregion
 
@@ -53,7 +57,7 @@ namespace FindDemo
             //query = FacetsExample(query);
 
             // Geo facets demo
-            var storeQuery = StoresWithin10KfromOsloNorway(client);
+            var storeQuery = StoresWithin10KfromOurLocation(client);
             ShowStoreResults(storeQuery.GetResult());
 
             #endregion
@@ -194,9 +198,9 @@ namespace FindDemo
         /// Request the number of stores within 1, 5, and 10 kilometers of a location via the GeoDistanceFacetFor method
         /// </summary>
         /// <returns></returns>
-        private static ITypeSearch<Store> StoresWithin10KfromOsloNorway(IClient client)
+        private static ITypeSearch<Store> StoresWithin10KfromOurLocation(IClient client)
         {
-            var locationOfOsloNorway = new GeoLocation(59.916667, 10.75); // Location of Oslo, Norway
+            var theCosmopolitanHotelLasVegas = new GeoLocation(36.109308, -115.175291); // Location of The Cosmopolitan Hotel, Las Vegas, Nevada
 
             var ranges = new List<NumericRange> {
                 new NumericRange {From = 0, To = 1},
@@ -205,8 +209,8 @@ namespace FindDemo
             };
 
             return client.Search<Store>()
-                .Filter(s => s.Location.WithinDistanceFrom(locationOfOsloNorway, new Kilometers(10)))
-                .GeoDistanceFacetFor(s => s.Location, locationOfOsloNorway, ranges.ToArray());
+                .Filter(s => s.Location.WithinDistanceFrom(theCosmopolitanHotelLasVegas, new Kilometers(10)))
+                .GeoDistanceFacetFor(s => s.Location, theCosmopolitanHotelLasVegas, ranges.ToArray());
         }
 
         #endregion
@@ -245,7 +249,7 @@ namespace FindDemo
         /// <summary>
         /// Helper method that outputs both facets and results for Store search results
         /// </summary>
-        /// <param name="res"></param>
+        /// <param name="results"></param>
         static void ShowStoreResults(SearchResults<Store> results)
         {
             Console.WriteLine("RESULTS Showing {0} out of {1}. Search took {2} ms", results.Hits.Count(), results.TotalMatching, results.ProcessingInfo.ServerDuration);
@@ -255,7 +259,7 @@ namespace FindDemo
 
             foreach (var range in facet)
             {
-                Console.WriteLine("There are " + range.TotalCount + " stores within " + range.To + " km radius of Oslo city center.");
+                Console.WriteLine("There are " + range.TotalCount + " stores within " + range.To + " km radius of The Cosmopolitan Hotel.");
             }
 
             Console.WriteLine();

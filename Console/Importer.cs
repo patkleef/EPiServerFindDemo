@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using EPiServer.Find;
+using FindDemo.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace FindDemo
 {
@@ -39,15 +41,11 @@ namespace FindDemo
 
             // Stores
             var stores = ParseJsonAsStores("stores.json").ToList();
-            foreach (var store in stores)
-            {
-                store.Location = new GeoLocation(store.Latitude, store.Longitude);
-            }
 
             #endregion
 
             // we are bulk indexing
-            IndexBulks(client, productsToIndex, 100);
+            //IndexBulks(client, productsToIndex, 100);
 
             IndexBulks(client, stores, 100);
         }
@@ -77,7 +75,7 @@ namespace FindDemo
 
             return products;
         }
-
+        
         private static IEnumerable<Store> ParseJsonAsStores(string fileName)
         {
             string path = GetFilePath(fileName);
@@ -123,6 +121,7 @@ namespace FindDemo
                 Console.WriteLine("Phhewww. The data is still intact. Go on querying");
             }
         }
-
     }
+
+   
 }
