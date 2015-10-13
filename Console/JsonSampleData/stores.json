@@ -1,702 +1,172 @@
 [
     {
-      "Name": "Ålesund",
-      "Location": {
-        "lat": 62.4661274,
-        "lon": 6.3557468
-      },
-      "Id": "2ff93cd2-51bb-4bf3-bbfc-5b4bad9b380b",
-      "CountryName": "Norway",
-      "Latitude": "62.4661274",
-      "Longitude": "6.3557468",
-      "Address": "Langelandsveien 51",
-      "PostalCode": "6010",
-      "PostalPlace": "Ålesund"
+      "storeId": 358,
+      "name": "Henderson",
+      "longName": "ShopX - Henderson",
+      "address": "611 Marks St",
+      "address2": "",
+      "city": "Henderson",
+      "region": "NV",
+      "fullPostalCode": "89014",
+      "country": "US",
+      "lat": 36.065033,
+      "lng": -115.03682,
+      "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8",
+      "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
+      "phone": "702-434-5536",
+      "postalCode": "89014"
     },
     {
-      "Name": "Ulset",
-      "Location": {
-        "lat": 60.4645834,
-        "lon": 5.3233926
-      },
-      "Id": "ba23688e-932a-4b04-8dbb-95c1e68e65e2",
-      "CountryName": "Norway",
-      "Latitude": "60.4645834",
-      "Longitude": "5.3233926",
-      "Address": "Åsane Senter 37",
-      "PostalCode": "5116",
-      "PostalPlace": "Ulset"
+      "storeId": 122,
+      "name": "Las Vegas II",
+      "longName": "ShopX - Las Vegas II",
+      "address": "2050 N Rainbow Blvd",
+      "address2": "",
+      "city": "Las Vegas",
+      "region": "NV",
+      "fullPostalCode": "89108",
+      "country": "US",
+      "lat": 36.196686,
+      "lng": -115.24034,
+      "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8",
+      "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
+      "phone": "702-631-4645",
+      "postalCode": "89108"
     },
     {
-      "Name": "Ålesund",
-      "Location": {
-        "lat": 62.465188,
-        "lon": 6.351728
-      },
-      "Id": "9c35d2f8-18c8-4369-ac12-cacd959b15f7",
-      "CountryName": "Norway",
-      "Latitude": "62.465188",
-      "Longitude": "6.351728",
-      "Address": "Moa",
-      "PostalCode": "6018",
-      "PostalPlace": "Ålesund"
+      "storeId": 1044,
+      "name": "SW Las Vegas",
+      "longName": "ShopX - SW Las Vegas",
+      "address": "6950 Arroyo Crossing Pkwy",
+      "address2": "",
+      "city": "Las Vegas",
+      "region": "NV",
+      "fullPostalCode": "89113",
+      "country": "US",
+      "lat": 36.064461,
+      "lng": -115.24371,
+      "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8",
+      "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
+      "phone": "702-260-8707",
+      "postalCode": "89113"
     },
     {
-      "Name": "Tønsberg",
-      "Location": {
-        "lat": 59.269589,
-        "lon": 10.412434
-      },
-      "Id": "543acc31-7755-4a49-83d9-16da851a40fd",
-      "CountryName": "Norway",
-      "Latitude": "59.269589",
-      "Longitude": "10.412434",
-      "Address": null,
-      "PostalCode": "3110",
-      "PostalPlace": "Tønsberg"
+      "storeId": 289,
+      "name": "Maryland Parkway",
+      "longName": "ShopX - Maryland Parkway",
+      "address": "3820 S Maryland Pkwy",
+      "address2": "",
+      "city": "Las Vegas",
+      "region": "NV",
+      "fullPostalCode": "89119",
+      "country": "US",
+      "lat": 36.119545,
+      "lng": -115.13538,
+      "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8",
+      "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
+      "phone": "702-732-8283",
+      "postalCode": "89119"
     },
     {
-      "Name": "Sandefjord",
-      "Location": {
-        "lat": 59.131569,
-        "lon": 10.224356
-      },
-      "Id": "d7861282-8f60-45fa-aae6-d33e174c2281",
-      "CountryName": "Norway",
-      "Latitude": "59.131569",
-      "Longitude": "10.224356",
-      "Address": "Jernbaneallèen 21",
-      "PostalCode": "3210",
-      "PostalPlace": "Sandefjord"
+      "storeId": 1421,
+      "name": "Centennial",
+      "longName": "ShopX - Centennial",
+      "address": "6455 N Decatur Blvd",
+      "address2": "",
+      "city": "Las Vegas",
+      "region": "NV",
+      "fullPostalCode": "89131",
+      "country": "US",
+      "lat": 36.277332,
+      "lng": -115.20852,
+      "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8",
+      "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
+      "phone": "702-655-7599",
+      "postalCode": "89131"
     },
     {
-      "Name": "Sandvika",
-      "Location": {
-        "lat": 59.890111,
-        "lon": 10.520381
-      },
-      "Id": "da923ed3-2f5f-4b96-ac76-8c9f9110d4e2",
-      "CountryName": "Norway",
-      "Latitude": "59.890111",
-      "Longitude": "10.520381",
-      "Address": "Brodtkorpsgate 7",
-      "PostalCode": "1300",
-      "PostalPlace": "Sandvika"
+      "storeId": 542,
+      "name": "Las Vegas",
+      "longName": "ShopX - Las Vegas",
+      "address": "10950 W Charleston Blvd",
+      "address2": "",
+      "city": "Las Vegas",
+      "region": "NV",
+      "fullPostalCode": "89135",
+      "country": "US",
+      "lat": 36.160297,
+      "lng": -115.33474,
+      "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8",
+      "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
+      "phone": "702-228-6492",
+      "postalCode": "89135"
     },
     {
-      "Name": "Oslo",
-      "Location": {
-        "lat": 59.9432416,
-        "lon": 10.8354783
-      },
-      "Id": "9ec192cc-69a2-4517-89a7-b7b0fed85b0e",
-      "CountryName": "Norway",
-      "Latitude": "59.9432416",
-      "Longitude": "10.8354783",
-      "Address": "Erich Mogenssønsvei 38",
-      "PostalCode": "594",
-      "PostalPlace": "Oslo"
+      "storeId": 1783,
+      "name": "East Sparks",
+      "longName": "ShopX - East Sparks",
+      "address": "1315 Scheels Drive",
+      "address2": "",
+      "city": "Sparks",
+      "region": "NV",
+      "fullPostalCode": "89434",
+      "country": "US",
+      "lat": 39.53096,
+      "lng": -119.71764,
+      "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8",
+      "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
+      "phone": "775-352-3439",
+      "postalCode": "89434"
     },
     {
-      "Name": "Sortland",
-      "Location": {
-        "lat": 68.694258,
-        "lon": 15.415901
-      },
-      "Id": "df175c87-a7a1-4d7d-8941-2c1d7905cc99",
-      "CountryName": "Norway",
-      "Latitude": "68.694258",
-      "Longitude": "15.415901",
-      "Address": "Strandgate 24",
-      "PostalCode": "8401",
-      "PostalPlace": "Sortland"
+      "storeId": 1014,
+      "name": "Spanish Springs",
+      "longName": "ShopX - Spanish Springs",
+      "address": "155 Los Altos Pkwy",
+      "address2": "",
+      "city": "Sparks",
+      "region": "NV",
+      "fullPostalCode": "89436",
+      "country": "US",
+      "lat": 39.579536,
+      "lng": -119.7412,
+      "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8",
+      "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
+      "phone": "775-626-8080",
+      "postalCode": "89436"
     },
     {
-      "Name": "Sarpsborg",
-      "Location": {
-        "lat": 59.28333,
-        "lon": 11.10751
-      },
-      "Id": "aa10dad2-6469-45db-b4ec-49a980117c0b",
-      "CountryName": "Norway",
-      "Latitude": "59.28333",
-      "Longitude": "11.10751",
-      "Address": "Roald Amundsensgt. 36",
-      "PostalCode": "1701",
-      "PostalPlace": "Sarpsborg"
+      "storeId": 128,
+      "name": "Reno",
+      "longName": "ShopX - Reno",
+      "address": "5575 S Virginia St",
+      "address2": "",
+      "city": "Reno",
+      "region": "NV",
+      "fullPostalCode": "89502",
+      "country": "US",
+      "lat": 39.475178,
+      "lng": -119.78868,
+      "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8",
+      "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
+      "phone": "775-448-9797",
+      "postalCode": "89502"
     },
     {
-      "Name": "Oslo",
-      "Location": {
-        "lat": 59.962086,
-        "lon": 10.926028
-      },
-      "Id": "b18ec892-4e65-4b8c-b86f-9d39e9a24902",
-      "CountryName": "Norway",
-      "Latitude": "59.962086",
-      "Longitude": "10.926028",
-      "Address": "Stovner Senter 3",
-      "PostalCode": "985",
-      "PostalPlace": "Oslo"
-    },
-    {
-      "Name": "Sandnes",
-      "Location": {
-        "lat": 58.876351,
-        "lon": 5.721814
-      },
-      "Id": "45c1be19-503d-421f-b3dc-625f4d7abf35",
-      "CountryName": "Norway",
-      "Latitude": "58.876351",
-      "Longitude": "5.721814",
-      "Address": "Gamle Stokkavei 1",
-      "PostalCode": "4313",
-      "PostalPlace": "Sandnes"
-    },
-    {
-      "Name": "Orkanger",
-      "Location": {
-        "lat": 63.3022559,
-        "lon": 9.8433862
-      },
-      "Id": "4707c37e-4e13-4d72-b51b-fbd8c3e4b44c",
-      "CountryName": "Norway",
-      "Latitude": "63.3022559",
-      "Longitude": "9.8433862",
-      "Address": "Tverradkomsten 60",
-      "PostalCode": "7300",
-      "PostalPlace": "Orkanger"
-    },
-    {
-      "Name": "Oslo",
-      "Location": {
-        "lat": 59.912463,
-        "lon": 10.752607
-      },
-      "Id": "368a49ad-984d-4473-b20d-b5b2948ccf34",
-      "CountryName": "Norway",
-      "Latitude": "59.912463",
-      "Longitude": "10.752607",
-      "Address": "Stenersgate 1",
-      "PostalCode": "184",
-      "PostalPlace": "Oslo"
-    },
-    {
-      "Name": "Narvik",
-      "Location": {
-        "lat": 68.441258,
-        "lon": 17.435295
-      },
-      "Id": "deb6c6bb-03b4-4db5-8427-98eaf9e2ac65",
-      "CountryName": "Norway",
-      "Latitude": "68.441258",
-      "Longitude": "17.435295",
-      "Address": "Kongensgate  66",
-      "PostalCode": "8514",
-      "PostalPlace": "Narvik"
-    },
-    {
-      "Name": "Førde",
-      "Location": {
-        "lat": 61.4535792,
-        "lon": 5.8496685
-      },
-      "Id": "ae249a5c-6e20-4315-acd7-86cb37eadec8",
-      "CountryName": "Norway",
-      "Latitude": "61.4535792",
-      "Longitude": "5.8496685",
-      "Address": "Elvegården, Naustedalsvegen 1B",
-      "PostalCode": "6800",
-      "PostalPlace": "Førde"
-    },
-    {
-      "Name": "Lierskogen",
-      "Location": {
-        "lat": 59.8112927,
-        "lon": 10.3058456
-      },
-      "Id": "35a5dfb6-da86-49c5-aeb3-4b5ea97c7076",
-      "CountryName": "Norway",
-      "Latitude": "59.8112927",
-      "Longitude": "10.3058456",
-      "Address": "Drammensveien 201",
-      "PostalCode": "3420",
-      "PostalPlace": "Lierskogen"
-    },
-    {
-      "Name": "Rolvsøy",
-      "Location": {
-        "lat": 59.251032,
-        "lon": 10.99229
-      },
-      "Id": "c2a14420-1aac-4ac3-a609-38a1ca653856",
-      "CountryName": "Norway",
-      "Latitude": "59.251032",
-      "Longitude": "10.99229",
-      "Address": "Dikeveien 26",
-      "PostalCode": "1661",
-      "PostalPlace": "Rolvsøy"
-    },
-    {
-      "Name": "Bodø",
-      "Location": {
-        "lat": 67.276772,
-        "lon": 14.417827
-      },
-      "Id": "140405b4-5f19-44d6-bc0c-9473ec58bf83",
-      "CountryName": "Norway",
-      "Latitude": "67.276772",
-      "Longitude": "14.417827",
-      "Address": "Stormyra",
-      "PostalCode": "8008",
-      "PostalPlace": "Bodø"
-    },
-    {
-      "Name": "Namsos",
-      "Location": {
-        "lat": 64.4677041,
-        "lon": 11.4916013
-      },
-      "Id": "949b3611-eda7-4d30-80ce-c7a5000fb04d",
-      "CountryName": "Norway",
-      "Latitude": "64.4677041",
-      "Longitude": "11.4916013",
-      "Address": "Verftsgata 4",
-      "PostalCode": "7801",
-      "PostalPlace": "Namsos"
-    },
-    {
-      "Name": "Bergen",
-      "Location": {
-        "lat": 60.296214,
-        "lon": 5.330215
-      },
-      "Id": "19b2d591-145a-4260-a4bb-5c15709b0eae",
-      "CountryName": "Norway",
-      "Latitude": "60.296214",
-      "Longitude": "5.330215",
-      "Address": "Laguneveien 1",
-      "PostalCode": "5239",
-      "PostalPlace": "Bergen"
-    },
-    {
-      "Name": "Strømmen",
-      "Location": {
-        "lat": 59.947286,
-        "lon": 11.007332
-      },
-      "Id": "b8a7329e-8fee-4ad5-b1d0-1559ccd8ec59",
-      "CountryName": "Norway",
-      "Latitude": "59.947286",
-      "Longitude": "11.007332",
-      "Address": "Støperiveien 5",
-      "PostalCode": "2010",
-      "PostalPlace": "Strømmen"
-    },
-    {
-      "Name": "Straume",
-      "Location": {
-        "lat": 60.3489586,
-        "lon": 5.2918036
-      },
-      "Id": "acb1dee3-260c-4703-8e81-01bbcc499f57",
-      "CountryName": "Norway",
-      "Latitude": "60.3489586",
-      "Longitude": "5.2918036",
-      "Address": "Folke Bernadottesv. 52",
-      "PostalCode": "5147",
-      "PostalPlace": "Straume"
-    },
-    {
-      "Name": "Trondheim",
-      "Location": {
-        "lat": 63.430363,
-        "lon": 10.393717
-      },
-      "Id": "bfb552da-438c-4c52-b7ff-e9a606aac734",
-      "CountryName": "Norway",
-      "Latitude": "63.430363",
-      "Longitude": "10.393717",
-      "Address": "Kongengsgt. 9",
-      "PostalCode": "7013",
-      "PostalPlace": "Trondheim"
-    },
-    {
-      "Name": "Stavanger",
-      "Location": {
-        "lat": 58.9706574,
-        "lon": 5.735337
-      },
-      "Id": "6b95a1ea-3657-4825-803a-a7b7d758a4f9",
-      "CountryName": "Norway",
-      "Latitude": "58.9706574",
-      "Longitude": "5.735337",
-      "Address": "Klubbgaten 5",
-      "PostalCode": "4013",
-      "PostalPlace": "Stavanger"
-    },
-    {
-      "Name": "Stathelle",
-      "Location": {
-        "lat": 59.0450169,
-        "lon": 9.6943961
-      },
-      "Id": "8e18654e-d92f-44e7-8209-f113aa2481a7",
-      "CountryName": "Norway",
-      "Latitude": "59.0450169",
-      "Longitude": "9.6943961",
-      "Address": "Gangveien 10",
-      "PostalCode": "3960",
-      "PostalPlace": "Stathelle"
-    },
-    {
-      "Name": "Stavanger",
-      "Location": {
-        "lat": 58.9829236,
-        "lon": 5.6738134
-      },
-      "Id": "116e2fec-3abf-4c4d-8a3a-6a6f6fbc968e",
-      "CountryName": "Norway",
-      "Latitude": "58.9829236",
-      "Longitude": "5.6738134",
-      "Address": "Tastatunet 4",
-      "PostalCode": "4027",
-      "PostalPlace": "Stavanger"
-    },
-    {
-      "Name": "Oslo",
-      "Location": {
-        "lat": 59.9239185,
-        "lon": 10.7590992
-      },
-      "Id": "63f5397f-9fa5-47c9-8ea9-0072a48307bf",
-      "CountryName": "Norway",
-      "Latitude": "59.9239185",
-      "Longitude": "10.7590992",
-      "Address": "Thorvald Meyers gate 51",
-      "PostalCode": "555",
-      "PostalPlace": "Oslo"
-    },
-    {
-      "Name": "Rasta",
-      "Location": {
-        "lat": 59.918569,
-        "lon": 10.9522242
-      },
-      "Id": "d29baba7-0aa5-408f-bff7-267eb082c8a3",
-      "CountryName": "Norway",
-      "Latitude": "59.918569",
-      "Longitude": "10.9522242",
-      "Address": "Gamleveien 88",
-      "PostalCode": "1476",
-      "PostalPlace": "Rasta"
-    },
-    {
-      "Name": "Porsgrunn",
-      "Location": {
-        "lat": 59.1382891,
-        "lon": 9.6423722
-      },
-      "Id": "3f507bc4-61c2-4852-b94c-20f2672c81f1",
-      "CountryName": "Norway",
-      "Latitude": "59.1382891",
-      "Longitude": "9.6423722",
-      "Address": "Kulltangvegen 70",
-      "PostalCode": "3921",
-      "PostalPlace": "Porsgrunn"
-    },
-    {
-      "Name": "Oslo",
-      "Location": {
-        "lat": 59.913087,
-        "lon": 10.737694
-      },
-      "Id": "f52c5735-7c23-408f-992b-db0a0d1530eb",
-      "CountryName": "Norway",
-      "Latitude": "59.913087",
-      "Longitude": "10.737694",
-      "Address": "Stortingsgaten 10",
-      "PostalCode": "161",
-      "PostalPlace": "Oslo"
-    },
-    {
-      "Name": "Oslo",
-      "Location": {
-        "lat": 59.913846,
-        "lon": 10.747414
-      },
-      "Id": "95c7d240-ad99-4265-9717-531096811750",
-      "CountryName": "Norway",
-      "Latitude": "59.913846",
-      "Longitude": "10.747414",
-      "Address": "Torggata  6",
-      "PostalCode": "181",
-      "PostalPlace": "Oslo"
-    },
-    {
-      "Name": "Ålesund",
-      "Location": {
-        "lat": 62.472164,
-        "lon": 6.15947
-      },
-      "Id": "cb87b767-bac3-412b-8048-1d1ad6fe224b",
-      "CountryName": "Norway",
-      "Latitude": "62.472164",
-      "Longitude": "6.15947",
-      "Address": "Grimmergata 1",
-      "PostalCode": "6002",
-      "PostalPlace": "Ålesund"
-    },
-    {
-      "Name": "Trondheim",
-      "Location": {
-        "lat": 63.4303558,
-        "lon": 10.3990414
-      },
-      "Id": "ceba9558-66d7-44ff-af4a-72ccae54db33",
-      "CountryName": "Norway",
-      "Latitude": "63.4303558",
-      "Longitude": "10.3990414",
-      "Address": "Kongens gate 8",
-      "PostalCode": "7011",
-      "PostalPlace": "Trondheim"
-    },
-    {
-      "Name": "Sogndal",
-      "Location": {
-        "lat": 61.2321658,
-        "lon": 7.1036529
-      },
-      "Id": "d34eb12c-fde5-46bd-8e67-432e75faddcc",
-      "CountryName": "Norway",
-      "Latitude": "61.2321658",
-      "Longitude": "7.1036529",
-      "Address": "Hovevegen 6",
-      "PostalCode": "6856",
-      "PostalPlace": "Sogndal"
-    },
-    {
-      "Name": "Trondheim",
-      "Location": {
-        "lat": 63.432528,
-        "lon": 10.39601
-      },
-      "Id": "846e589a-1b71-4b50-b7ef-5e8141d637ed",
-      "CountryName": "Norway",
-      "Latitude": "63.432528",
-      "Longitude": "10.39601",
-      "Address": "Jomfrugata 5",
-      "PostalCode": "7011",
-      "PostalPlace": "Trondheim"
-    },
-    {
-      "Name": "Karmsund",
-      "Location": {
-        "lat": 59.3773467,
-        "lon": 5.3070997
-      },
-      "Id": "1216bb13-d65c-4b13-b133-4f85cc5da794",
-      "CountryName": "Norway",
-      "Latitude": "59.3773467",
-      "Longitude": "5.3070997",
-      "Address": "Austbøveien 16",
-      "PostalCode": "5542",
-      "PostalPlace": "Karmsund"
-    },
-    {
-      "Name": "Asker",
-      "Location": {
-        "lat": 59.835142,
-        "lon": 10.433242
-      },
-      "Id": "d33d02bc-40da-4bd1-bc14-9174f2886e2a",
-      "CountryName": "Norway",
-      "Latitude": "59.835142",
-      "Longitude": "10.433242",
-      "Address": "Knut Askersvei 26",
-      "PostalCode": "1383",
-      "PostalPlace": "Asker"
-    },
-    {
-      "Name": "Oslo",
-      "Location": {
-        "lat": 59.9034164,
-        "lon": 10.8211958
-      },
-      "Id": "2cb06144-80a0-4a54-868a-0db865bb97aa",
-      "CountryName": "Norway",
-      "Latitude": "59.9034164",
-      "Longitude": "10.8211958",
-      "Address": "Østensjøveien 79",
-      "PostalCode": "667",
-      "PostalPlace": "Oslo"
-    },
-    {
-      "Name": "Kolbotn",
-      "Location": {
-        "lat": 59.8099435,
-        "lon": 10.7992378
-      },
-      "Id": "04a380eb-aa24-4593-8f0f-6e3eca745618",
-      "CountryName": "Norway",
-      "Latitude": "59.8099435",
-      "Longitude": "10.7992378",
-      "Address": "Strandliveien 6",
-      "PostalCode": "1410",
-      "PostalPlace": "Kolbotn"
-    },
-    {
-      "Name": "Askim",
-      "Location": {
-        "lat": 59.5828007,
-        "lon": 11.1658602
-      },
-      "Id": "c6802001-e166-41b4-9793-c260310078e4",
-      "CountryName": "Norway",
-      "Latitude": "59.5828007",
-      "Longitude": "11.1658602",
-      "Address": "Eidsbergveien 7",
-      "PostalCode": "1830",
-      "PostalPlace": "Askim"
-    },
-    {
-      "Name": "Halden",
-      "Location": {
-        "lat": 59.1215105,
-        "lon": 11.3833722
-      },
-      "Id": "cd87f787-7889-46c0-8f2d-3e0b0009abf5",
-      "CountryName": "Norway",
-      "Latitude": "59.1215105",
-      "Longitude": "11.3833722",
-      "Address": "Walkers gate  4",
-      "PostalCode": "1771",
-      "PostalPlace": "Halden"
-    },
-    {
-      "Name": "Arendal",
-      "Location": {
-        "lat": 58.4588415,
-        "lon": 8.7617674
-      },
-      "Id": "677d4349-3eb0-410c-98f4-0fcb633e35fa",
-      "CountryName": "Norway",
-      "Latitude": "58.4588415",
-      "Longitude": "8.7617674",
-      "Address": "Vesterveien 6",
-      "PostalCode": "4836",
-      "PostalPlace": "Arendal"
-    },
-    {
-      "Name": "Oslo",
-      "Location": {
-        "lat": 59.9139371,
-        "lon": 10.7432154
-      },
-      "Id": "89ef61e3-607f-4092-baf2-587682d61053",
-      "CountryName": "Norway",
-      "Latitude": "59.9139371",
-      "Longitude": "10.7432154",
-      "Address": "Grensen 13",
-      "PostalCode": "159",
-      "PostalPlace": "Oslo"
-    },
-    {
-      "Name": "Oslo",
-      "Location": {
-        "lat": 59.912013442262165,
-        "lon": 10.745660727508493
-      },
-      "Id": "da95dc58-2713-46ef-89a3-a95f3c1c942b",
-      "CountryName": "Norway",
-      "Latitude": "59.912013442262165",
-      "Longitude": "10.745660727508493",
-      "Address": "Karl Johans gate 12",
-      "PostalCode": "154",
-      "PostalPlace": "Oslo"
-    },
-    {
-      "Name": "Haugesund",
-      "Location": {
-        "lat": 59.3951807,
-        "lon": 5.3317479
-      },
-      "Id": "cf69b799-8a93-4b14-a1c1-7fd438262cdb",
-      "CountryName": "Norway",
-      "Latitude": "59.3951807",
-      "Longitude": "5.3317479",
-      "Address": "Longhammarveien 27",
-      "PostalCode": "5536",
-      "PostalPlace": "Haugesund"
-    },
-    {
-      "Name": "Kristiansand",
-      "Location": {
-        "lat": 58.1454192,
-        "lon": 7.9937641
-      },
-      "Id": "987fdb15-b894-41fd-8b2f-2f2a78a7a490",
-      "CountryName": "Norway",
-      "Latitude": "58.1454192",
-      "Longitude": "7.9937641",
-      "Address": "Rådhusgata 7-9",
-      "PostalCode": "4611",
-      "PostalPlace": "Kristiansand"
-    },
-    {
-      "Name": "Tiller",
-      "Location": {
-        "lat": 63.3619123,
-        "lon": 10.3789421
-      },
-      "Id": "75087f94-623a-4d6b-aa51-4393ddd92ee3",
-      "CountryName": "Norway",
-      "Latitude": "63.3619123",
-      "Longitude": "10.3789421",
-      "Address": "Østre Rosten 28",
-      "PostalCode": "7075",
-      "PostalPlace": "Tiller"
-    },
-    {
-      "Name": "Tromsø",
-      "Location": {
-        "lat": 69.650024,
-        "lon": 18.955785
-      },
-      "Id": "bb4d84b4-590f-44fe-945b-1ca12877a7e9",
-      "CountryName": "Norway",
-      "Latitude": "69.650024",
-      "Longitude": "18.955785",
-      "Address": "Storgt. 74",
-      "PostalCode": "9008",
-      "PostalPlace": "Tromsø"
-    },
-    {
-      "Name": "Tønsberg",
-      "Location": {
-        "lat": 59.2672786,
-        "lon": 10.4076936
-      },
-      "Id": "243a84d0-1198-410c-b5c0-d8b887a9e8a0",
-      "CountryName": "Norway",
-      "Latitude": "59.2672786",
-      "Longitude": "10.4076936",
-      "Address": "Storgaten 32",
-      "PostalCode": "3126",
-      "PostalPlace": "Tønsberg"
-    },
-    {
-      "Name": "Steinkjer",
-      "Location": {
-        "lat": 64.011245,
-        "lon": 11.49163
-      },
-      "Id": "1d313f5e-7c6b-4aa9-af2a-1a2a2fe06292",
-      "CountryName": "Norway",
-      "Latitude": "64.011245",
-      "Longitude": "11.49163",
-      "Address": "Sjøfartsgata  6",
-      "PostalCode": "7725",
-      "PostalPlace": "Steinkjer"
+      "storeId": 850,
+      "name": "Carson Valley",
+      "longName": "ShopX - Carson Valley",
+      "address": "911 Topsy Ln #250",
+      "address2": "",
+      "city": "Carson City",
+      "region": "NV",
+      "fullPostalCode": "89705",
+      "country": "US",
+      "lat": 39.10384,
+      "lng": -119.77578,
+      "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8",
+      "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
+      "phone": "775-267-3523",
+      "postalCode": "89705"
     }
   ]

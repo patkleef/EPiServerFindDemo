@@ -55,19 +55,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Importer.cs" />
-    <Compile Include="Product.cs" />
+    <Compile Include="Models\Product.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Store.cs" />
+    <Compile Include="Models\Store.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="JsonSampleData\cashualshirts.json" />
+    <None Include="JsonSampleData\boxers.json" />
     <None Include="JsonSampleData\jeans.json" />
     <None Include="JsonSampleData\knitwear.json" />
     <None Include="JsonSampleData\shirts.json" />
-    <None Include="JsonSampleData\jackets.json" />
     <None Include="JsonSampleData\stores.json" />
+    <None Include="JsonSampleData\thirts.json" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
