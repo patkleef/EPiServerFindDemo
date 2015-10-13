@@ -54,18 +54,7 @@
 
     @Html.Partial("~/Views/Shared/SearchJsonResult.cshtml")
 
-    <table class="table table-striped" data-bind="visible: results().length > 0">
-        <thead>
-        <tr>
-            <th>Results</th>
-        </tr>
-        </thead>
-        <tbody data-bind="foreach: results">
-        <tr>
-            <td data-bind="text: title"></td>
-        </tr>
-        </tbody>
-    </table>
+    @Html.Partial("~/Views/Shared/TypedSearchResults.cshtml")
 </div>
 
 @section Scripts

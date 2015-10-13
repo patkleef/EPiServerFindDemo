@@ -49,10 +49,11 @@ namespace Site.Controllers.Api
         {
             var hitSpecification = new HitSpecification();
 
-            var result = _client.UnifiedSearchFor(query).Track()
+            var result = _client.UnifiedSearchFor(query)
                 .Take(100)
+                .StatisticsTrack()
                 .GetResult(hitSpecification, false);
-            
+
             return Json(result);
         }
 
@@ -403,7 +404,7 @@ namespace Site.Controllers.Api
             if (article != null)
             {
                 var result = _client.Search<ArticlePage>()
-                .MoreLike(article.BodyText.ToString())
+                .MoreLike(article.PageName)
                 .MinimumDocumentFrequency(minimumDocumentFrequency)
                 .MaximumDocumentFrequency(maximumDocumentFrequency)
                 .PercentTermsToMatch(percentTermsToMatch)
@@ -415,8 +416,10 @@ namespace Site.Controllers.Api
                 .Filter(x => !x.ContentLink.ID.Match(articleId))
                 .Select(a => new
                 {
-                    Title = a.PageName
+                    Title = a.PageName,
+                    Url = _urlResolver.GetUrl(a.ContentLink)
                 })
+                .Take(100)
                 .GetResult();
 
                 return Json(result);
@@ -538,6 +541,7 @@ namespace Site.Controllers.Api
                     Id = a.ContentLink.ID,
                     Title = a.PageName
                 })
+                .Take(100)
                 .GetResult();
 
             return Json(result);

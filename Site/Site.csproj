@@ -354,6 +354,7 @@
     <Content Include="Views\InfluenceSearchResults\BoostingWithFilters.cshtml" />
     <Content Include="Views\Shared\UnifiedSearchResults.cshtml" />
     <Content Include="Views\Shared\SearchJsonResult.cshtml" />
+    <Content Include="Views\Shared\TypedSearchResults.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
