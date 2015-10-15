@@ -14,7 +14,7 @@
         "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
         "phone": "702-434-5536",
         "postalCode": "89014",
-        "departments": [ 1, 2 ]
+        "departments": [ 0, 1 ]
     },
     {
         "storeId": 122,
@@ -31,137 +31,145 @@
         "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
         "phone": "702-631-4645",
         "postalCode": "89108",
+        "departments": [ 0, 1 ]
+    },
+    {
+        "storeId": 1044,
+        "name": "ShopX - SW Las Vegas",
+        "address": "6950 Arroyo Crossing Pkwy",
+        "address2": "",
+        "city": "Las Vegas",
+        "region": "NV",
+        "fullPostalCode": "89113",
+        "country": "US",
+        "lat": 36.064461,
+        "lng": -115.24371,
+        "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8",
+        "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
+        "phone": "702-260-8707",
+        "postalCode": "89113",
+        "departments": [ 0, 1 ]
+    },
+    {
+        "storeId": 289,
+        "name": "ShopX Men Only- Maryland Parkway",
+        "address": "3820 S Maryland Pkwy",
+        "address2": "",
+        "city": "Las Vegas",
+        "region": "NV",
+        "fullPostalCode": "89119",
+        "country": "US",
+        "lat": 36.119545,
+        "lng": -115.13538,
+        "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8",
+        "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
+        "phone": "702-732-8283",
+        "postalCode": "89119",
         "departments": [ 1 ]
     },
     {
-      "storeId": 1044,
-      "name": "ShopX - SW Las Vegas",
-      "address": "6950 Arroyo Crossing Pkwy",
-      "address2": "",
-      "city": "Las Vegas",
-      "region": "NV",
-      "fullPostalCode": "89113",
-      "country": "US",
-      "lat": 36.064461,
-      "lng": -115.24371,
-      "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8",
-      "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
-      "phone": "702-260-8707",
-      "postalCode": "89113"
+        "storeId": 1421,
+        "name": "ShopX - Centennial",
+        "address": "6455 N Decatur Blvd",
+        "address2": "",
+        "city": "Las Vegas",
+        "region": "NV",
+        "fullPostalCode": "89131",
+        "country": "US",
+        "lat": 36.277332,
+        "lng": -115.20852,
+        "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8",
+        "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
+        "phone": "702-655-7599",
+        "postalCode": "89131",
+        "departments": [ 0, 1 ]
     },
     {
-      "storeId": 289,
-      "name": "ShopX - Maryland Parkway",
-      "address": "3820 S Maryland Pkwy",
-      "address2": "",
-      "city": "Las Vegas",
-      "region": "NV",
-      "fullPostalCode": "89119",
-      "country": "US",
-      "lat": 36.119545,
-      "lng": -115.13538,
-      "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8",
-      "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
-      "phone": "702-732-8283",
-      "postalCode": "89119"
+        "storeId": 542,
+        "name": "ShopX Women Only - Las Vegas",
+        "address": "10950 W Charleston Blvd",
+        "address2": "",
+        "city": "Las Vegas",
+        "region": "NV",
+        "fullPostalCode": "89135",
+        "country": "US",
+        "lat": 36.160297,
+        "lng": -115.33474,
+        "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8",
+        "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
+        "phone": "702-228-6492",
+        "postalCode": "89135",
+        "departments": [ 0 ]
     },
     {
-      "storeId": 1421,
-      "name": "ShopX - Centennial",
-      "address": "6455 N Decatur Blvd",
-      "address2": "",
-      "city": "Las Vegas",
-      "region": "NV",
-      "fullPostalCode": "89131",
-      "country": "US",
-      "lat": 36.277332,
-      "lng": -115.20852,
-      "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8",
-      "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
-      "phone": "702-655-7599",
-      "postalCode": "89131"
+        "storeId": 1783,
+        "name": "ShopX - East Sparks",
+        "address": "1315 Scheels Drive",
+        "address2": "",
+        "city": "Sparks",
+        "region": "NV",
+        "fullPostalCode": "89434",
+        "country": "US",
+        "lat": 39.53096,
+        "lng": -119.71764,
+        "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8",
+        "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
+        "phone": "775-352-3439",
+        "postalCode": "89434",
+        "departments": [ 0, 1 ]
     },
     {
-      "storeId": 542,
-      "name": "ShopX - Las Vegas",
-      "address": "10950 W Charleston Blvd",
-      "address2": "",
-      "city": "Las Vegas",
-      "region": "NV",
-      "fullPostalCode": "89135",
-      "country": "US",
-      "lat": 36.160297,
-      "lng": -115.33474,
-      "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8",
-      "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
-      "phone": "702-228-6492",
-      "postalCode": "89135"
+        "storeId": 1014,
+        "name": "ShopX - Spanish Springs",
+        "address": "155 Los Altos Pkwy",
+        "address2": "",
+        "city": "Sparks",
+        "region": "NV",
+        "fullPostalCode": "89436",
+        "country": "US",
+        "lat": 39.579536,
+        "lng": -119.7412,
+        "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8",
+        "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
+        "phone": "775-626-8080",
+        "postalCode": "89436",
+        "departments": [ 0, 1 ]
     },
     {
-      "storeId": 1783,
-      "name": "ShopX - East Sparks",
-      "address": "1315 Scheels Drive",
-      "address2": "",
-      "city": "Sparks",
-      "region": "NV",
-      "fullPostalCode": "89434",
-      "country": "US",
-      "lat": 39.53096,
-      "lng": -119.71764,
-      "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8",
-      "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
-      "phone": "775-352-3439",
-      "postalCode": "89434"
+        "storeId": 128,
+        "name": "ShopX - Reno",
+        "address": "5575 S Virginia St",
+        "address2": "",
+        "city": "Reno",
+        "region": "NV",
+        "fullPostalCode": "89502",
+        "country": "US",
+        "lat": 39.475178,
+        "lng": -119.78868,
+        "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8",
+        "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
+        "phone": "775-448-9797",
+        "postalCode": "89502",
+        "departments": [ 0, 1 ]
     },
     {
-      "storeId": 1014,
-      "name": "ShopX - Spanish Springs",
-      "address": "155 Los Altos Pkwy",
-      "address2": "",
-      "city": "Sparks",
-      "region": "NV",
-      "fullPostalCode": "89436",
-      "country": "US",
-      "lat": 39.579536,
-      "lng": -119.7412,
-      "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8",
-      "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
-      "phone": "775-626-8080",
-      "postalCode": "89436"
+        "storeId": 850,
+        "name": "ShopX - Carson Valley",
+        "address": "911 Topsy Ln #250",
+        "address2": "",
+        "city": "Carson City",
+        "region": "NV",
+        "fullPostalCode": "89705",
+        "country": "US",
+        "lat": 39.10384,
+        "lng": -119.77578,
+        "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8",
+        "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
+        "phone": "775-267-3523",
+        "postalCode": "89705",
+        "departments": [ 0, 1 ]
     },
     {
-      "storeId": 128,
-      "name": "ShopX - Reno",
-      "address": "5575 S Virginia St",
-      "address2": "",
-      "city": "Reno",
-      "region": "NV",
-      "fullPostalCode": "89502",
-      "country": "US",
-      "lat": 39.475178,
-      "lng": -119.78868,
-      "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8",
-      "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
-      "phone": "775-448-9797",
-      "postalCode": "89502"
-    },
-    {
-      "storeId": 850,
-      "name": "ShopX - Carson Valley",
-      "address": "911 Topsy Ln #250",
-      "address2": "",
-      "city": "Carson City",
-      "region": "NV",
-      "fullPostalCode": "89705",
-      "country": "US",
-      "lat": 39.10384,
-      "lng": -119.77578,
-      "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8",
-      "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
-      "phone": "775-267-3523",
-      "postalCode": "89705"
-    },
-      {
         "storeId": 393,
         "name": "ShopX - West Hollywood",
         "address": "1015 N La Brea Ave",
@@ -175,9 +183,10 @@
         "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 11-8",
         "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 11am-8pm",
         "phone": "323-883-0219",
-        "postalCode": "90038"
-      },
-      {
+        "postalCode": "90038",
+        "departments": [ 0, 1 ]
+    },
+    {
         "storeId": 183,
         "name": "ShopX - Atwater Village",
         "address": "2909 Los Feliz Blvd",
@@ -191,9 +200,10 @@
         "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 11-8",
         "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 11am-8pm",
         "phone": "323-912-9288",
-        "postalCode": "90039"
-      },
-      {
+        "postalCode": "90039",
+        "departments": [ 0, 1 ]
+    },
+    {
         "storeId": 109,
         "name": "ShopX - West LA",
         "address": "11301 W Pico Blvd",
@@ -207,9 +217,10 @@
         "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 11-8",
         "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 11am-8pm",
         "phone": "310-268-9190",
-        "postalCode": "90064"
-      },
-      {
+        "postalCode": "90064",
+        "departments": [ 0, 1 ]
+    },
+    {
         "storeId": 1432,
         "name": "ShopX - Compton",
         "address": "230 Towne Center Dr",
@@ -223,9 +234,10 @@
         "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 11-8",
         "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 11am-8pm",
         "phone": "310-884-6822",
-        "postalCode": "90220"
-      },
-      {
+        "postalCode": "90220",
+        "departments": [ 0, 1 ]
+    },
+    {
         "storeId": 1510,
         "name": "ShopX - Culver City Westfield Mall",
         "address": "6000 Sepulveda Blvd.",
@@ -239,9 +251,10 @@
         "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 11-8",
         "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 11am-8pm",
         "phone": "310-636-1299",
-        "postalCode": "90230"
-      },
-      {
+        "postalCode": "90230",
+        "departments": [ 0, 1 ]
+    },
+    {
         "storeId": 179,
         "name": "ShopX - Culver City",
         "address": "10799 Washington Blvd",
@@ -255,11 +268,12 @@
         "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 11-8",
         "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 11am-8pm",
         "phone": "310-204-2147",
-        "postalCode": "90232"
-      },
-      {
+        "postalCode": "90232",
+        "departments": [ 0, 1 ]
+    },
+    {
         "storeId": 872,
-        "name": "ShopX - Downey",
+        "name": "ShopX Men Only- Downey",
         "address": "12118 Lakewood Blvd",
         "address2": "",
         "city": "Downey",
@@ -271,9 +285,10 @@
         "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 11-8",
         "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 11am-8pm",
         "phone": "562-803-9850",
-        "postalCode": "90242"
-      },
-      {
+        "postalCode": "90242",
+        "departments": [ 1 ]
+    },
+    {
         "storeId": 1011,
         "name": "ShopX - Sepulveda and Rosecrans",
         "address": "740 S Sepulveda Blvd",
@@ -287,9 +302,10 @@
         "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 11-8",
         "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 11am-8pm",
         "phone": "310-416-9937",
-        "postalCode": "90245"
-      },
-      {
+        "postalCode": "90245",
+        "departments": [ 0, 1 ]
+    },
+    {
         "storeId": 104,
         "name": "ShopX -Hawthorne",
         "address": "5000 W 147th St",
@@ -303,9 +319,10 @@
         "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 11-8",
         "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 11am-8pm",
         "phone": "310-644-9312",
-        "postalCode": "90250"
-      },
-      {
+        "postalCode": "90250",
+        "departments": [ 0, 1 ]
+    },
+    {
         "storeId": 107,
         "name": "ShopX - Torrance",
         "address": "3675 Pacific Coast Hwy",
@@ -319,9 +336,10 @@
         "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 11-8",
         "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 11am-8pm",
         "phone": "310-791-1186",
-        "postalCode": "90505"
-      },
-      {
+        "postalCode": "90505",
+        "departments": [ 0, 1 ]
+    },
+    {
         "storeId": 1537,
         "name": "ShopX - Montebello",
         "address": "2415 Via Campo",
@@ -335,9 +353,10 @@
         "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 10-8",
         "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 10am-8pm",
         "phone": "323-725-5259",
-        "postalCode": "90640"
-      },
-      {
+        "postalCode": "90640",
+        "departments": [ 0, 1 ]
+    },
+    {
         "storeId": 117,
         "name": "ShopX - Cerritos",
         "address": "12989 Park Plaza Dr ",
@@ -351,9 +370,10 @@
         "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 11-8",
         "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 11am-8pm",
         "phone": "562-402-1555",
-        "postalCode": "90703"
-      },
-      {
+        "postalCode": "90703",
+        "departments": [ 0, 1 ]
+    },
+    {
         "storeId": 127,
         "name": "ShopX - Lakewood",
         "address": "5101 Clark Ave",
@@ -368,8 +388,8 @@
         "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 11am-8pm",
         "phone": "562-529-6500",
         "postalCode": "90712"
-      },
-      {
+    },
+    {
         "storeId": 1119,
         "name": "ShopX - Signal Hill",
         "address": "2701 Cherry Ave",
@@ -383,9 +403,10 @@
         "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 11-8",
         "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 11am-8pm",
         "phone": "562-426-6036",
-        "postalCode": "90755"
-      },
-      {
+        "postalCode": "90755",
+        "departments": [ 0, 1 ]
+    },
+    {
         "storeId": 1009,
         "name": "ShopX - Long Beach",
         "address": "6310 E Pacific Coast Hwy",
@@ -399,9 +420,10 @@
         "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 11-8",
         "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 11am-8pm",
         "phone": "562-431-5026",
-        "postalCode": "90803"
-      },
-      {
+        "postalCode": "90803",
+        "departments": [ 0, 1 ]
+    },
+    {
         "storeId": 1782,
         "name": "ShopX Duarte",
         "address": "1470 Mountain Ave.",
@@ -415,9 +437,10 @@
         "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 11-8",
         "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 11am-8pm",
         "phone": "626-305-1839",
-        "postalCode": "91010"
-      },
-      {
+        "postalCode": "91010",
+        "departments": [ 0, 1 ]
+    },
+    {
         "storeId": 125,
         "name": "ShopX - Pasadena",
         "address": "3415 E Foothill Blvd",
@@ -431,9 +454,10 @@
         "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 11-8",
         "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 11am-8pm",
         "phone": "626-351-9516",
-        "postalCode": "91107"
-      },
-      {
+        "postalCode": "91107",
+        "departments": [ 0, 1 ]
+    },
+    {
         "storeId": 116,
         "name": "ShopX - Woodland Hills",
         "address": "21601 Victory Blvd",
@@ -447,9 +471,10 @@
         "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 11-8",
         "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 11am-8pm",
         "phone": "818-713-1007",
-        "postalCode": "91303"
-      },
-      {
+        "postalCode": "91303",
+        "departments": [ 0, 1 ]
+    },
+    {
         "storeId": 1180,
         "name": "ShopX - Northridge",
         "address": "19350 #B Nordhoff Way",
@@ -463,9 +488,10 @@
         "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 11-8",
         "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 11am-8pm",
         "phone": "818-727-2035",
-        "postalCode": "91324"
-      },
-      {
+        "postalCode": "91324",
+        "departments": [ 0, 1 ]
+    },
+    {
         "storeId": 130,
         "name": "ShopX - Porter Ranch",
         "address": "19929 Rinaldi St",
@@ -479,6 +505,7 @@
         "hours": "Mon: 10-9; Tue: 10-9; Wed: 10-9; Thurs: 10-9; Fri: 10-9; Sat: 10-9; Sun: 11-8",
         "hoursAmPm": "Mon: 10am-9pm; Tue: 10am-9pm; Wed: 10am-9pm; Thurs: 10am-9pm; Fri: 10am-9pm; Sat: 10am-9pm; Sun: 11am-8pm",
         "phone": "818-363-9304",
-        "postalCode": "91326"
-  	}
-  ]
+        "postalCode": "91326",
+        "departments": [ 0, 1 ]
+    }
+]

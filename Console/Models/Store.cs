@@ -1,11 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.Serialization;
+﻿using System.Diagnostics;
 using EPiServer.Find;
-using EPiServer.Find.Helpers;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Linq;
 
 namespace FindDemo.Models
 {
@@ -14,7 +8,6 @@ namespace FindDemo.Models
         [Id]
         public int StoreId { get; set; }
         public string Name { get; set; }
-        public string LongName { get; set; }
         public string Address { get; set; }
         public string Address2 { get; set; }
         public string City { get; set; }
@@ -27,9 +20,16 @@ namespace FindDemo.Models
         public string HoursAmPm { get; set; }
         public string Phone { get; set; }
         public string PostalCode { get; set; }
-        public GeoLocation Location => new GeoLocation(Lat,Lng);
+        public Gender[] Departments { get; set; }
 
-        
+        public GeoLocation Location
+        {
+            get
+            {
+                return new GeoLocation(Lat, Lng);
+            }
+        }
+
 
         //public string SearchTitle
         //{

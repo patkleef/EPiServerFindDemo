@@ -7,6 +7,7 @@ using System.Text;
 using EPiServer.Find;
 using EPiServer.Find.Api;
 using EPiServer.Find.Api.Facets;
+using EPiServer.Find.Api.Ids;
 using EPiServer.Find.Api.Querying.Filters;
 using FindDemo.Models;
 
@@ -24,13 +25,14 @@ namespace FindDemo
 
             //Importer.ClearIndex(client);
 
-            Importer.AddDemoContentFromFiles(client);
+            //Importer.AddDemoContentFromFiles(client);
 
             #endregion
 
             #region Filtering
 
             /************* FILTERING *****************/
+
             //var query = client.Search<Product>();
 
             //query = FilterString(query);
@@ -41,12 +43,15 @@ namespace FindDemo
 
             //query = FiltersCombinedExample(query);
 
+
             //Console.WriteLine("What sizes should we filter on? (Use ',' to separate.) ");
             //string sizes = Console.ReadLine();
             //if (string.IsNullOrEmpty(sizes) == false)
             //{
             //    query = FilterUsingBuildFilter(client, query, sizes.Split(',').ToList<string>());
             //}
+
+            ProjectIfYouCan(client);
 
             /************* FILTERING END *****************/
 
@@ -57,21 +62,26 @@ namespace FindDemo
             //query = FacetsExample(query);
 
             // Geo facets demo
-            var storeQuery = StoresWithin10KfromOurLocation(client);
-            ShowStoreResults(storeQuery.GetResult());
+            //var storeQuery = StoresWithin10KfromOurLocation(client);
+            //ShowStoreResults(storeQuery.GetResult());
 
             #endregion
 
-            //var result = query.GetResult();
+            // Remember to cache your queries!
+            //var result = query.StaticallyCacheFor(TimeSpan.FromMinutes(10)).GetResult();
 
             //ShowProductResults(result);
+
+            // Cache demo
+            //ShowCachingWithDateTimeInQuery(client);
         }
 
+       
 
         #region Filter methods
 
         /// <summary>
-        /// Example: Starts with "Blizzard", use Name field
+        /// Example: Starts with "Soft", use Name field
         /// Match, Prefix, AnyWordBeginsWith
         /// The AnyWordBeginsWith method matches strings which contains any word that starts with a given string,
         /// making it suitable for autocomplete. It does not case about casing.
@@ -82,7 +92,7 @@ namespace FindDemo
         /// <returns></returns>
         private static ITypeSearch<Product> FilterString(ITypeSearch<Product> q)
         {
-            return q.Filter(p => p.Name.PrefixCaseInsensitive("Blizzard"));
+            return q.Filter(p => p.Name.PrefixCaseInsensitive("Soft"));
         }
 
         /// <summary>
@@ -127,8 +137,6 @@ namespace FindDemo
         }
 
 
-
-
         /// <summary>
         /// Example: All womens jeans that are not sold out, order by price, then by name
         /// Using filters on Enum, collections and boolean
@@ -148,6 +156,7 @@ namespace FindDemo
                 .ThenBy(p => p.Name);
         }
 
+
         /// <summary>
         /// Sometimes, especially when reacting to user input filter has to be dynamically composed.
         /// For this we can use the BuildFilter method.        
@@ -166,6 +175,78 @@ namespace FindDemo
             }
 
             return q.Filter(sizeFilter);
+        }
+
+        /// <summary>
+        /// Example: Find sizes and stock for product named 'Mio cardigan'
+        /// </summary>
+        /// <param name="client"></param>
+        private static void ProjectIfYouCan(IClient client)
+        {
+            var result = client.Search<Product>()
+                .Filter(p => p.Name.Match("Mio cardigan"))
+                .Select(r => new
+                {
+                    Id = r.VariantCode,
+                    Skus = r.Skus
+                })
+                .GetResult();
+
+            foreach (var hit in result)
+            {
+                Console.WriteLine(hit.Id);
+                foreach (var sku in hit.Skus)
+                {
+                    Console.WriteLine("\t Size {0} Stock {1}", sku.Size, sku.Stock);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="client"></param>
+        private static void ShowCachingWithDateTimeInQuery(IClient client)
+        {
+            int totalTimeMs = 0;
+
+            Console.WriteLine("String first batch....");
+
+            for (int i = 0; i < 20; i++)
+            {
+                var resultOne = client.Search<Product>()
+                .Filter(p => p.Collection.Match(Collection.Jeans))
+                .Filter(p => p.Gender.Match(Gender.Womens))
+                .Filter(p => p.InStock.Match(true))
+                .StaticallyCacheFor(TimeSpan.FromMinutes(10))
+                .GetResult();
+                totalTimeMs += resultOne.ProcessingInfo.ServerDuration;
+                Console.WriteLine("\tFound {0} items. Search took {1} ms", resultOne.TotalMatching, resultOne.ProcessingInfo.ServerDuration);
+            }
+
+            Console.WriteLine("Total time {0} ms", totalTimeMs);
+
+            totalTimeMs = 0;
+            Console.WriteLine("********************");
+
+            Console.WriteLine("String second batch....");
+
+            for (int i = 0; i < 20; i++)
+            {
+                var result = client.Search<Product>()
+                .Filter(p => p.Collection.Match(Collection.Jeans))
+                .Filter(p => p.Gender.Match(Gender.Womens))
+                .Filter(p => p.InStock.Match(true))
+                .Filter(p => p.LastUpdated.LessThan(DateTime.Now))
+                .StaticallyCacheFor(TimeSpan.FromMinutes(10))
+                .GetResult();
+
+                totalTimeMs += result.ProcessingInfo.ServerDuration;
+                Console.WriteLine("\tFound {0} items. Search took {1} ms", result.TotalMatching, result.ProcessingInfo.ServerDuration);
+            }
+
+            Console.WriteLine("Total time {0} ms", totalTimeMs);
+
         }
 
         #endregion
@@ -218,7 +299,7 @@ namespace FindDemo
         #region multi search
 
 
-        
+
         #endregion
 
 

@@ -45,7 +45,7 @@ namespace FindDemo
             #endregion
 
             // we are bulk indexing
-            //IndexBulks(client, productsToIndex, 100);
+            IndexBulks(client, productsToIndex, 100);
 
             IndexBulks(client, stores, 100);
         }
