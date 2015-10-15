@@ -1,19 +1,23 @@
 ﻿<table class="table table-striped" data-bind="visible: results().length > 0">
     <thead>
-        <tr>
-            <th>Results</th>
-        </tr>
+    <tr>
+        <th>Results</th>
+    </tr>
     </thead>
     <tbody data-bind="foreach: results">
-        <tr>
-            <td>
-                <strong data-bind="html: Title"></strong> - <strong data-bind="text: Section"></strong>
-                <p data-bind="html: Excerpt"></p>
-                <p>
-                    <i data-bind="text: OriginalObjectType"></i>
-                </p>
-                <span data-bind="text: UpdateDate"></span> - <a data-bind="attr: { href: Url }, visible: Url != null">Read more</a>
-            </td>
-        </tr>
+    <tr>
+        <td>
+            <strong data-bind="html: Title"></strong> - <strong data-bind="text: Section"></strong>
+            <p data-bind="html: Excerpt"></p>
+            <p>
+                <i data-bind="text: OriginalObjectType"></i>
+            </p>
+            <span data-bind="text: UpdateDate"></span> - <a data-bind="attr: { href: Url }, visible: Url != null">Read more</a>
+        </td>
+    </tr>
     </tbody>
 </table>
+
+<div data-bind="visible: results().length == 0 && resultJson() != null" class="alert alert-info search-container-separator" role="alert">
+    Sorry no results were found.
+</div>

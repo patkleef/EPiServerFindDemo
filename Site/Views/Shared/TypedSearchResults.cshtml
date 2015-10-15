@@ -1,0 +1,19 @@
+﻿<table class="table table-striped" data-bind="visible: results().length > 0">
+    <thead>
+    <tr>
+        <th>Results</th>
+    </tr>
+    </thead>
+    <tbody data-bind="foreach: results">
+    <tr>
+        <td>
+            <strong data-bind="html: Title"></strong>
+            <a data-bind="attr: { href: Url}">Read more</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div data-bind="visible: results().length == 0 && resultJson() != null" class="alert alert-info search-container-separator" role="alert">
+    Sorry no results were found.
+</div>
