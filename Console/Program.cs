@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using EPiServer.Find;
 using EPiServer.Find.Api;
 using EPiServer.Find.Api.Facets;
 using EPiServer.Find.Api.Ids;
 using EPiServer.Find.Api.Querying.Filters;
+using EPiServer.Find.ClientConventions;
 using FindDemo.Models;
 
 namespace FindDemo
@@ -21,14 +23,21 @@ namespace FindDemo
         static void Main(string[] args)
         {
             var client = Client.CreateFromConfig();
+            
+            /************** Conventions *******************/
+            
+            // This is how you can specify Id property to Find
+            //client.Conventions.ForType<Product>().IdIs(p => p.VariantCode);
+
+            client.Conventions.ForType<Product>().IncludeField(p => p.Sizes());
 
             #region Indexing
 
             /************* INDEXING *****************/
 
-            //Importer.ClearIndex(client);
+            Importer.ClearIndex(client);
 
-            //Importer.AddDemoContentFromFiles(client);
+            Importer.AddDemoContentFromFiles(client);
 
             #endregion
 
@@ -139,8 +148,8 @@ namespace FindDemo
         /// <returns></returns>
         private static ITypeSearch<Product> FilteringComplexCollections(ITypeSearch<Product> q)
         {
-            return q.Filter(p => p.Skus.MatchContained(sku => sku.Size, "XL"));
-            //return q.Filter(p => p.Sizes.Match("XL"));
+            return q.Filter(p => p.Skus.MatchContained(s => s.Size, "XL"));
+            //return q.Filter(p => p.Sizes().Match("XL"));
         }
 
 
@@ -178,7 +187,7 @@ namespace FindDemo
             foreach (var filterSize in sizesToFilter)
             {
                 string size = filterSize;
-                sizeFilter = sizeFilter.Or(x => x.Sizes.Match(size));
+                sizeFilter = sizeFilter.Or(x => x.Sizes().Match(size));
             }
 
             return q.Filter(sizeFilter);
@@ -273,7 +282,7 @@ namespace FindDemo
         private static ITypeSearch<Product> FacetsExample(ITypeSearch<Product> q)
         {
             return q
-                .TermsFacetFor(p => p.Sizes) //Size
+                .TermsFacetFor(p => p.Sizes()) //Size
                 .TermsFacetFor(p => p.Color) //Color
                 .RangeFacetFor(p => p.Price, new NumericRange(20, 50), new NumericRange(51, 100), new NumericRange(101, 500)) //Price
                 //.HistogramFacetFor(p => p.Price, 50) //Price
@@ -355,7 +364,7 @@ namespace FindDemo
                 Console.WriteLine("\t{0} ({1})", p.Document.Name.ToUpper(), p.Document.VariantCode);
                 Console.WriteLine("\tCollection: {0}", p.Document.Collection);
                 Console.WriteLine("\tPrice: {0}", p.Document.Price);
-                Console.WriteLine("\tSizes: {0}", string.Join(",", p.Document.Sizes.ToArray()));
+                Console.WriteLine("\tSizes: {0}", string.Join(",", p.Document.Sizes().ToArray()));
                 Console.WriteLine("");
             }
 

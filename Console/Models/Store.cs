@@ -35,7 +35,7 @@ namespace FindDemo.Models
         //{
         //    get
         //    {
-        //        return string.Format("{0}, {1}", CountryName, Name);
+        //        return string.Format("{0}, {1}", Region, Name);
         //    }
         //}
 

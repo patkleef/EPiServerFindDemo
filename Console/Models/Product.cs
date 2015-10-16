@@ -25,27 +25,19 @@ namespace FindDemo.Models
         public Collection Collection { get; set; }
         public Gender Gender { get; set; }
 
-        //public string SearchTitle
-        //{
-        //    get
-        //    {
-        //        return string.Format("{0} {1} {2}", VariantCode, Name, Color);
-        //    }
-        //}
+        public string SearchTitle
+        {
+            get
+            {
+                return string.Format("{0}: {1}, {2}", VariantCode, Name, Color);
+            }
+        }
 
         public bool InStock
         {
             get
             {
                 return Skus.Any(s => s.Stock > 0);
-            }
-        }
-
-        public IEnumerable<string> Sizes
-        {
-            get
-            {
-                return Skus.Select(s => s.Size).ToList();
             }
         }
 
