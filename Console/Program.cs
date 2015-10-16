@@ -15,6 +15,9 @@ namespace FindDemo
 {
     class Program
     {
+        // Location of The Cosmopolitan Hotel, Las Vegas, Nevada
+        private static readonly GeoLocation TheCosmopolitanHotelLasVegas = new GeoLocation(36.109308, -115.175291); 
+
         static void Main(string[] args)
         {
             var client = Client.CreateFromConfig();
@@ -51,7 +54,7 @@ namespace FindDemo
             //    query = FilterUsingBuildFilter(client, query, sizes.Split(',').ToList<string>());
             //}
 
-            ProjectIfYouCan(client);
+            //ProjectIfYouCan(client);
 
             /************* FILTERING END *****************/
 
@@ -67,6 +70,12 @@ namespace FindDemo
 
             #endregion
 
+            #region Multi search
+
+            //FindProductsAndStores(client);
+
+            #endregion
+
             // Remember to cache your queries!
             //var result = query.StaticallyCacheFor(TimeSpan.FromMinutes(10)).GetResult();
 
@@ -75,8 +84,6 @@ namespace FindDemo
             // Cache demo
             //ShowCachingWithDateTimeInQuery(client);
         }
-
-       
 
         #region Filter methods
 
@@ -107,14 +114,14 @@ namespace FindDemo
         }
 
         /// <summary>
-        /// Example: This year and next years collection, use AvailableFrom field and OrFilter
+        /// Example: Products updated within the last week, use LastUpdated field and LessThan
         /// Match, InRange, Exists, MatchYear and more
         /// </summary>
         /// <param name="q"></param>
         /// <returns></returns>
         private static ITypeSearch<Product> FilterDateTime(ITypeSearch<Product> q)
         {
-            return q;
+            return q.Filter(p => p.LastUpdated.LessThan(DateTime.Now.AddDays(-7)));
         }
 
 
@@ -179,6 +186,7 @@ namespace FindDemo
 
         /// <summary>
         /// Example: Find sizes and stock for product named 'Mio cardigan'
+        /// Tailor the objects to your need: Less data transfered = smaller response
         /// </summary>
         /// <param name="client"></param>
         private static void ProjectIfYouCan(IClient client)
@@ -281,8 +289,6 @@ namespace FindDemo
         /// <returns></returns>
         private static ITypeSearch<Store> StoresWithin10KfromOurLocation(IClient client)
         {
-            var theCosmopolitanHotelLasVegas = new GeoLocation(36.109308, -115.175291); // Location of The Cosmopolitan Hotel, Las Vegas, Nevada
-
             var ranges = new List<NumericRange> {
                 new NumericRange {From = 0, To = 1},
                 new NumericRange {From = 0, To = 5},
@@ -290,15 +296,43 @@ namespace FindDemo
             };
 
             return client.Search<Store>()
-                .Filter(s => s.Location.WithinDistanceFrom(theCosmopolitanHotelLasVegas, new Kilometers(10)))
-                .GeoDistanceFacetFor(s => s.Location, theCosmopolitanHotelLasVegas, ranges.ToArray());
+                .Filter(s => s.Location.WithinDistanceFrom(TheCosmopolitanHotelLasVegas, new Kilometers(10)))
+                .GeoDistanceFacetFor(s => s.Location, TheCosmopolitanHotelLasVegas, ranges.ToArray());
         }
 
         #endregion
 
-        #region multi search
+        #region Multi search
+
+        /// <summary>
+        /// Find all men t-shirts and stores within 10 km radius that sell mens clothing
+        /// </summary>
+        /// <param name="client"></param>
+        private static void FindProductsAndStores(IClient client)
+        {
+            var multiResults = client.MultiSearch<string>()
+                .Search<Product, string>((search => search.Filter(p => p.Collection.Match(Collection.Tees))
+                           .Filter(p => p.Gender.Match(Gender.Mens)).Select(p => (string.Format("{0} {1}",p.Name, p.Color) ))))
+                    .Search<Store, string>((search => 
+                        search.Filter(s => s.Location.WithinDistanceFrom(TheCosmopolitanHotelLasVegas, new Kilometers(10)))
+                            .Filter(s => s.Departments.Match(Gender.Mens)).Select(p => p.Name)))
+                    .GetResult().ToList();
+
+            var products = multiResults[0];
+            Console.WriteLine("Found {0} hits for Product ", products.TotalMatching);
+            foreach (var productNameAndColor in products.Hits)
+            {
+                Console.WriteLine("\t{0}", productNameAndColor.Document);
+            }
 
 
+            var stores = multiResults[1];
+            Console.WriteLine("Found {0} hits for Store ", stores.TotalMatching);
+            foreach (var storeName in stores.Hits)
+            {
+                Console.WriteLine("\t{0}", storeName.Document);
+            }
+        }
 
         #endregion
 
