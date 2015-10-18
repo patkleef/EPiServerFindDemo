@@ -25,6 +25,14 @@ namespace FindDemo.Models
         public Collection Collection { get; set; }
         public Gender Gender { get; set; }
 
+        public bool InStock
+        {
+            get
+            {
+                return Skus.Any(s => s.Stock > 0);
+            }
+        }
+
         public string SearchTitle
         {
             get
@@ -33,13 +41,6 @@ namespace FindDemo.Models
             }
         }
 
-        public bool InStock
-        {
-            get
-            {
-                return Skus.Any(s => s.Stock > 0);
-            }
-        }
 
         public DateTime LastUpdated { get { return DateTime.Now; } }
     }

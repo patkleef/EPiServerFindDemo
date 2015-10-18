@@ -23,13 +23,17 @@ namespace FindDemo
         static void Main(string[] args)
         {
             var client = Client.CreateFromConfig();
-            
+
+            #region Conventions
+
             /************** Conventions *******************/
             
             // This is how you can specify Id property to Find
             //client.Conventions.ForType<Product>().IdIs(p => p.VariantCode);
 
             client.Conventions.ForType<Product>().IncludeField(p => p.Sizes());
+
+            #endregion
 
             #region Indexing
 
