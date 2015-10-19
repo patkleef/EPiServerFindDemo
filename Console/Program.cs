@@ -39,9 +39,9 @@ namespace FindDemo
 
             /************* INDEXING *****************/
 
-            Importer.ClearIndex(client);
+            //Importer.ClearIndex(client);
 
-            Importer.AddDemoContentFromFiles(client);
+            //Importer.AddDemoContentFromFiles(client);
 
             #endregion
 
@@ -49,37 +49,29 @@ namespace FindDemo
 
             /************* FILTERING *****************/
 
-            //var query = client.Search<Product>();
+            //FilterString(client);
 
-            //query = FilterString(query);
+            //FilterNumerical(client);
 
-            //query = FilterNumerical(query);
+            //FilteringComplexCollections(client);
+            
+            //FiltersCombinedExample(client);
 
-            //query = FilteringComplexCollections(query);
-
-            //query = FiltersCombinedExample(query);
-
-
-            //Console.WriteLine("What sizes should we filter on? (Use ',' to separate.) ");
-            //string sizes = Console.ReadLine();
-            //if (string.IsNullOrEmpty(sizes) == false)
-            //{
-            //    query = FilterUsingBuildFilter(client, query, sizes.Split(',').ToList<string>());
-            //}
+            //FilterUsingBuildFilter(client);
 
             //ProjectIfYouCan(client);
-
+            
             /************* FILTERING END *****************/
 
             #endregion
 
             #region Facets
 
-            //query = FacetsExample(query);
+            // Product facets
+            //ProductFacetsExample(client);
 
-            // Geo facets demo
-            //var storeQuery = StoresWithin10KfromOurLocation(client);
-            //ShowStoreResults(storeQuery.GetResult());
+            // Store facets using GeoLocation
+            //StoresWithin10KfromOurLocation(client);
 
             #endregion
 
@@ -89,11 +81,6 @@ namespace FindDemo
 
             #endregion
 
-            // Remember to cache your queries!
-            //var result = query.StaticallyCacheFor(TimeSpan.FromMinutes(10)).GetResult();
-
-            //ShowProductResults(result);
-
             // Cache demo
             //ShowCachingWithDateTimeInQuery(client);
         }
@@ -101,29 +88,35 @@ namespace FindDemo
         #region Filter methods
 
         /// <summary>
-        /// Example: Starts with "Soft", use Name field
-        /// Match, Prefix, AnyWordBeginsWith
+        /// Example: Use Name field, Match "Ribbs polo" and Fuzzy using "Lucy pncho"
+        /// Match, Prefix, AnyWordBeginsWith, MatchFuzzy
         /// The AnyWordBeginsWith method matches strings which contains any word that starts with a given string,
-        /// making it suitable for autocomplete. It does not case about casing.
+        /// making it suitable for autocomplete. It does not care about casing.
         /// NOTE: While AnyWordBeginsWith is powerful it is not optimal in terms of performance when used for large strings.
         /// Be careful!
         /// </summary>
-        /// <param name="q"></param>
-        /// <returns></returns>
-        private static ITypeSearch<Product> FilterString(ITypeSearch<Product> q)
+        private static void FilterString(IClient client)
         {
-            return q.Filter(p => p.Name.PrefixCaseInsensitive("Soft"));
+            var result = client.Search<Product>()
+                    .Filter(p => p.Name.Match("Ribbs polo")) // exact match, case sensitive
+                    .OrFilter(p => p.Name.MatchFuzzy("Lucy pncho")) // Fuzzy match (misspellings etc)
+                    .StaticallyCacheFor(TimeSpan.FromHours(1)).GetResult();
+
+            ShowProductResults(result);
         }
 
         /// <summary>
         /// Example: Products in price range  10-50
         /// Match, InRange, Exists
         /// </summary>
-        /// <param name="q"></param>
-        /// <returns></returns>
-        private static ITypeSearch<Product> FilterNumerical(ITypeSearch<Product> q)
+        /// <param name="client"></param>
+        private static void FilterNumerical(IClient client)
         {
-            return q.Filter(p => p.Price.InRange(10, 50));
+            var result = client.Search<Product>()
+                    .Filter(p => p.Price.InRange(50, 100))
+                    .GetCachedResults(1);
+
+            ShowProductResults(result);
         }
 
         /// <summary>
@@ -146,14 +139,16 @@ namespace FindDemo
         /// That is: We can find size S and items with stock larger than 2, we cannot require that those conditions should apply to the same object.
         /// In practice this limitation can often be worked around by filtering on some unique value of the objects in the list.
         /// Also note that while MatchContained works for filtering on complex objects it's best practice to "denormalize" indexed objects by including
-        /// fields at indexing time to make querying less complex.
+        /// fields at indexing time to make querying less complex. 
         /// </summary>
-        /// <param name="q"></param>
-        /// <returns></returns>
-        private static ITypeSearch<Product> FilteringComplexCollections(ITypeSearch<Product> q)
+        private static void FilteringComplexCollections(IClient client)
         {
-            return q.Filter(p => p.Skus.MatchContained(s => s.Size, "XL"));
-            //return q.Filter(p => p.Sizes().Match("XL"));
+            var result = client.Search<Product>()
+                .Filter(p => p.Skus.MatchContained(s => s.Size, "XL"))
+                //.Filter(p => p.Sizes().Match("XL"))
+                .GetCachedResults(1);
+
+            ShowProductResults(result);
         }
 
 
@@ -164,16 +159,17 @@ namespace FindDemo
         /// Note: OrderBy orders null values last while OrderByDecending orders them first. 
         /// Use the second argument of type SortMissing to override the default behavior
         /// </summary>
-        /// <param name="q"></param>
-        /// <returns></returns>
-        private static ITypeSearch<Product> FiltersCombinedExample(ITypeSearch<Product> q)
+        private static void FiltersCombinedExample(IClient client)
         {
-            return q
+            var result = client.Search<Product>()
                 .Filter(p => p.Collection.Match(Collection.Jeans))
                 .Filter(p => p.Gender.Match(Gender.Womens))
                 .Filter(p => p.InStock.Match(true))
                 .OrderBy(p => p.Price)
-                .ThenBy(p => p.Name);
+                .ThenBy(p => p.Name)
+                .GetCachedResults(1);
+
+            ShowProductResults(result);
         }
 
 
@@ -181,27 +177,30 @@ namespace FindDemo
         /// Sometimes, especially when reacting to user input filter has to be dynamically composed.
         /// For this we can use the BuildFilter method.        
         /// </summary>
-        /// <param name="client">The search client</param>
-        /// <param name="q">Our query</param>
-        /// <param name="sizesToFilter">The color we would like to filter on</param>
-        /// <returns></returns>
-        private static ITypeSearch<Product> FilterUsingBuildFilter(IClient client, ITypeSearch<Product> q, IEnumerable<string> sizesToFilter)
+        private static void FilterUsingBuildFilter(IClient client)
         {
-            var sizeFilter = client.BuildFilter<Product>();
-            foreach (var filterSize in sizesToFilter)
+            var query = client.Search<Product>();
+            Console.WriteLine("What colors should we filter on? (Use ',' to separate.) ");
+            string colors = Console.ReadLine();
+            if (string.IsNullOrEmpty(colors) == false)
             {
-                string size = filterSize;
-                sizeFilter = sizeFilter.Or(x => x.Sizes().Match(size));
-            }
+                var colorFilter = client.BuildFilter<Product>();
 
-            return q.Filter(sizeFilter);
+                foreach (var filterColor in colors.Split(',').ToList())
+                {
+                    string c = filterColor;
+                    colorFilter = colorFilter.Or(x => x.Color.MatchCaseInsensitive(c));
+                }
+
+                var result = query.Filter(colorFilter).StaticallyCacheFor(TimeSpan.FromMinutes(10)).GetResult();
+                ShowProductResults(result);
+            }
         }
 
         /// <summary>
         /// Example: Find sizes and stock for product named 'Mio cardigan'
         /// Tailor the objects to your need: Less data transfered = smaller response
         /// </summary>
-        /// <param name="client"></param>
         private static void ProjectIfYouCan(IClient client)
         {
             var result = client.Search<Product>()
@@ -279,13 +278,10 @@ namespace FindDemo
         /// NB: Make sure you know the difference in use of Filter and FilterHits. 
         /// Filters added using Filter are applied BEFORE calculating facets, while FilterHits are added AFTER calculating facets
         /// Filter is better performance wise.
-        /// 
         /// </summary>
-        /// <param name="q"></param>
-        /// <returns></returns>
-        private static ITypeSearch<Product> FacetsExample(ITypeSearch<Product> q)
+        private static void ProductFacetsExample(IClient client)
         {
-            return q
+            var query = client.Search<Product>()
                 .TermsFacetFor(p => p.Sizes()) //Size
                 .TermsFacetFor(p => p.Color) //Color
                 .RangeFacetFor(p => p.Price, new NumericRange(20, 50), new NumericRange(51, 100), new NumericRange(101, 500)) //Price
@@ -293,6 +289,10 @@ namespace FindDemo
                 .FilterFacet("Womens", p => p.Gender.Match(Gender.Womens))
                 .FilterFacet("Jeans", p => p.Collection.Match(Collection.Jeans))
                 .FilterFacet("Sold out", p => p.InStock.Match(false)); //Filterfacet
+
+            var result = query.StaticallyCacheFor(TimeSpan.FromMinutes(10)).GetResult();
+
+            ShowProductResults(result);
         }
 
         /// <summary>
@@ -300,7 +300,7 @@ namespace FindDemo
         /// Request the number of stores within 1, 5, and 10 kilometers of a location via the GeoDistanceFacetFor method
         /// </summary>
         /// <returns></returns>
-        private static ITypeSearch<Store> StoresWithin10KfromOurLocation(IClient client)
+        private static void StoresWithin10KfromOurLocation(IClient client)
         {
             var ranges = new List<NumericRange> {
                 new NumericRange {From = 0, To = 1},
@@ -308,9 +308,14 @@ namespace FindDemo
                 new NumericRange {From = 0, To = 10}
             };
 
-            return client.Search<Store>()
+            var result = client.Search<Store>()
                 .Filter(s => s.Location.WithinDistanceFrom(TheCosmopolitanHotelLasVegas, new Kilometers(10)))
-                .GeoDistanceFacetFor(s => s.Location, TheCosmopolitanHotelLasVegas, ranges.ToArray());
+                .GeoDistanceFacetFor(s => s.Location, TheCosmopolitanHotelLasVegas, ranges.ToArray())
+                .StaticallyCacheFor(TimeSpan.FromMinutes(10))
+                .GetResult();
+
+            ShowStoreResults(result);
+
         }
 
         #endregion
@@ -348,7 +353,8 @@ namespace FindDemo
         }
 
         #endregion
-
+        
+        #region Helper methods
 
         /// <summary>
         /// Helper method that outputs both facets and results for Product search results
@@ -450,5 +456,7 @@ namespace FindDemo
                 }
             }
         }
+
+#endregion
     }
 }
