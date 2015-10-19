@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using EPiServer.Find;
 using Newtonsoft.Json;
@@ -19,18 +20,10 @@ namespace FindDemo.Models
         public string Color { get; set; }
         [JsonIgnore]
         public bool Available { get; set; }
-        public Sku[] Skus { get; set; }
+        public IEnumerable<Sku> Skus { get; set; }
         public bool NewArrival { get; set; }
         public Collection Collection { get; set; }
         public Gender Gender { get; set; }
-
-        public string SearchTitle
-        {
-            get
-            {
-                return string.Format("{0} {1} {2}", VariantCode, Name, Color);
-            }
-        }
 
         public bool InStock
         {
@@ -40,13 +33,16 @@ namespace FindDemo.Models
             }
         }
 
-        public IEnumerable<string> Sizes
+        public string SearchTitle
         {
             get
             {
-                return Skus.Select(s => s.Size).ToList();
+                return string.Format("{0}: {1}, {2}", VariantCode, Name, Color);
             }
         }
+
+
+        public DateTime LastUpdated { get { return DateTime.Now; } }
     }
 
     /// <summary>

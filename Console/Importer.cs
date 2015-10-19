@@ -43,11 +43,15 @@ namespace FindDemo
             var stores = ParseJsonAsStores("stores.json").ToList();
 
             #endregion
+            
+            #region Indexing region
 
             // we are bulk indexing
-            //IndexBulks(client, productsToIndex, 100);
+            IndexBulks(client, productsToIndex, 100);
 
             IndexBulks(client, stores, 100);
+
+            #endregion
         }
 
         private static void IndexBulks(IClient client, IEnumerable<object> objects, int bulkSize)
