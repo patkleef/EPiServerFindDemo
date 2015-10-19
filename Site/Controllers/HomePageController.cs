@@ -1,4 +1,6 @@
 ﻿using System.Web.Mvc;
+using EPiServer.Find.Framework.Statistics;
+using EPiServer.ServiceLocation;
 using EPiServer.Web.Mvc;
 using Site.Models.Pages;
 

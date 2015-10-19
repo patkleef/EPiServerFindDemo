@@ -9,11 +9,15 @@
     <title>EPiServer Find demo</title>
     <link href="/Static/Style/css/bootstrap.min.css" rel="stylesheet" />
     <style>
-        em {color: red;}
+        em {color: blue;}
         .starter-template {margin-top:100px; }
         .container-separator { margin-top:10px; margin-bottom: 10px; }
         .search-container-separator { margin-top:30px; }
         .json-code { white-space: pre; font-family: monospace; }
+        .form-control, .btn { border-color: #222}
+        .well { border-color: #CCC; background-color: #CCC  }
+        .table-striped>tbody>tr:nth-of-type(odd) { background-color: #CCC }
+        .panel {  border-color: #222 }
     </style>
 </head>
 <body>
@@ -54,7 +58,7 @@
                             </li>
                         </ul>
                     </li>
-                    <li class="@(Request.Url.AbsolutePath == "/MoreLike" ? "active" : "")"><a href="/MoreLike">More like</a></li>
+                    @*<li class="@(Request.Url.AbsolutePath == "/MoreLike" ? "active" : "")"><a href="/MoreLike">More like</a></li>*@
 
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Highlighting <span class="caret"></span></a>

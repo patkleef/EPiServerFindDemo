@@ -7,7 +7,6 @@ using EPiServer.Find;
 using EPiServer.Find.Api;
 using EPiServer.Find.Cms;
 using EPiServer.Find.Framework;
-using EPiServer.Find.Framework.Statistics;
 using EPiServer.Find.Helpers.Text;
 using EPiServer.Find.Statistics;
 using EPiServer.Find.UnifiedSearch;
@@ -52,7 +51,7 @@ namespace Site.Controllers.Api
             var result = _client.UnifiedSearchFor(query)
                 .Take(100)
                 .StatisticsTrack()
-                .GetResult(hitSpecification, false);
+                .GetResult(hitSpecification);
 
             return Json(result);
         }
@@ -71,7 +70,7 @@ namespace Site.Controllers.Api
         [Route("api/TypedSearch/")]
         public IHttpActionResult TypedSearch(string query)
         {
-            var trackQueryResult = SearchClient.Instance.Statistics().TrackQuery(query);
+            var trackQueryResult = _client.Statistics().TrackQuery(query);
 
             var result = _client.Search<ArticlePage>()
                 .For(query)
@@ -193,7 +192,7 @@ namespace Site.Controllers.Api
             {
                 return Json(string.Empty);
             }
-            var result = _client.UnifiedSearchFor(query).ApplyBestBets().GetResult(new HitSpecification(), false);
+            var result = _client.UnifiedSearchFor(query).ApplyBestBets().GetResult(new HitSpecification());
 
             return Json(result);
         }
@@ -216,7 +215,7 @@ namespace Site.Controllers.Api
             {
                 return Json(string.Empty);
             }
-            var result = _client.UnifiedSearchFor(query).UsingSynonyms().GetResult(new HitSpecification(), false);
+            var result = _client.UnifiedSearchFor(query).UsingSynonyms().GetResult(new HitSpecification());
 
             return Json(result);
         }
@@ -455,7 +454,6 @@ namespace Site.Controllers.Api
             var hitSpecification = new HitSpecification();
             hitSpecification.HighlightExcerpt = true;
             hitSpecification.HighlightTitle = true;
-            hitSpecification.ExcerptLength = 100;
             if (!string.IsNullOrEmpty(preTag))
             {
                 hitSpecification.PreTagForAllHighlights = preTag;
