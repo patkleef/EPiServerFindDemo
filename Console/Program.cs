@@ -31,6 +31,8 @@ namespace FindDemo
             // This is how you can specify Id property to Find
             //client.Conventions.ForType<Product>().IdIs(p => p.VariantCode);
 
+            // Normally, customizing client conventions should be part of the initialization, 
+            // typically in a initializable module in an EPiServer CMS website 
             client.Conventions.ForType<Product>().IncludeField(p => p.Sizes());
 
             #endregion
@@ -77,7 +79,7 @@ namespace FindDemo
 
             #region Multi search
 
-            //FindProductsAndStores(client);
+            FindProductsAndStores(client);
 
             #endregion
 
@@ -179,12 +181,12 @@ namespace FindDemo
         /// </summary>
         private static void FilterUsingBuildFilter(IClient client)
         {
-            var query = client.Search<Product>();
             Console.WriteLine("What colors should we filter on? (Use ',' to separate.) ");
             string colors = Console.ReadLine();
+
             if (string.IsNullOrEmpty(colors) == false)
             {
-                var colorFilter = client.BuildFilter<Product>();
+                FilterBuilder<Product> colorFilter = client.BuildFilter<Product>();
 
                 foreach (var filterColor in colors.Split(',').ToList())
                 {
@@ -192,7 +194,9 @@ namespace FindDemo
                     colorFilter = colorFilter.Or(x => x.Color.MatchCaseInsensitive(c));
                 }
 
-                var result = query.Filter(colorFilter).StaticallyCacheFor(TimeSpan.FromMinutes(10)).GetResult();
+                var result = client.Search<Product>()
+                            .Filter(colorFilter).GetCachedResults(1);
+                
                 ShowProductResults(result);
             }
         }
@@ -205,11 +209,7 @@ namespace FindDemo
         {
             var result = client.Search<Product>()
                 .Filter(p => p.Name.Match("Mio cardigan"))
-                .Select(r => new
-                {
-                    Id = r.VariantCode,
-                    Skus = r.Skus
-                })
+                .Select(r => new { Id = r.VariantCode,Skus = r.Skus})
                 .GetResult();
 
             foreach (var hit in result)
@@ -228,11 +228,11 @@ namespace FindDemo
         /// <param name="client"></param>
         private static void ShowCachingWithDateTimeInQuery(IClient client)
         {
-            int totalTimeMs = 0;
+            int timerBatchOne = 0;
 
-            Console.WriteLine("String first batch....");
+            Console.WriteLine("String first batch");
 
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 50; i++)
             {
                 var resultOne = client.Search<Product>()
                 .Filter(p => p.Collection.Match(Collection.Jeans))
@@ -240,18 +240,18 @@ namespace FindDemo
                 .Filter(p => p.InStock.Match(true))
                 .StaticallyCacheFor(TimeSpan.FromMinutes(10))
                 .GetResult();
-                totalTimeMs += resultOne.ProcessingInfo.ServerDuration;
-                Console.WriteLine("\tFound {0} items. Search took {1} ms", resultOne.TotalMatching, resultOne.ProcessingInfo.ServerDuration);
+                timerBatchOne += resultOne.ProcessingInfo.ServerDuration;
+                Console.Write(".");
             }
 
-            Console.WriteLine("Total time {0} ms", totalTimeMs);
+            Console.WriteLine("\nTotal time {0} ms", timerBatchOne);
 
-            totalTimeMs = 0;
+            int timerBatchTwo = 0;
             Console.WriteLine("********************");
 
-            Console.WriteLine("String second batch....");
+            Console.WriteLine("String second batch");
 
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 50; i++)
             {
                 var result = client.Search<Product>()
                 .Filter(p => p.Collection.Match(Collection.Jeans))
@@ -261,11 +261,11 @@ namespace FindDemo
                 .StaticallyCacheFor(TimeSpan.FromMinutes(10))
                 .GetResult();
 
-                totalTimeMs += result.ProcessingInfo.ServerDuration;
-                Console.WriteLine("\tFound {0} items. Search took {1} ms", result.TotalMatching, result.ProcessingInfo.ServerDuration);
+                timerBatchTwo += result.ProcessingInfo.ServerDuration;
+                Console.Write(".");
             }
 
-            Console.WriteLine("Total time {0} ms", totalTimeMs);
+            Console.WriteLine("\nTotal time {0} ms\n", timerBatchTwo);
 
         }
 
@@ -285,12 +285,12 @@ namespace FindDemo
                 .TermsFacetFor(p => p.Sizes()) //Size
                 .TermsFacetFor(p => p.Color) //Color
                 .RangeFacetFor(p => p.Price, new NumericRange(20, 50), new NumericRange(51, 100), new NumericRange(101, 500)) //Price
-                //.HistogramFacetFor(p => p.Price, 50) //Price
+                //.HistogramFacetFor(p => p.Price, 100) //Price
                 .FilterFacet("Womens", p => p.Gender.Match(Gender.Womens))
                 .FilterFacet("Jeans", p => p.Collection.Match(Collection.Jeans))
                 .FilterFacet("Sold out", p => p.InStock.Match(false)); //Filterfacet
 
-            var result = query.StaticallyCacheFor(TimeSpan.FromMinutes(10)).GetResult();
+            var result = query.GetCachedResults(1);
 
             ShowProductResults(result);
         }
@@ -457,6 +457,6 @@ namespace FindDemo
             }
         }
 
-#endregion
+        #endregion
     }
 }
