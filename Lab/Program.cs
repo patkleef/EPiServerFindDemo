@@ -2,6 +2,7 @@
 using System.Linq;
 using EPiServer.Find;
 using EPiServer.Find.Api.Facets;
+using EPiServer.Find.Api.Querying.Filters;
 using EPiServer.Sample.Hotels;
 
 namespace Lab
@@ -19,13 +20,12 @@ namespace Lab
             //q = FilterOnPrice(q);
             //q = FilterOnRating(q);
             //q = FilterOnCoordinates(q);
-
-            q = FilterFacetOnPrice(q);
+            
+            //q = FilterFacetOnPrice(q);
 
             var result = q.GetResult();
-            OutputResults(result);
 
-            Console.ReadLine();
+            OutputResults(result);
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace Lab
         {
             Console.Write("What should we search for? ");
             string query = Console.ReadLine();
-            return q.For(query);
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Lab
         /// <returns></returns>
         static ITypeSearch<Hotel> FilterOnPrice(ITypeSearch<Hotel> q)
         {
-            return q.Filter(x => x.PriceUSD.InRange(100, 200));
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace Lab
         /// <returns></returns>
         static ITypeSearch<Hotel> FilterFacetOnPrice(ITypeSearch<Hotel> q)
         {
-            return q.FilterFacet("Price filter", x => x.PriceUSD.InRange(100, 200));
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Lab
         /// <returns></returns>
         static ITypeSearch<Hotel> FilterOnRating(ITypeSearch<Hotel> q)
         {
-            return q.Filter(x => x.StarRating.GreaterThan(4));
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -76,8 +76,7 @@ namespace Lab
         /// <returns></returns>
         static ITypeSearch<Hotel> FilterOnCoordinates(ITypeSearch<Hotel> q)
         {
-            return q.Filter(x => x.GeoCoordinates.WithinDistanceFrom(
-                COSMOPOLITAN_HOTEL_GEO, 5.Kilometers()));
+            throw new NotImplementedException();
         }
 
         /// <summary>
