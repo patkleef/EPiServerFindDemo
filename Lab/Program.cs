@@ -16,51 +16,67 @@ namespace Lab
             var client = HotelHelpers.HotelClient;
 
             var q = client.Search<Hotel>();
-            //q = TextSearchExample(q);
             //q = FilterOnPrice(q);
             //q = FilterOnRating(q);
-            //q = FilterOnCoordinates(q);
+            //q = FilterOnLocation(q);
+            //q = AdvancedFiltering(q);
+            //q = RangeFacets(q);
+            //q = FacetForCountry(q);
             
-            //q = FilterFacetOnPrice(q);
-
             var result = q.GetResult();
 
             OutputResults(result);
         }
 
         /// <summary>
-        /// Basic text search in all fields for a given query
+        /// Code solutons
         /// </summary>
         /// <param name="cli"></param>
-        static ITypeSearch<Hotel> TextSearchExample(ITypeSearch<Hotel> q)
+        static void Solutions(ITypeSearch<Hotel> q)
         {
-            Console.Write("What should we search for? ");
-            string query = Console.ReadLine();
-            throw new NotImplementedException();
+            //Exercise 1: Filter on price -> Get all hotels that have price between 100 and 200
+            //return q.Filter(x => x.PriceUSD.InRange(100, 200));
+
+            //Exercise 2: Filter on rating/review -> Find all hotels that have a star rating of either 4 o 5, OR
+            //review rate of 9 or 10 with more than 50 reviews
+            /*return q.Filter(x => x.StarRating.InRange(4, 5))
+                    .OrFilter(x => x.ReviewCount.GreaterThan(50))
+                    .Filter(x => x.Ratings.Overall.InRange(8, 9));*/
+
+            //Exercise 3: Filter on location -> Get all hotels within 5 km of the cosmopolitan hotel,
+            //order by distance from cosmopolitan hotel (closest first)
+            /*return q.Filter(x => x.GeoCoordinates.WithinDistanceFrom(COSMOPOLITAN_HOTEL_GEO, 5.Kilometer()))
+                    .OrderBy(x => x.GeoCoordinates).DistanceFrom(COSMOPOLITAN_HOTEL_GEO);*/
+
+            //Exercise 4: Advanced filtering -> Show hotels with more than 2 stars within 10 km of the cosmopolitan hotel
+            //that offer room service, have air condition and are of chain specified by user
+            /*return q.Filter(x => x.StarRating.GreaterThan(2))
+                .Filter(x => x.GeoCoordinates.WithinDistanceFrom(COSMOPOLITAN_HOTEL_GEO, 10.Kilometer()))
+                .Filter(x => x.Features.MatchCaseInsensitive("Air conditioned"))
+                .Filter(x => x.Features.MatchCaseInsensitive("Room service"));*/
+
+            //Exercise 5: Range facets -> create range facets for price ranges 20-50, 51-100 and 101-150 USD
+            /*return q.RangeFacetFor(x => x.PriceUSD, new[] { new NumericRange(20, 50), new NumericRange(51, 100), new NumericRange(101, 150)});*/
+
+            //Exercise 6: Facet for country -> List name of all countries that have hotels
+            //return q.TermsFacetFor(x => x.Location.Country.Title, request => request.Size = 500).Take(0);
+
+            //Exercise 7: Basic text search, query entered by user, in fields Name and Description
+            /*return q.For("hotel").InFields(x => x.Name, x => x.Description);*/
         }
 
         /// <summary>
-        /// Get hotels that have price (PriceUSD) between 100 and 200
+        /// Exercise 1: Filter on price -> Get all hotels that have price between 100 and 200
         /// </summary>
         /// <param name="q"></param>
-        /// <returns></returns>
         static ITypeSearch<Hotel> FilterOnPrice(ITypeSearch<Hotel> q)
         {
             throw new NotImplementedException();
         }
 
         /// <summary>
-        /// Get hotels that have price (PriceUSD) between 100 and 200
-        /// </summary>
-        /// <param name="q"></param>
-        /// <returns></returns>
-        static ITypeSearch<Hotel> FilterFacetOnPrice(ITypeSearch<Hotel> q)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        /// Get hotels that have rating (StarRating) greater than 4
+        /// Exercise 2: Filter on rating/review -> Find all hotels that have a star rating of either 4 o 5, OR
+        /// review rate of 9 or 10 with more than 50 reviews
         /// </summary>
         /// <param name="q"></param>
         /// <returns></returns>
@@ -70,12 +86,56 @@ namespace Lab
         }
 
         /// <summary>
-        /// Get hotels within 5 kilometers (GeoCoordinates) of the geo coordinates of the Cosmopolitan hotel
+        /// Exercise 3: Filter on location -> Get all hotels within 5 km of the cosmopolitan hotel,
+        /// order by distance from cosmopolitan hotel (closest first)
         /// </summary>
         /// <param name="q"></param>
         /// <returns></returns>
-        static ITypeSearch<Hotel> FilterOnCoordinates(ITypeSearch<Hotel> q)
+        static ITypeSearch<Hotel> FilterOnLocation(ITypeSearch<Hotel> q)
         {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Exercise 4: Advanced filtering -> Show hotels with more than 2 stars within 10 km of the cosmopolitan hotel
+        /// that offer room service, have air condition and are of chain specified by user
+        /// </summary>
+        /// <param name="q"></param>
+        /// <returns></returns>
+        static ITypeSearch<Hotel> AdvancedFiltering(ITypeSearch<Hotel> q)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Exercise 5: Range facets -> create range facets for price ranges 20-50, 51-100 and 101-150 USD
+        /// </summary>
+        /// <param name="q"></param>
+        /// <returns></returns>
+        static ITypeSearch<Hotel> RangeFacets(ITypeSearch<Hotel> q)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Exercise 6: Facet for country -> List name of all countries that have hotels
+        /// </summary>
+        /// <param name="q"></param>
+        /// <returns></returns>
+        static ITypeSearch<Hotel> FacetForCountry(ITypeSearch<Hotel> q)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Exercise 7: Basic text search, query entered by user, in fields Name and Description
+        /// </summary>
+        /// <param name="q"></param>
+        /// <returns></returns>
+        static ITypeSearch<Hotel> BasicTextSearch(ITypeSearch<Hotel> q)
+        {
+            Console.Write("What should we search for? ");
+            string query = Console.ReadLine();
             throw new NotImplementedException();
         }
 
@@ -140,11 +200,14 @@ namespace Lab
                 Console.WriteLine("\t{0}", h.Document.LocationsString);
                 Console.WriteLine("\tPrice: {0}", h.Document.PriceUSD);
                 Console.WriteLine("\tRating: {0}", h.Document.StarRating);
+                Console.WriteLine("\tReview count: {0}", h.Document.ReviewCount);
+                Console.WriteLine("\tOverall rating: {0}", h.Document.Ratings.Overall);
+                Console.WriteLine("\tCountry: {0}", h.Document.Location.Country.Title);
                 Console.WriteLine("\tType: {0}", h.Document.PropertyType);
-                Console.WriteLine("\t{0}", string.Join(",", h.Document.Features.Take(5).ToArray()));
+                Console.WriteLine("\t{0}", string.Join(",", h.Document.Features.ToArray()));
                 Console.WriteLine("\n");
             }
-
+            Console.ReadLine();
         }
     }
 }
