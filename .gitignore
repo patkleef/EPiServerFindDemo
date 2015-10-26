@@ -13,6 +13,8 @@
 !/packages/*/lib/*/*.dll
 # Include dlls if they're in the CommonReferences directory
 !*CommonReferences/*.dll
+# Include dlls if they're in the Lib directory
+!/Lib/*.dll
 ####################
 # VS Upgrade stuff #
 ####################
