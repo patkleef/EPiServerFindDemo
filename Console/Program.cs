@@ -43,7 +43,7 @@ namespace FindDemo
 
             //Importer.ClearIndex(client);
 
-            //Importer.AddDemoContentFromFiles(client);
+            Importer.AddDemoContentFromFiles(client);
 
             #endregion
 
@@ -79,7 +79,7 @@ namespace FindDemo
 
             #region Multi search
 
-            FindProductsAndStores(client);
+            //FindProductsAndStores(client);
 
             #endregion
 
@@ -99,12 +99,7 @@ namespace FindDemo
         /// </summary>
         private static void FilterString(IClient client)
         {
-            var result = client.Search<Product>()
-                    .Filter(p => p.Name.Match("Ribbs polo")) // exact match, case sensitive
-                    .OrFilter(p => p.Name.MatchFuzzy("Lucy pncho")) // Fuzzy match (misspellings etc)
-                    .StaticallyCacheFor(TimeSpan.FromHours(1)).GetResult();
-
-            ShowProductResults(result);
+            //ShowProductResults(result);
         }
 
         /// <summary>
@@ -114,24 +109,10 @@ namespace FindDemo
         /// <param name="client"></param>
         private static void FilterNumerical(IClient client)
         {
-            var result = client.Search<Product>()
-                    .Filter(p => p.Price.InRange(50, 100))
-                    .GetCachedResults(1);
-
-            ShowProductResults(result);
+            //ShowProductResults(result);
         }
 
-        /// <summary>
-        /// Example: Products updated within the last week, use LastUpdated field and LessThan
-        /// Match, InRange, Exists, MatchYear and more
-        /// </summary>
-        /// <param name="q"></param>
-        /// <returns></returns>
-        private static ITypeSearch<Product> FilterDateTime(ITypeSearch<Product> q)
-        {
-            return q.Filter(p => p.LastUpdated.LessThan(DateTime.Now.AddDays(-7)));
-        }
-
+        
 
         /// <summary>
         /// Example: All products in Size XL
@@ -145,12 +126,7 @@ namespace FindDemo
         /// </summary>
         private static void FilteringComplexCollections(IClient client)
         {
-            var result = client.Search<Product>()
-                .Filter(p => p.Skus.MatchContained(s => s.Size, "XL"))
-                //.Filter(p => p.Sizes().Match("XL"))
-                .GetCachedResults(1);
-
-            ShowProductResults(result);
+           // ShowProductResults(result);
         }
 
 
@@ -163,15 +139,7 @@ namespace FindDemo
         /// </summary>
         private static void FiltersCombinedExample(IClient client)
         {
-            var result = client.Search<Product>()
-                .Filter(p => p.Collection.Match(Collection.Jeans))
-                .Filter(p => p.Gender.Match(Gender.Womens))
-                .Filter(p => p.InStock.Match(true))
-                .OrderBy(p => p.Price)
-                .ThenBy(p => p.Name)
-                .GetCachedResults(1);
-
-            ShowProductResults(result);
+            //ShowProductResults(result);
         }
 
 
@@ -285,7 +253,6 @@ namespace FindDemo
                 .TermsFacetFor(p => p.Sizes()) //Size
                 .TermsFacetFor(p => p.Color) //Color
                 .RangeFacetFor(p => p.Price, new NumericRange(20, 50), new NumericRange(51, 100), new NumericRange(101, 500)) //Price
-                //.HistogramFacetFor(p => p.Price, 100) //Price
                 .FilterFacet("Womens", p => p.Gender.Match(Gender.Womens))
                 .FilterFacet("Jeans", p => p.Collection.Match(Collection.Jeans))
                 .FilterFacet("Sold out", p => p.InStock.Match(false)); //Filterfacet
