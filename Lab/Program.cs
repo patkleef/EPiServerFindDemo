@@ -22,6 +22,7 @@ namespace Lab
             //q = AdvancedFiltering(q);
             //q = RangeFacets(q);
             //q = FacetForCountry(q);
+            //q = BasicTextSearch(q);
             
             var result = q.GetResult();
 
@@ -34,7 +35,7 @@ namespace Lab
         /// <param name="q"></param>
         static ITypeSearch<Hotel> FilterOnPrice(ITypeSearch<Hotel> q)
         {
-            throw new NotImplementedException();
+            return q.Filter(x => x.PriceUSD.InRange(100, 200));
         }
 
         /// <summary>
@@ -45,7 +46,8 @@ namespace Lab
         /// <returns></returns>
         static ITypeSearch<Hotel> FilterOnRating(ITypeSearch<Hotel> q)
         {
-            throw new NotImplementedException();
+            return q.Filter(x => x.StarRating.InRange(4, 5))
+                .OrFilter(x => x.ReviewCount.GreaterThan(50) & x.Ratings.Overall.InRange(8, 9));
         }
 
         /// <summary>
@@ -56,7 +58,8 @@ namespace Lab
         /// <returns></returns>
         static ITypeSearch<Hotel> FilterOnLocation(ITypeSearch<Hotel> q)
         {
-            throw new NotImplementedException();
+            return q.Filter(x => x.GeoCoordinates.WithinDistanceFrom(COSMOPOLITAN_HOTEL_GEO, 5.Kilometer()))
+                    .OrderBy(x => x.GeoCoordinates).DistanceFrom(COSMOPOLITAN_HOTEL_GEO);
         }
 
         /// <summary>
@@ -67,7 +70,10 @@ namespace Lab
         /// <returns></returns>
         static ITypeSearch<Hotel> AdvancedFiltering(ITypeSearch<Hotel> q)
         {
-            throw new NotImplementedException();
+            return q.Filter(x => x.StarRating.GreaterThan(2))
+                .Filter(x => x.GeoCoordinates.WithinDistanceFrom(COSMOPOLITAN_HOTEL_GEO, 10.Kilometer()))
+                .Filter(x => x.Features.MatchCaseInsensitive("Air conditioned"))
+                .Filter(x => x.Features.MatchCaseInsensitive("Room service"));
         }
 
         /// <summary>
@@ -77,7 +83,9 @@ namespace Lab
         /// <returns></returns>
         static ITypeSearch<Hotel> RangeFacets(ITypeSearch<Hotel> q)
         {
-            throw new NotImplementedException();
+            var ranges = new[] {new NumericRange(20, 50), new NumericRange(51, 100), new NumericRange(101, 150)};
+
+            return q.RangeFacetFor(x => x.PriceUSD, ranges);
         }
 
         /// <summary>
@@ -87,7 +95,7 @@ namespace Lab
         /// <returns></returns>
         static ITypeSearch<Hotel> FacetForCountry(ITypeSearch<Hotel> q)
         {
-            throw new NotImplementedException();
+            return q.TermsFacetFor(x => x.Location.Country.Title, request => request.Size = 500).Take(0);
         }
 
         /// <summary>
@@ -99,7 +107,7 @@ namespace Lab
         {
             Console.Write("What should we search for? ");
             string query = Console.ReadLine();
-            throw new NotImplementedException();
+            return q.For(query).InFields(x => x.Name, x => x.Description);
         }
 
         /// <summary>
