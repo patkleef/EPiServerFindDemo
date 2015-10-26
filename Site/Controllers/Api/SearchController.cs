@@ -7,6 +7,7 @@ using EPiServer.Find;
 using EPiServer.Find.Api;
 using EPiServer.Find.Cms;
 using EPiServer.Find.Framework;
+using EPiServer.Find.Framework.Statistics;
 using EPiServer.Find.Helpers.Text;
 using EPiServer.Find.Statistics;
 using EPiServer.Find.UnifiedSearch;
@@ -24,6 +25,7 @@ namespace Site.Controllers.Api
     {
         private readonly IClient _client;
         private readonly UrlResolver _urlResolver;
+        private readonly IStatisticTagsHelper _statisticsTagsHelper;
 
         /// <summary>
         /// Public constructor
@@ -32,6 +34,7 @@ namespace Site.Controllers.Api
         {
             _client = SearchClient.Instance;
             _urlResolver = ServiceLocator.Current.GetInstance<UrlResolver>();
+            _statisticsTagsHelper = ServiceLocator.Current.GetInstance<IStatisticTagsHelper>();
         }
 
         #region Unified Search
@@ -70,17 +73,34 @@ namespace Site.Controllers.Api
         [Route("api/TypedSearch/")]
         public IHttpActionResult TypedSearch(string query)
         {
-            var trackQueryResult = _client.Statistics().TrackQuery(query);
-
             var result = _client.Search<ArticlePage>()
                 .For(query)
                 .GetContentResult();
 
+            var trackId = new TrackContext().Id;
+            TrackQuery(query, result.TotalMatching, trackId);
+
             return Json(result.Items.Select((x, i) => new
             {
                 Title = x.PageName,
-                Url = GetTrackingUrl(x, query, trackQueryResult.TrackId, i)
+                Url = GetTrackingUrl(x, query, trackId, i)
             }));
+        }
+
+        /// <summary>
+        /// Track query
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="nrOfHits"></param>
+        /// <param name="id"></param>
+        public void TrackQuery(string query, int nrOfHits, string id)
+        {
+            SearchClient.Instance.Statistics().TrackQuery(query, x =>
+            {
+                x.Id = id;
+                x.Tags = _statisticsTagsHelper.GetTags();
+                x.Query.Hits = nrOfHits;
+            });
         }
 
         /// <summary>
@@ -93,9 +113,7 @@ namespace Site.Controllers.Api
         /// <returns></returns>
         private string GetTrackingUrl(ArticlePage page, string query, string trackId, int index)
         {
-            var tags = string.Format("language:{0},siteid:{1}",
-                Thread.CurrentThread.CurrentUICulture,
-                SiteDefinition.Current.Id);
+            var tags = _statisticsTagsHelper.GetTags().Concatenate(",");
 
             return string.Format("{0}?_t_id={1}&_t_q={2}&_t_tags={3}&_t_ip={4}&_t_hit.id={5}&_t_hit.pos={6}",
                 _urlResolver.GetUrl(page),
