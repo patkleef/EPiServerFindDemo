@@ -38,8 +38,9 @@
     <Reference Include="EPiServer.Find">
       <HintPath>packages\EPiServer.Find.10.1.0.3493\lib\net45\EPiServer.Find.dll</HintPath>
     </Reference>
-    <Reference Include="EPiServer.Sample.Hotels">
-      <HintPath>..\Lib\EPiServer.Sample.Hotels.dll</HintPath>
+    <Reference Include="EPiServer.Sample.Hotels, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Lib\EPiServer.Sample.Hotels.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
