@@ -17,9 +17,7 @@ namespace FindDemo
 {
     class Program
     {
-        // Location of The Cosmopolitan Hotel, Las Vegas, Nevada
-        private static readonly GeoLocation TheCosmopolitanHotelLasVegas = new GeoLocation(36.109308, -115.175291); 
-
+        
         static void Main(string[] args)
         {
             var client = Client.CreateFromConfig();
@@ -43,26 +41,24 @@ namespace FindDemo
 
             //Importer.ClearIndex(client);
 
-            Importer.AddDemoContentFromFiles(client);
+            //Importer.AddDemoContentFromFiles(client);
 
             #endregion
 
             #region Filtering
 
             /************* FILTERING *****************/
-
-            //FilterString(client);
-
-            //FilterNumerical(client);
+          
+            //FilterSimple(client);
 
             //FilteringComplexCollections(client);
-            
+
             //FiltersCombinedExample(client);
 
             //FilterUsingBuildFilter(client);
 
             //ProjectIfYouCan(client);
-            
+
             /************* FILTERING END *****************/
 
             #endregion
@@ -73,13 +69,13 @@ namespace FindDemo
             //ProductFacetsExample(client);
 
             // Store facets using GeoLocation
-            //StoresWithin10KfromOurLocation(client);
+            //StoresCloseToOurLocation(client);
 
             #endregion
 
             #region Multi search
 
-            //FindProductsAndStores(client);
+            FindProductsAndStores(client);
 
             #endregion
 
@@ -87,35 +83,33 @@ namespace FindDemo
             //ShowCachingWithDateTimeInQuery(client);
         }
 
+
         #region Filter methods
 
         /// <summary>
-        /// Example: Use Name field, Match "Ribbs polo" and Fuzzy using "Lucy pncho"
-        /// Match, Prefix, AnyWordBeginsWith, MatchFuzzy
+        /// String: Match, Prefix, AnyWordBeginsWith, MatchFuzzy
+        /// Number: Range
+        /// DateTime: MatchYear etc
         /// The AnyWordBeginsWith method matches strings which contains any word that starts with a given string,
         /// making it suitable for autocomplete. It does not care about casing.
         /// NOTE: While AnyWordBeginsWith is powerful it is not optimal in terms of performance when used for large strings.
         /// Be careful!
         /// </summary>
-        private static void FilterString(IClient client)
+        private static void FilterSimple(IClient client)
         {
-            //ShowProductResults(result);
-        }
+            //Example: Products named "Ribbs polo" OR Fuzzy match "Lucy pncho"
+            // AND Price range 10-50
+            var result = client.Search<Product>()
+                .Filter(p => p.Name.MatchCaseInsensitive("Ribbs polo")  |
+                    p.Name.MatchFuzzy("Lucy pncho"))
+                 .Filter(p => p.Price.InRange(10,50))
+                .GetCachedResults();
 
-        /// <summary>
-        /// Example: Products in price range  10-50
-        /// Match, InRange, Exists
-        /// </summary>
-        /// <param name="client"></param>
-        private static void FilterNumerical(IClient client)
-        {
-            //ShowProductResults(result);
+            ShowProductResults(result);
         }
-
         
 
         /// <summary>
-        /// Example: All products in Size XL
         /// Using MatchContained on the complex object OR using Sizes collection
         /// Note: While it is possible to filter on several fields in objects in collections using MatchContained
         /// several times it is not possible to specify that those conditions should apply to the same object in the list.
@@ -126,12 +120,17 @@ namespace FindDemo
         /// </summary>
         private static void FilteringComplexCollections(IClient client)
         {
-           // ShowProductResults(result);
+            // Example: All products in Size XL
+            var result = client.Search<Product>()
+               //.Filter(p => p.Skus.MatchContained(s => s.Size, "XL"))
+               .Filter(p => p.Sizes().Match("XL"))
+                .GetCachedResults();
+
+            ShowProductResults(result);
         }
 
 
         /// <summary>
-        /// Example: All womens jeans that are not sold out, order by price, then by name
         /// Using filters on Enum, collections and boolean
         /// When using Match on a list of strings we require that at least one of the strings in the list matches the value specified.
         /// Note: OrderBy orders null values last while OrderByDecending orders them first. 
@@ -139,7 +138,18 @@ namespace FindDemo
         /// </summary>
         private static void FiltersCombinedExample(IClient client)
         {
-            //ShowProductResults(result);
+            // Example: All womens jeans that are not sold out, 
+            // order by price, then by name
+
+            var result = client.Search<Product>()
+                .Filter(p => p.Gender.Match(Gender.Womens))
+                .Filter(p => p.Collection.Match(Collection.Jeans))
+                .Filter(p => p.InStock.Match(true))
+                .OrderBy(p => p.Price)
+                .ThenBy(p => p.Name, SortMissing.Last)
+                .GetCachedResults();
+
+            ShowProductResults(result);
         }
 
 
@@ -163,7 +173,8 @@ namespace FindDemo
                 }
 
                 var result = client.Search<Product>()
-                            .Filter(colorFilter).GetCachedResults(1);
+                            .Filter(colorFilter)
+                            .GetCachedResults();
                 
                 ShowProductResults(result);
             }
@@ -178,7 +189,7 @@ namespace FindDemo
             var result = client.Search<Product>()
                 .Filter(p => p.Name.Match("Mio cardigan"))
                 .Select(r => new { Id = r.VariantCode,Skus = r.Skus})
-                .GetResult();
+                .GetCachedResults();
 
             foreach (var hit in result)
             {
@@ -250,14 +261,15 @@ namespace FindDemo
         private static void ProductFacetsExample(IClient client)
         {
             var query = client.Search<Product>()
+                .FilterHits(p => p.Name.Prefix("Lucy"))
                 .TermsFacetFor(p => p.Sizes()) //Size
-                .TermsFacetFor(p => p.Color) //Color
+                .TermsFacetFor(p => p.Color, p => p.Size = 50) //Color
                 .RangeFacetFor(p => p.Price, new NumericRange(20, 50), new NumericRange(51, 100), new NumericRange(101, 500)) //Price
                 .FilterFacet("Womens", p => p.Gender.Match(Gender.Womens))
                 .FilterFacet("Jeans", p => p.Collection.Match(Collection.Jeans))
                 .FilterFacet("Sold out", p => p.InStock.Match(false)); //Filterfacet
 
-            var result = query.GetCachedResults(1);
+            var result = query.GetCachedResults();
 
             ShowProductResults(result);
         }
@@ -267,8 +279,11 @@ namespace FindDemo
         /// Request the number of stores within 1, 5, and 10 kilometers of a location via the GeoDistanceFacetFor method
         /// </summary>
         /// <returns></returns>
-        private static void StoresWithin10KfromOurLocation(IClient client)
+        private static void StoresCloseToOurLocation(IClient client)
         {
+            // Location of The Cosmopolitan Hotel, Las Vegas, Nevada
+            var theCosmopolitanHotelLasVegas = new GeoLocation(36.109308, -115.175291); 
+
             var ranges = new List<NumericRange> {
                 new NumericRange {From = 0, To = 1},
                 new NumericRange {From = 0, To = 5},
@@ -276,10 +291,9 @@ namespace FindDemo
             };
 
             var result = client.Search<Store>()
-                .Filter(s => s.Location.WithinDistanceFrom(TheCosmopolitanHotelLasVegas, new Kilometers(10)))
-                .GeoDistanceFacetFor(s => s.Location, TheCosmopolitanHotelLasVegas, ranges.ToArray())
-                .StaticallyCacheFor(TimeSpan.FromMinutes(10))
-                .GetResult();
+                .Filter(s => s.Location.WithinDistanceFrom(theCosmopolitanHotelLasVegas, new Miles(10)))
+                .GeoDistanceFacetFor(s => s.Location, theCosmopolitanHotelLasVegas, ranges.ToArray())
+                .GetCachedResults();
 
             ShowStoreResults(result);
 
@@ -295,12 +309,17 @@ namespace FindDemo
         /// <param name="client"></param>
         private static void FindProductsAndStores(IClient client)
         {
+            // Location of The Cosmopolitan Hotel, Las Vegas, Nevada
+            var theCosmopolitanHotelLasVegas = new GeoLocation(36.109308, -115.175291); 
+            
             var multiResults = client.MultiSearch<string>()
                 .Search<Product, string>((search => search.Filter(p => p.Collection.Match(Collection.Tees))
-                           .Filter(p => p.Gender.Match(Gender.Mens)).Select(p => (string.Format("{0} {1}",p.Name, p.Color) ))))
-                    .Search<Store, string>((search => 
-                        search.Filter(s => s.Location.WithinDistanceFrom(TheCosmopolitanHotelLasVegas, new Kilometers(10)))
-                            .Filter(s => s.Departments.Match(Gender.Mens)).Select(p => p.Name)))
+                           .Filter(p => p.Gender.Match(Gender.Mens))
+                           .Select(p => (string.Format("{0} {1}",p.Name, p.Color) ))))
+                    .Search<Store, string>((search =>
+                        search.Filter(s => s.Location.WithinDistanceFrom(theCosmopolitanHotelLasVegas, new Kilometers(10)))
+                            .Filter(s => s.Departments.Match(Gender.Mens))
+                            .Select(p => p.Name)))
                     .GetResult().ToList();
 
             var products = multiResults[0];

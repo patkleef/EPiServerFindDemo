@@ -22,7 +22,7 @@ namespace FindDemo.Models
         public string PostalCode { get; set; }
         public Gender[] Departments { get; set; }
 
-        public GeoLocation Location
+        public EPiServer.Find.GeoLocation Location
         {
             get
             {

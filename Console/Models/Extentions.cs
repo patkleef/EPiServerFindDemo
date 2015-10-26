@@ -14,9 +14,9 @@ namespace FindDemo.Models
              return product.Skus.Select(s => s.Size).ToList();
         }
 
-        public static SearchResults<TResult> GetCachedResults<TResult>(this ISearch<TResult> search, int hours)
+        public static SearchResults<TResult> GetCachedResults<TResult>(this ISearch<TResult> search)
         {
-            return search.StaticallyCacheFor(TimeSpan.FromHours(hours)).GetResult();
+            return search.StaticallyCacheFor(TimeSpan.FromMinutes(10)).GetResult();
         }
     }
 }
