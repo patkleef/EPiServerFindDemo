@@ -210,7 +210,9 @@ namespace Site.Controllers.Api
             {
                 return Json(string.Empty);
             }
-            var result = _client.UnifiedSearchFor(query).ApplyBestBets().GetResult(new HitSpecification());
+            var result = _client.UnifiedSearchFor(query)
+                .ApplyBestBets()
+                .GetResult(new HitSpecification());
 
             return Json(result);
         }
@@ -233,7 +235,9 @@ namespace Site.Controllers.Api
             {
                 return Json(string.Empty);
             }
-            var result = _client.UnifiedSearchFor(query).UsingSynonyms().GetResult(new HitSpecification());
+            var result = _client.UnifiedSearchFor(query)
+                .UsingSynonyms()
+                .GetResult(new HitSpecification());
 
             return Json(result);
         }
@@ -321,7 +325,7 @@ namespace Site.Controllers.Api
         {
             if (!useBoostingWithWeights)
             {
-                var result = _client.UnifiedSearch().For(query).GetResult();
+                var result = _client.UnifiedSearchFor(query).GetResult();
 
                 return Json(result);
             }
@@ -375,7 +379,7 @@ namespace Site.Controllers.Api
             }
             else
             {
-                var result = _client.UnifiedSearch().For(query)
+                var result = _client.UnifiedSearchFor(query)
                                 .BoostMatching(p => p.SearchUpdateDate.InRange(startDate, endDate), boostFactor)
                                 .GetResult();
 
