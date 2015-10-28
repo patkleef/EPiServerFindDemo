@@ -25,19 +25,19 @@ namespace FindDemo
 
             // Product
             var womenKnitwear = ParseJsonAsProducts("knitwear.json").ToList();
-            productsToIndex.AddRange(AddCollection(womenKnitwear, Collection.Knitwear));
+            productsToIndex.AddRange(AddCollection(womenKnitwear, CategoryEnum.Knitwear));
 
             var womenJeans = ParseJsonAsProducts("jeans.json").ToList();
-            productsToIndex.AddRange(AddCollection(womenJeans, Collection.Jeans));
+            productsToIndex.AddRange(AddCollection(womenJeans, CategoryEnum.Jeans));
 
             var womenShirts = ParseJsonAsProducts("shirts.json").ToList();
-            productsToIndex.AddRange(AddCollection(womenShirts, Collection.Shirts));
+            productsToIndex.AddRange(AddCollection(womenShirts, CategoryEnum.Shirts));
 
             var menBoxers = ParseJsonAsProducts("boxers.json").ToList();
-            productsToIndex.AddRange(AddCollection(menBoxers, Collection.Underwear));
+            productsToIndex.AddRange(AddCollection(menBoxers, CategoryEnum.Underwear));
 
             var menTShirts = ParseJsonAsProducts("thirts.json").ToList();
-            productsToIndex.AddRange(AddCollection(menTShirts, Collection.Tees));
+            productsToIndex.AddRange(AddCollection(menTShirts, CategoryEnum.Tees));
 
             // Stores
             var stores = ParseJsonAsStores("stores.json").ToList();
@@ -105,11 +105,11 @@ namespace FindDemo
             return jsonSerializer.Deserialize<IEnumerable<Store>>(jsonReader);
         }
 
-        private static List<Product> AddCollection(List<Product> products, Collection collection)
+        private static List<Product> AddCollection(List<Product> products, CategoryEnum categoryEnum)
         {
             foreach (var product in products)
             {
-                product.Collection = collection;
+                product.CategoryEnum = categoryEnum;
             }
             return products;
         }

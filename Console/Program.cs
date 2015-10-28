@@ -41,7 +41,7 @@ namespace FindDemo
 
             //Importer.ClearIndex(client);
 
-            //Importer.AddDemoContentFromFiles(client);
+            Importer.AddDemoContentFromFiles(client);
 
             #endregion
 
@@ -49,11 +49,7 @@ namespace FindDemo
 
             /************* FILTERING *****************/
           
-            //FilterSimple(client);
-
-            //FilteringComplexCollections(client);
-
-            //FiltersCombinedExample(client);
+            //FilterDemo(client);
 
             //FilterUsingBuildFilter(client);
 
@@ -75,7 +71,7 @@ namespace FindDemo
 
             #region Multi search
 
-            FindProductsAndStores(client);
+            //FindProductsAndStores(client);
 
             #endregion
 
@@ -90,20 +86,17 @@ namespace FindDemo
         /// String: Match, Prefix, AnyWordBeginsWith, MatchFuzzy
         /// Number: Range
         /// DateTime: MatchYear etc
-        /// The AnyWordBeginsWith method matches strings which contains any word that starts with a given string,
-        /// making it suitable for autocomplete. It does not care about casing.
-        /// NOTE: While AnyWordBeginsWith is powerful it is not optimal in terms of performance when used for large strings.
-        /// Be careful!
+        /// 1: Products named "Ribbs polo" OR Fuzzy match "Lucy pncho" AND Price range 10-50
+        /// 2: Using MatchContained on the complex object OR using Sizes collection ("XL")
+        /// 3: All womens jeans that are not sold out, order by price, then by name
         /// </summary>
-        private static void FilterSimple(IClient client)
+        private static void FilterDemo(IClient client)
         {
-            //Example: Products named "Ribbs polo" OR Fuzzy match "Lucy pncho"
-            // AND Price range 10-50
             var result = client.Search<Product>()
                 .Filter(p => p.Name.MatchCaseInsensitive("Ribbs polo")  |
                     p.Name.MatchFuzzy("Lucy pncho"))
                  .Filter(p => p.Price.InRange(10,50))
-                .GetCachedResults();
+                .GetResult(); // Remember to cache your searches!!
 
             ShowProductResults(result);
         }
@@ -122,8 +115,8 @@ namespace FindDemo
         {
             // Example: All products in Size XL
             var result = client.Search<Product>()
-               //.Filter(p => p.Skus.MatchContained(s => s.Size, "XL"))
-               .Filter(p => p.Sizes().Match("XL"))
+               .Filter(p => p.Skus.MatchContained(s => s.Size, "XL"))
+               //.Filter(p => p.Sizes().Match("XL"))
                 .GetCachedResults();
 
             ShowProductResults(result);
@@ -143,7 +136,7 @@ namespace FindDemo
 
             var result = client.Search<Product>()
                 .Filter(p => p.Gender.Match(Gender.Womens))
-                .Filter(p => p.Collection.Match(Collection.Jeans))
+                .Filter(p => p.CategoryEnum.Match(CategoryEnum.Jeans))
                 .Filter(p => p.InStock.Match(true))
                 .OrderBy(p => p.Price)
                 .ThenBy(p => p.Name, SortMissing.Last)
@@ -214,7 +207,7 @@ namespace FindDemo
             for (int i = 0; i < 50; i++)
             {
                 var resultOne = client.Search<Product>()
-                .Filter(p => p.Collection.Match(Collection.Jeans))
+                .Filter(p => p.CategoryEnum.Match(CategoryEnum.Jeans))
                 .Filter(p => p.Gender.Match(Gender.Womens))
                 .Filter(p => p.InStock.Match(true))
                 .StaticallyCacheFor(TimeSpan.FromMinutes(10))
@@ -233,7 +226,7 @@ namespace FindDemo
             for (int i = 0; i < 50; i++)
             {
                 var result = client.Search<Product>()
-                .Filter(p => p.Collection.Match(Collection.Jeans))
+                .Filter(p => p.CategoryEnum.Match(CategoryEnum.Jeans))
                 .Filter(p => p.Gender.Match(Gender.Womens))
                 .Filter(p => p.InStock.Match(true))
                 .Filter(p => p.LastUpdated.LessThan(DateTime.Now))
@@ -261,13 +254,15 @@ namespace FindDemo
         private static void ProductFacetsExample(IClient client)
         {
             var query = client.Search<Product>()
-                .FilterHits(p => p.Name.Prefix("Lucy"))
+                //.Filter(p => p.Name.Prefix("Lucy"))
                 .TermsFacetFor(p => p.Sizes()) //Size
                 .TermsFacetFor(p => p.Color, p => p.Size = 50) //Color
                 .RangeFacetFor(p => p.Price, new NumericRange(20, 50), new NumericRange(51, 100), new NumericRange(101, 500)) //Price
                 .FilterFacet("Womens", p => p.Gender.Match(Gender.Womens))
-                .FilterFacet("Jeans", p => p.Collection.Match(Collection.Jeans))
+                .FilterFacet("Jeans", p => p.CategoryEnum.Match(CategoryEnum.Jeans))
                 .FilterFacet("Sold out", p => p.InStock.Match(false)); //Filterfacet
+
+            // Filter vs FilterHits --> know the difference!!
 
             var result = query.GetCachedResults();
 
@@ -313,7 +308,7 @@ namespace FindDemo
             var theCosmopolitanHotelLasVegas = new GeoLocation(36.109308, -115.175291); 
             
             var multiResults = client.MultiSearch<string>()
-                .Search<Product, string>((search => search.Filter(p => p.Collection.Match(Collection.Tees))
+                .Search<Product, string>((search => search.Filter(p => p.CategoryEnum.Match(CategoryEnum.Tees))
                            .Filter(p => p.Gender.Match(Gender.Mens))
                            .Select(p => (string.Format("{0} {1}",p.Name, p.Color) ))))
                     .Search<Store, string>((search =>
@@ -358,7 +353,7 @@ namespace FindDemo
             foreach (var p in res.Hits)
             {
                 Console.WriteLine("\t{0} ({1})", p.Document.Name.ToUpper(), p.Document.VariantCode);
-                Console.WriteLine("\tCollection: {0}", p.Document.Collection);
+                Console.WriteLine("\tCollection: {0}", p.Document.CategoryEnum);
                 Console.WriteLine("\tPrice: {0}", p.Document.Price);
                 Console.WriteLine("\tSizes: {0}", string.Join(",", p.Document.Sizes().ToArray()));
                 Console.WriteLine("");

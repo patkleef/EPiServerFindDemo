@@ -22,7 +22,7 @@ namespace FindDemo.Models
         public bool Available { get; set; }
         public IEnumerable<Sku> Skus { get; set; }
         public bool NewArrival { get; set; }
-        public Collection Collection { get; set; }
+        public CategoryEnum CategoryEnum { get; set; }
         public Gender Gender { get; set; }
 
         public bool InStock
@@ -33,13 +33,13 @@ namespace FindDemo.Models
             }
         }
 
-        public string SearchTitle
-        {
-            get
-            {
-                return string.Format("{0}: {1}, {2}", VariantCode, Name, Color);
-            }
-        }
+        //public string SearchTitle
+        //{
+        //    get
+        //    {
+        //        return string.Format("{0}: {1}, {2}", VariantCode, Name, Color);
+        //    }
+        //}
 
 
         public DateTime LastUpdated { get { return DateTime.Now; } }
@@ -60,7 +60,7 @@ namespace FindDemo.Models
         Womens, Mens
     }
 
-    public enum Collection
+    public enum CategoryEnum
     {
         Underwear, Tops, Jeans, Shorts, Pants, Knitwear, Accessories, Shirts, Polos, Sweaters, Tees, Dresses, Jackets
     }
