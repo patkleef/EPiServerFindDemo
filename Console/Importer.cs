@@ -19,9 +19,9 @@ namespace FindDemo
         /// <param name="client"></param>
         public static void AddDemoContentFromFiles(IClient client)
         {
-            var productsToIndex = new List<Product>();
-
             #region Parsing Json to Product and Store items
+
+            var productsToIndex = new List<Product>();
 
             // Product
             var womenKnitwear = ParseJsonAsProducts("knitwear.json").ToList();
@@ -47,14 +47,10 @@ namespace FindDemo
             #region Indexing region
             
             // Adding objects using Index method
-            
-            #region Indexing
 
             IndexBulks(client, productsToIndex, 100);
 
             IndexBulks(client, stores, 100);
-
-            #endregion
 
             #endregion
         }
@@ -127,7 +123,7 @@ namespace FindDemo
             string answer = Console.ReadLine();
             if (answer != null && answer.ToLower() == "y")
             {
-                client.Delete<Product>(product => product.VariantCode.Exists());
+                client.Delete<Product>(product => product.ProductId.Exists());
                 client.Delete<Store>(store => store.Name.Exists());
                 Console.WriteLine("Index is empty. You're starting clean");
             }

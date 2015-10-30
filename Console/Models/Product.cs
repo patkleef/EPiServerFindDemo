@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
 
 namespace FindDemo.Models
 {
     public class Product
     {
         [EPiServer.Find.Id]
-        public string VariantCode { get; set; }
+        public string ProductId { get; set; }
 
         public string StyleCode { get; set; }
         public string Name { get; set; }
@@ -18,8 +17,10 @@ namespace FindDemo.Models
         public bool IsOnSale { get; set; }
         public object CampaignLabel { get; set; }
         public string Color { get; set; }
+        
         [Newtonsoft.Json.JsonIgnore]
         public bool Available { get; set; }
+        
         public IEnumerable<Sku> Skus { get; set; }
         public bool NewArrival { get; set; }
         public CategoryEnum CategoryEnum { get; set; }
@@ -37,7 +38,7 @@ namespace FindDemo.Models
         //{
         //    get
         //    {
-        //        return string.Format("{0}: {1}, {2}", VariantCode, Name, Color);
+        //        return string.Format("{0}: {1}, {2}", ProductId, Name, Color);
         //    }
         //}
 

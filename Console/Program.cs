@@ -1,14 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
 using EPiServer.Find;
 using EPiServer.Find.Api;
 using EPiServer.Find.Api.Facets;
-using EPiServer.Find.Api.Ids;
 using EPiServer.Find.Api.Querying.Filters;
 using EPiServer.Find.ClientConventions;
 using FindDemo.Models;
@@ -27,8 +22,9 @@ namespace FindDemo
             /************** Conventions *******************/
             
             // This is how you can specify Id property to Find
-            //client.Conventions.ForType<Product>().IdIs(p => p.VariantCode);
+            //client.Conventions.ForType<Product>().IdIs(p => p.ProductId);
 
+            
             // Normally, customizing client conventions should be part of the initialization, 
             // typically in a initializable module in an EPiServer CMS website 
             client.Conventions.ForType<Product>().IncludeField(p => p.Sizes());
@@ -41,7 +37,7 @@ namespace FindDemo
 
             //Importer.ClearIndex(client);
 
-            Importer.AddDemoContentFromFiles(client);
+            //Importer.AddDemoContentFromFiles(client);
 
             #endregion
 
@@ -75,8 +71,11 @@ namespace FindDemo
 
             #endregion
 
+            #region cache
             // Cache demo
             //ShowCachingWithDateTimeInQuery(client);
+
+            #endregion
         }
 
 
@@ -92,8 +91,10 @@ namespace FindDemo
         /// </summary>
         private static void FilterDemo(IClient client)
         {
+            var yesterday = DateTime.Now.AddDays(-1);
+
             var result = client.Search<Product>()
-                .Filter(p => p.Name.MatchCaseInsensitive("Ribbs polo")  |
+                .Filter(p => p.Name.Match("Ribbs polo")  |
                     p.Name.MatchFuzzy("Lucy pncho"))
                  .Filter(p => p.Price.InRange(10,50))
                 .GetResult(); // Remember to cache your searches!!
@@ -181,7 +182,7 @@ namespace FindDemo
         {
             var result = client.Search<Product>()
                 .Filter(p => p.Name.Match("Mio cardigan"))
-                .Select(r => new { Id = r.VariantCode,Skus = r.Skus})
+                .Select(r => new { Id = r.ProductId,Skus = r.Skus})
                 .GetCachedResults();
 
             foreach (var hit in result)
@@ -255,8 +256,8 @@ namespace FindDemo
         {
             var query = client.Search<Product>()
                 //.Filter(p => p.Name.Prefix("Lucy"))
-                .TermsFacetFor(p => p.Sizes()) //Size
-                .TermsFacetFor(p => p.Color, p => p.Size = 50) //Color
+                .TermsFacetFor(p => p.Sizes()) //Size p => p.Size = 50
+                .TermsFacetFor(p => p.Color) //Color
                 .RangeFacetFor(p => p.Price, new NumericRange(20, 50), new NumericRange(51, 100), new NumericRange(101, 500)) //Price
                 .FilterFacet("Womens", p => p.Gender.Match(Gender.Womens))
                 .FilterFacet("Jeans", p => p.CategoryEnum.Match(CategoryEnum.Jeans))
@@ -264,14 +265,14 @@ namespace FindDemo
 
             // Filter vs FilterHits --> know the difference!!
 
-            var result = query.GetCachedResults();
+            var result = query.Take(0).GetCachedResults();
 
             ShowProductResults(result);
         }
 
         /// <summary>
         /// Geographic distance facets: grouping documents with a GeoLocation type property by distance from a location.
-        /// Request the number of stores within 1, 5, and 10 kilometers of a location via the GeoDistanceFacetFor method
+        /// Request the number of stores within 1, 5, and 10 kilometers/miles of a location via the GeoDistanceFacetFor method
         /// </summary>
         /// <returns></returns>
         private static void StoresCloseToOurLocation(IClient client)
@@ -286,7 +287,7 @@ namespace FindDemo
             };
 
             var result = client.Search<Store>()
-                .Filter(s => s.Location.WithinDistanceFrom(theCosmopolitanHotelLasVegas, new Miles(10)))
+                .Filter(s => s.Location.WithinDistanceFrom(theCosmopolitanHotelLasVegas, new Kilometers(10)))
                 .GeoDistanceFacetFor(s => s.Location, theCosmopolitanHotelLasVegas, ranges.ToArray())
                 .GetCachedResults();
 
@@ -308,7 +309,8 @@ namespace FindDemo
             var theCosmopolitanHotelLasVegas = new GeoLocation(36.109308, -115.175291); 
             
             var multiResults = client.MultiSearch<string>()
-                .Search<Product, string>((search => search.Filter(p => p.CategoryEnum.Match(CategoryEnum.Tees))
+                .Search<Product, string>((search => 
+                    search.Filter(p => p.CategoryEnum.Match(CategoryEnum.Tees))
                            .Filter(p => p.Gender.Match(Gender.Mens))
                            .Select(p => (string.Format("{0} {1}",p.Name, p.Color) ))))
                     .Search<Store, string>((search =>
@@ -352,8 +354,8 @@ namespace FindDemo
             Console.WriteLine("Products found: ");
             foreach (var p in res.Hits)
             {
-                Console.WriteLine("\t{0} ({1})", p.Document.Name.ToUpper(), p.Document.VariantCode);
-                Console.WriteLine("\tCollection: {0}", p.Document.CategoryEnum);
+                Console.WriteLine("\t{0} ({1})", p.Document.Name.ToUpper(), p.Document.ProductId);
+                Console.WriteLine("\tCategory: {0}", p.Document.CategoryEnum);
                 Console.WriteLine("\tPrice: {0}", p.Document.Price);
                 Console.WriteLine("\tSizes: {0}", string.Join(",", p.Document.Sizes().ToArray()));
                 Console.WriteLine("");
@@ -374,7 +376,7 @@ namespace FindDemo
 
             foreach (var range in facet)
             {
-                Console.WriteLine("There are " + range.TotalCount + " stores within " + range.To + " km radius of The Cosmopolitan Hotel.");
+                Console.WriteLine("There are " + range.TotalCount + " stores within " + range.To + " km/mile radius of The Cosmopolitan Hotel.");
             }
 
             Console.WriteLine();
