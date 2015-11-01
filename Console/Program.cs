@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using EPiServer.Find;
 using EPiServer.Find.Api;
@@ -15,6 +16,8 @@ namespace FindDemo
         
         static void Main(string[] args)
         {
+            // *ALWAYS* use SearchClient.Instance singelton if you're using
+            // Find with any other EPiServer Products, like CMS/Commerce
             var client = Client.CreateFromConfig();
 
             #region Conventions
@@ -35,9 +38,7 @@ namespace FindDemo
 
             /************* INDEXING *****************/
 
-            //Importer.ClearIndex(client);
-
-            //Importer.AddDemoContentFromFiles(client);
+            Importer.AddDemoContentFromFiles(client);
 
             #endregion
 
@@ -85,19 +86,19 @@ namespace FindDemo
         /// String: Match, Prefix, AnyWordBeginsWith, MatchFuzzy
         /// Number: Range
         /// DateTime: MatchYear etc
-        /// 1: Products named "Ribbs polo" OR Fuzzy match "Lucy pncho" AND Price range 10-50
-        /// 2: Using MatchContained on the complex object OR using Sizes collection ("XL")
-        /// 3: All womens jeans that are not sold out, order by price, then by name
+        /// 1: Knitwear
+        /// 2: Name "Sino cardigan" OR "Ribbs polo"
+        /// 3: Size S
+        /// 4: Price Range 10-50
         /// </summary>
         private static void FilterDemo(IClient client)
         {
             var yesterday = DateTime.Now.AddDays(-1);
 
             var result = client.Search<Product>()
-                .Filter(p => p.Name.Match("Ribbs polo")  |
-                    p.Name.MatchFuzzy("Lucy pncho"))
-                 .Filter(p => p.Price.InRange(10,50))
-                .GetResult(); // Remember to cache your searches!!
+                 // Category knitwear, Name "Sino cardigan" or "Ribbs Polo", Size "S", Price "10-50"
+                .OrderBy(p => p.Name)
+                .GetResult(); 
 
             ShowProductResults(result);
         }
@@ -256,16 +257,15 @@ namespace FindDemo
         {
             var query = client.Search<Product>()
                 //.Filter(p => p.Name.Prefix("Lucy"))
-                .TermsFacetFor(p => p.Sizes()) //Size p => p.Size = 50
+                .TermsFacetFor(p => p.Sizes()) //Size 
                 .TermsFacetFor(p => p.Color) //Color
                 .RangeFacetFor(p => p.Price, new NumericRange(20, 50), new NumericRange(51, 100), new NumericRange(101, 500)) //Price
-                .FilterFacet("Womens", p => p.Gender.Match(Gender.Womens))
-                .FilterFacet("Jeans", p => p.CategoryEnum.Match(CategoryEnum.Jeans))
+                .FilterFacet("Womens Jeans", p => p.Gender.Match(Gender.Womens) & p.CategoryEnum.Match(CategoryEnum.Jeans))
                 .FilterFacet("Sold out", p => p.InStock.Match(false)); //Filterfacet
 
             // Filter vs FilterHits --> know the difference!!
 
-            var result = query.Take(0).GetCachedResults();
+            var result = query.GetCachedResults();
 
             ShowProductResults(result);
         }
@@ -309,13 +309,11 @@ namespace FindDemo
             var theCosmopolitanHotelLasVegas = new GeoLocation(36.109308, -115.175291); 
             
             var multiResults = client.MultiSearch<string>()
-                .Search<Product, string>((search => 
-                    search.Filter(p => p.CategoryEnum.Match(CategoryEnum.Tees))
-                           .Filter(p => p.Gender.Match(Gender.Mens))
+                .Search<Product, string>((search =>
+                    search.FindTeesForMen()
                            .Select(p => (string.Format("{0} {1}",p.Name, p.Color) ))))
                     .Search<Store, string>((search =>
-                        search.Filter(s => s.Location.WithinDistanceFrom(theCosmopolitanHotelLasVegas, new Kilometers(10)))
-                            .Filter(s => s.Departments.Match(Gender.Mens))
+                        search.FindStoresForMenCloseToMe(theCosmopolitanHotelLasVegas)
                             .Select(p => p.Name)))
                     .GetResult().ToList();
 
