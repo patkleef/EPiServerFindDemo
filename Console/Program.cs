@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using EPiServer.Find;
 using EPiServer.Find.Api;
@@ -87,21 +86,27 @@ namespace FindDemo
         /// Number: Range
         /// DateTime: MatchYear etc
         /// 1: Knitwear
-        /// 2: Name "Sino cardigan" OR "Ribbs polo"
-        /// 3: Size S
-        /// 4: Price Range 10-50
+        /// 2: Size S OR M
+        /// 3: Price Range 10-50
         /// </summary>
         private static void FilterDemo(IClient client)
         {
             var yesterday = DateTime.Now.AddDays(-1);
 
             var result = client.Search<Product>()
-                 // Category knitwear, Name "Sino cardigan" or "Ribbs Polo", Size "S", Price "10-50"
-                .OrderBy(p => p.Name)
+                 // Category knitwear AND Size "S" OR Size "M" AND Price "10-50"
+                 .Filter(p => p.CategoryEnum.Match(CategoryEnum.Knitwear))
+                 .Filter(p => p.Sizes().Match("S") | p.Sizes().Match("M"))
+                 .Filter(p => p.Price.InRange(10,50))
                 .GetResult(); 
 
             ShowProductResults(result);
         }
+
+
+
+
+
         
 
         /// <summary>
