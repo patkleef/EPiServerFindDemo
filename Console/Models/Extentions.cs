@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using EPiServer.Find;
-using EPiServer.Find.Api.Querying;
 using EPiServer.Find.Api.Querying.Filters;
 
 namespace FindDemo.Models
@@ -17,13 +13,12 @@ namespace FindDemo.Models
              return product.Skus.Select(s => s.Size).ToList();
         }
 
+
+
         public static SearchResults<TResult> GetCachedResults<TResult>(this ISearch<TResult> search)
         {
             return search.StaticallyCacheFor(TimeSpan.FromHours(1)).GetResult();
         }
-
-
-
 
         public static ITypeSearch<Product> FindTeesForMen(this ITypeSearch<Product> search)
         {
