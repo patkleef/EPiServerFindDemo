@@ -35,13 +35,13 @@ namespace FindDemo.Models
             }
         }
 
-        //public string SearchTitle
-        //{
-        //    get
-        //    {
-        //        return string.Format("{0}: {1}, {2}", ProductId, Name, Color);
-        //    }
-        //}
+        public string SearchTitle
+        {
+            get
+            {
+                return string.Format("{0}: {1}, {2}", ProductId, Name, Color);
+            }
+        }
 
 
         public DateTime LastUpdated { get { return DateTime.Now; } }

@@ -19,7 +19,7 @@ namespace FindDemo.Models
 
         public static SearchResults<TResult> GetCachedResults<TResult>(this ISearch<TResult> search)
         {
-            return search.StaticallyCacheFor(TimeSpan.FromMinutes(10)).GetResult();
+            return search.StaticallyCacheFor(TimeSpan.FromHours(1)).GetResult();
         }
 
 

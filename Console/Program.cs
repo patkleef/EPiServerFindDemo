@@ -38,7 +38,7 @@ namespace FindDemo
 
             /************* INDEXING *****************/
 
-            Importer.AddDemoContentFromFiles(client);
+            //Importer.AddDemoContentFromFiles(client);
 
             #endregion
 
@@ -47,10 +47,10 @@ namespace FindDemo
             /************* FILTERING *****************/
           
             //FilterDemo(client);
-
+            
             //FilterUsingBuildFilter(client);
 
-            //ProjectIfYouCan(client);
+            ProjectIfYouCan(client);
 
             /************* FILTERING END *****************/
 
@@ -72,11 +72,6 @@ namespace FindDemo
 
             #endregion
 
-            #region cache
-            // Cache demo
-            //ShowCachingWithDateTimeInQuery(client);
-
-            #endregion
         }
 
 
@@ -87,22 +82,24 @@ namespace FindDemo
         /// Number: Range
         /// DateTime: MatchYear etc
         /// 1: Knitwear
-        /// 2: Name "Sino cardigan" OR "Ribbs polo"
-        /// 3: Size S
+        /// 3: Size S or M
         /// 4: Price Range 10-50
         /// </summary>
         private static void FilterDemo(IClient client)
         {
             var yesterday = DateTime.Now.AddDays(-1);
 
+
             var result = client.Search<Product>()
-                 // Category knitwear, Name "Sino cardigan" or "Ribbs Polo", Size "S", Price "10-50"
-                .OrderBy(p => p.Name)
+                // Category knitwear, Size "S" OR "M", Price 10-50
                 .GetResult(); 
 
             ShowProductResults(result);
         }
         
+
+
+
 
         /// <summary>
         /// Using MatchContained on the complex object OR using Sizes collection
@@ -231,7 +228,6 @@ namespace FindDemo
                 .Filter(p => p.CategoryEnum.Match(CategoryEnum.Jeans))
                 .Filter(p => p.Gender.Match(Gender.Womens))
                 .Filter(p => p.InStock.Match(true))
-                .Filter(p => p.LastUpdated.LessThan(DateTime.Now))
                 .StaticallyCacheFor(TimeSpan.FromMinutes(10))
                 .GetResult();
 
@@ -256,9 +252,9 @@ namespace FindDemo
         private static void ProductFacetsExample(IClient client)
         {
             var query = client.Search<Product>()
-                //.Filter(p => p.Name.Prefix("Lucy"))
-                .TermsFacetFor(p => p.Sizes()) //Size 
-                .TermsFacetFor(p => p.Color) //Color
+                .FilterHits(p => p.Name.Prefix("Lucy"))
+                .TermsFacetFor(p => p.Sizes(), p => p.Size = 50) //Size 
+                .TermsFacetFor(p => p.Color, p => p.Size = 50) //Color
                 .RangeFacetFor(p => p.Price, new NumericRange(20, 50), new NumericRange(51, 100), new NumericRange(101, 500)) //Price
                 .FilterFacet("Womens Jeans", p => p.Gender.Match(Gender.Womens) & p.CategoryEnum.Match(CategoryEnum.Jeans))
                 .FilterFacet("Sold out", p => p.InStock.Match(false)); //Filterfacet
