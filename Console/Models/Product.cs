@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
+using EPiServer.Find;
 
 namespace FindDemo.Models
 {
     public class Product
     {
         [EPiServer.Find.Id]
-        public string VariantCode { get; set; }
+        public string ProductId { get; set; }
 
         public string StyleCode { get; set; }
         public string Name { get; set; }
@@ -18,11 +18,13 @@ namespace FindDemo.Models
         public bool IsOnSale { get; set; }
         public object CampaignLabel { get; set; }
         public string Color { get; set; }
+        
         [Newtonsoft.Json.JsonIgnore]
         public bool Available { get; set; }
+        
         public IEnumerable<Sku> Skus { get; set; }
         public bool NewArrival { get; set; }
-        public Collection Collection { get; set; }
+        public CategoryEnum CategoryEnum { get; set; }
         public Gender Gender { get; set; }
 
         public bool InStock
@@ -37,7 +39,7 @@ namespace FindDemo.Models
         {
             get
             {
-                return string.Format("{0}: {1}, {2}", VariantCode, Name, Color);
+                return string.Format("{0}: {1}, {2}", ProductId, Name, Color);
             }
         }
 
@@ -60,7 +62,7 @@ namespace FindDemo.Models
         Womens, Mens
     }
 
-    public enum Collection
+    public enum CategoryEnum
     {
         Underwear, Tops, Jeans, Shorts, Pants, Knitwear, Accessories, Shirts, Polos, Sweaters, Tees, Dresses, Jackets
     }

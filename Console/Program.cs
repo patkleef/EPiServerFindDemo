@@ -1,14 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Globalization;
 using System.Linq;
-using System.Net;
-using System.Runtime.Remoting.Messaging;
-using System.Text;
 using EPiServer.Find;
 using EPiServer.Find.Api;
 using EPiServer.Find.Api.Facets;
-using EPiServer.Find.Api.Ids;
 using EPiServer.Find.Api.Querying.Filters;
 using EPiServer.Find.ClientConventions;
 using FindDemo.Models;
@@ -20,6 +16,8 @@ namespace FindDemo
         
         static void Main(string[] args)
         {
+            // *ALWAYS* use SearchClient.Instance singelton if you're using
+            // Find with any other EPiServer Products, like CMS/Commerce
             var client = Client.CreateFromConfig();
 
             #region Conventions
@@ -27,8 +25,9 @@ namespace FindDemo
             /************** Conventions *******************/
             
             // This is how you can specify Id property to Find
-            //client.Conventions.ForType<Product>().IdIs(p => p.VariantCode);
+            //client.Conventions.ForType<Product>().IdIs(p => p.ProductId);
 
+            
             // Normally, customizing client conventions should be part of the initialization, 
             // typically in a initializable module in an EPiServer CMS website 
             client.Conventions.ForType<Product>().IncludeField(p => p.Sizes());
@@ -39,8 +38,6 @@ namespace FindDemo
 
             /************* INDEXING *****************/
 
-            //Importer.ClearIndex(client);
-
             //Importer.AddDemoContentFromFiles(client);
 
             #endregion
@@ -49,15 +46,11 @@ namespace FindDemo
 
             /************* FILTERING *****************/
           
-            //FilterSimple(client);
-
-            //FilteringComplexCollections(client);
-
-            //FiltersCombinedExample(client);
-
+            //FilterDemo(client);
+            
             //FilterUsingBuildFilter(client);
 
-            //ProjectIfYouCan(client);
+            ProjectIfYouCan(client);
 
             /************* FILTERING END *****************/
 
@@ -75,12 +68,10 @@ namespace FindDemo
 
             #region Multi search
 
-            FindProductsAndStores(client);
+            //FindProductsAndStores(client);
 
             #endregion
 
-            // Cache demo
-            //ShowCachingWithDateTimeInQuery(client);
         }
 
 
@@ -90,24 +81,25 @@ namespace FindDemo
         /// String: Match, Prefix, AnyWordBeginsWith, MatchFuzzy
         /// Number: Range
         /// DateTime: MatchYear etc
-        /// The AnyWordBeginsWith method matches strings which contains any word that starts with a given string,
-        /// making it suitable for autocomplete. It does not care about casing.
-        /// NOTE: While AnyWordBeginsWith is powerful it is not optimal in terms of performance when used for large strings.
-        /// Be careful!
+        /// 1: Knitwear
+        /// 3: Size S or M
+        /// 4: Price Range 10-50
         /// </summary>
-        private static void FilterSimple(IClient client)
+        private static void FilterDemo(IClient client)
         {
-            //Example: Products named "Ribbs polo" OR Fuzzy match "Lucy pncho"
-            // AND Price range 10-50
+            var yesterday = DateTime.Now.AddDays(-1);
+
+
             var result = client.Search<Product>()
-                .Filter(p => p.Name.MatchCaseInsensitive("Ribbs polo")  |
-                    p.Name.MatchFuzzy("Lucy pncho"))
-                 .Filter(p => p.Price.InRange(10,50))
-                .GetCachedResults();
+                // Category knitwear, Size "S" OR "M", Price 10-50
+                .GetResult(); 
 
             ShowProductResults(result);
         }
         
+
+
+
 
         /// <summary>
         /// Using MatchContained on the complex object OR using Sizes collection
@@ -122,8 +114,8 @@ namespace FindDemo
         {
             // Example: All products in Size XL
             var result = client.Search<Product>()
-               //.Filter(p => p.Skus.MatchContained(s => s.Size, "XL"))
-               .Filter(p => p.Sizes().Match("XL"))
+               .Filter(p => p.Skus.MatchContained(s => s.Size, "XL"))
+               //.Filter(p => p.Sizes().Match("XL"))
                 .GetCachedResults();
 
             ShowProductResults(result);
@@ -143,7 +135,7 @@ namespace FindDemo
 
             var result = client.Search<Product>()
                 .Filter(p => p.Gender.Match(Gender.Womens))
-                .Filter(p => p.Collection.Match(Collection.Jeans))
+                .Filter(p => p.CategoryEnum.Match(CategoryEnum.Jeans))
                 .Filter(p => p.InStock.Match(true))
                 .OrderBy(p => p.Price)
                 .ThenBy(p => p.Name, SortMissing.Last)
@@ -188,7 +180,7 @@ namespace FindDemo
         {
             var result = client.Search<Product>()
                 .Filter(p => p.Name.Match("Mio cardigan"))
-                .Select(r => new { Id = r.VariantCode,Skus = r.Skus})
+                .Select(r => new { Id = r.ProductId,Skus = r.Skus})
                 .GetCachedResults();
 
             foreach (var hit in result)
@@ -214,7 +206,7 @@ namespace FindDemo
             for (int i = 0; i < 50; i++)
             {
                 var resultOne = client.Search<Product>()
-                .Filter(p => p.Collection.Match(Collection.Jeans))
+                .Filter(p => p.CategoryEnum.Match(CategoryEnum.Jeans))
                 .Filter(p => p.Gender.Match(Gender.Womens))
                 .Filter(p => p.InStock.Match(true))
                 .StaticallyCacheFor(TimeSpan.FromMinutes(10))
@@ -233,10 +225,9 @@ namespace FindDemo
             for (int i = 0; i < 50; i++)
             {
                 var result = client.Search<Product>()
-                .Filter(p => p.Collection.Match(Collection.Jeans))
+                .Filter(p => p.CategoryEnum.Match(CategoryEnum.Jeans))
                 .Filter(p => p.Gender.Match(Gender.Womens))
                 .Filter(p => p.InStock.Match(true))
-                .Filter(p => p.LastUpdated.LessThan(DateTime.Now))
                 .StaticallyCacheFor(TimeSpan.FromMinutes(10))
                 .GetResult();
 
@@ -262,12 +253,13 @@ namespace FindDemo
         {
             var query = client.Search<Product>()
                 .FilterHits(p => p.Name.Prefix("Lucy"))
-                .TermsFacetFor(p => p.Sizes()) //Size
+                .TermsFacetFor(p => p.Sizes(), p => p.Size = 50) //Size 
                 .TermsFacetFor(p => p.Color, p => p.Size = 50) //Color
                 .RangeFacetFor(p => p.Price, new NumericRange(20, 50), new NumericRange(51, 100), new NumericRange(101, 500)) //Price
-                .FilterFacet("Womens", p => p.Gender.Match(Gender.Womens))
-                .FilterFacet("Jeans", p => p.Collection.Match(Collection.Jeans))
+                .FilterFacet("Womens Jeans", p => p.Gender.Match(Gender.Womens) & p.CategoryEnum.Match(CategoryEnum.Jeans))
                 .FilterFacet("Sold out", p => p.InStock.Match(false)); //Filterfacet
+
+            // Filter vs FilterHits --> know the difference!!
 
             var result = query.GetCachedResults();
 
@@ -276,7 +268,7 @@ namespace FindDemo
 
         /// <summary>
         /// Geographic distance facets: grouping documents with a GeoLocation type property by distance from a location.
-        /// Request the number of stores within 1, 5, and 10 kilometers of a location via the GeoDistanceFacetFor method
+        /// Request the number of stores within 1, 5, and 10 kilometers/miles of a location via the GeoDistanceFacetFor method
         /// </summary>
         /// <returns></returns>
         private static void StoresCloseToOurLocation(IClient client)
@@ -291,7 +283,7 @@ namespace FindDemo
             };
 
             var result = client.Search<Store>()
-                .Filter(s => s.Location.WithinDistanceFrom(theCosmopolitanHotelLasVegas, new Miles(10)))
+                .Filter(s => s.Location.WithinDistanceFrom(theCosmopolitanHotelLasVegas, new Kilometers(10)))
                 .GeoDistanceFacetFor(s => s.Location, theCosmopolitanHotelLasVegas, ranges.ToArray())
                 .GetCachedResults();
 
@@ -313,12 +305,11 @@ namespace FindDemo
             var theCosmopolitanHotelLasVegas = new GeoLocation(36.109308, -115.175291); 
             
             var multiResults = client.MultiSearch<string>()
-                .Search<Product, string>((search => search.Filter(p => p.Collection.Match(Collection.Tees))
-                           .Filter(p => p.Gender.Match(Gender.Mens))
+                .Search<Product, string>((search =>
+                    search.FindTeesForMen()
                            .Select(p => (string.Format("{0} {1}",p.Name, p.Color) ))))
                     .Search<Store, string>((search =>
-                        search.Filter(s => s.Location.WithinDistanceFrom(theCosmopolitanHotelLasVegas, new Kilometers(10)))
-                            .Filter(s => s.Departments.Match(Gender.Mens))
+                        search.FindStoresForMenCloseToMe(theCosmopolitanHotelLasVegas)
                             .Select(p => p.Name)))
                     .GetResult().ToList();
 
@@ -357,8 +348,8 @@ namespace FindDemo
             Console.WriteLine("Products found: ");
             foreach (var p in res.Hits)
             {
-                Console.WriteLine("\t{0} ({1})", p.Document.Name.ToUpper(), p.Document.VariantCode);
-                Console.WriteLine("\tCollection: {0}", p.Document.Collection);
+                Console.WriteLine("\t{0} ({1})", p.Document.Name.ToUpper(), p.Document.ProductId);
+                Console.WriteLine("\tCategory: {0}", p.Document.CategoryEnum);
                 Console.WriteLine("\tPrice: {0}", p.Document.Price);
                 Console.WriteLine("\tSizes: {0}", string.Join(",", p.Document.Sizes().ToArray()));
                 Console.WriteLine("");
@@ -379,7 +370,7 @@ namespace FindDemo
 
             foreach (var range in facet)
             {
-                Console.WriteLine("There are " + range.TotalCount + " stores within " + range.To + " km radius of The Cosmopolitan Hotel.");
+                Console.WriteLine("There are " + range.TotalCount + " stores within " + range.To + " km/mile radius of The Cosmopolitan Hotel.");
             }
 
             Console.WriteLine();
