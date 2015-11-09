@@ -1,4 +1,6 @@
-﻿namespace Site.Business.Content
+﻿using EPiServer.Find.UnifiedSearch;
+
+namespace Site.Business.Content
 {
     public class Company
     {
