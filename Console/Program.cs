@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using EPiServer.Find;
 using EPiServer.Find.Api;
@@ -16,6 +15,18 @@ namespace FindDemo
         
         static void Main(string[] args)
         {
+            #region Checking config
+
+            var config = EPiServer.Find.Configuration.GetConfiguration();
+            if (string.IsNullOrEmpty(config.ServiceUrl) || string.IsNullOrEmpty(config.DefaultIndex))
+            {
+                Console.WriteLine("Please add index information to app.config file.");
+                Console.WriteLine("You can create a free developer index at find.episerver.com");
+                return;
+            }
+
+            #endregion
+
             // *ALWAYS* use SearchClient.Instance singelton if you're using
             // Find with any other EPiServer Products, like CMS/Commerce
             var client = Client.CreateFromConfig();
@@ -50,7 +61,7 @@ namespace FindDemo
             
             //FilterUsingBuildFilter(client);
 
-            ProjectIfYouCan(client);
+            //ProjectIfYouCan(client);
 
             /************* FILTERING END *****************/
 
@@ -89,10 +100,9 @@ namespace FindDemo
         {
             var yesterday = DateTime.Now.AddDays(-1);
 
-
             var result = client.Search<Product>()
                 // Category knitwear, Size "S" OR "M", Price 10-50
-                .GetResult(); 
+                .GetCachedResults(); 
 
             ShowProductResults(result);
         }
@@ -252,9 +262,9 @@ namespace FindDemo
         private static void ProductFacetsExample(IClient client)
         {
             var query = client.Search<Product>()
-                .FilterHits(p => p.Name.Prefix("Lucy"))
-                .TermsFacetFor(p => p.Sizes(), p => p.Size = 50) //Size 
-                .TermsFacetFor(p => p.Color, p => p.Size = 50) //Color
+                //.Filter(p => p.Name.Prefix("Lucy"))
+                .TermsFacetFor(p => p.Sizes()) //Size 
+                .TermsFacetFor(p => p.Color) //Color
                 .RangeFacetFor(p => p.Price, new NumericRange(20, 50), new NumericRange(51, 100), new NumericRange(101, 500)) //Price
                 .FilterFacet("Womens Jeans", p => p.Gender.Match(Gender.Womens) & p.CategoryEnum.Match(CategoryEnum.Jeans))
                 .FilterFacet("Sold out", p => p.InStock.Match(false)); //Filterfacet
