@@ -102,7 +102,7 @@ namespace FindDemo
 
             var result = client.Search<Product>()
                 // Category knitwear, Size "S" OR "M", Price 10-50
-                .GetCachedResults(); 
+                .GetResult(); 
 
             ShowProductResults(result);
         }
