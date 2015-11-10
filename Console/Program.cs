@@ -264,8 +264,8 @@ namespace FindDemo
         {
             var query = client.Search<Product>()
                 .Filter(p => p.CategoryEnum.Match(CategoryEnum.Knitwear))
-                .TermsFacetFor(p => p.Sizes(), p => p.Size = 50) //Size 
-                .TermsFacetFor(p => p.Color, p => p.Size = 50) //Color
+                .TermsFacetFor(p => p.Sizes()) //Size 
+                .TermsFacetFor(p => p.Color) //Color
                 .RangeFacetFor(p => p.Price, 
                     new NumericRange(20, 50), 
                     new NumericRange(51, 100),
