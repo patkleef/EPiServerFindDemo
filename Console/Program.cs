@@ -57,11 +57,12 @@ namespace FindDemo
 
             /************* FILTERING *****************/
           
-            //FilterDemo(client);
+            FilterDemo(client);
+
+            //ProjectIfYouCan(client);
             
             //FilterUsingBuildFilter(client);
 
-            //ProjectIfYouCan(client);
 
             /************* FILTERING END *****************/
 
@@ -190,7 +191,7 @@ namespace FindDemo
         {
             var result = client.Search<Product>()
                 .Filter(p => p.Name.Match("Mio cardigan"))
-                .Select(r => new { Id = r.ProductId,Skus = r.Skus})
+                .Select(r => new { Id = r.ProductId, Skus = r.Skus})
                 .GetCachedResults();
 
             foreach (var hit in result)
@@ -262,16 +263,18 @@ namespace FindDemo
         private static void ProductFacetsExample(IClient client)
         {
             var query = client.Search<Product>()
-                //.Filter(p => p.Name.Prefix("Lucy"))
+                .Filter(p => p.CategoryEnum.Match(CategoryEnum.Knitwear))
                 .TermsFacetFor(p => p.Sizes()) //Size 
                 .TermsFacetFor(p => p.Color) //Color
-                .RangeFacetFor(p => p.Price, new NumericRange(20, 50), new NumericRange(51, 100), new NumericRange(101, 500)) //Price
-                .FilterFacet("Womens Jeans", p => p.Gender.Match(Gender.Womens) & p.CategoryEnum.Match(CategoryEnum.Jeans))
-                .FilterFacet("Sold out", p => p.InStock.Match(false)); //Filterfacet
+                .RangeFacetFor(p => p.Price, 
+                    new NumericRange(20, 50), 
+                    new NumericRange(51, 100),
+                    new NumericRange(101, 500)) //Price
+                .FilterFacet("Womens knitwear",
+                    p => p.Gender.Match(Gender.Womens) 
+                        & p.CategoryEnum.Match(CategoryEnum.Knitwear));
 
-            // Filter vs FilterHits --> know the difference!!
-
-            var result = query.GetCachedResults();
+            var result = query.Take(0).GetCachedResults();
 
             ShowProductResults(result);
         }
