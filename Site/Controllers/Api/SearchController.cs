@@ -52,9 +52,8 @@ namespace Site.Controllers.Api
             var hitSpecification = new HitSpecification();
 
             var result = _client.UnifiedSearchFor(query)
-                .Take(100)
                 .StatisticsTrack()
-                .GetResult(hitSpecification);
+                .GetResult();
 
             return Json(result);
         }
@@ -418,6 +417,10 @@ namespace Site.Controllers.Api
             int maximumQueryTerms,
             string stopWords)
         {
+            _client.Search<ArticlePage>()
+                .MoreLike("Enjoy A Vacation In Phuket With Best Phuket Golf Courses")
+                .GetContentResult();
+
             var article = _client.Search<ArticlePage>()
                                 .Filter(x => x.ContentLink.ID.Match(articleId))
                                 .GetContentResult().FirstOrDefault();
@@ -472,7 +475,7 @@ namespace Site.Controllers.Api
             string preTag,
             string postTag, 
             string concatentation)
-        {    
+        {
             var hitSpecification = new HitSpecification();
             hitSpecification.HighlightExcerpt = true;
             hitSpecification.HighlightTitle = true;
