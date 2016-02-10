@@ -19,8 +19,10 @@ namespace Site.Business.Initialization
         /// <param name="context"></param>
         public void Initialize(InitializationEngine context)
         {
-            SearchClient.Instance.Conventions.UnifiedSearchRegistry.Add<User>();
+            SearchClient.Instance.Conventions.UnifiedSearchRegistry.Add<Employee>();
             SearchClient.Instance.Conventions.UnifiedSearchRegistry.Add<Company>();
+
+            SearchClient.Instance.Conventions.NestedConventions.Add<Company>(company => company.Employees);
         }
 
         /// <summary>

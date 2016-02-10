@@ -5,6 +5,7 @@ using System.Threading;
 using System.Web.Http;
 using EPiServer.Find;
 using EPiServer.Find.Api;
+using EPiServer.Find.Api.Facets;
 using EPiServer.Find.Cms;
 using EPiServer.Find.Framework;
 using EPiServer.Find.Framework.Statistics;
@@ -14,6 +15,7 @@ using EPiServer.Find.UnifiedSearch;
 using EPiServer.ServiceLocation;
 using EPiServer.Web;
 using EPiServer.Web.Routing;
+using Site.Business.Content;
 using Site.Models.Pages;
 
 namespace Site.Controllers.Api
@@ -548,6 +550,57 @@ namespace Site.Controllers.Api
 
         #endregion
 
+        #region Nested queries
+
+        [HttpGet]
+        [Route("api/Search/CompanyCountryFacet")]
+        public IHttpActionResult CompanyCountryFacet()
+        {
+            var result = _client.Search<Company>()
+                .TermsFacetFor(c => c.Employees, c => c.Country)
+                .HistogramFacetFor(c => c.Employees, c => c.Age, 10)
+                .Take(100)
+                .GetResult();
+
+            var termsFacet = result.TermsFacetFor(c => c.Employees, c => c.Country);
+            var histogramFacet = result.HistogramFacetFor(c => c.Employees, c => c.Age);
+            
+            return Json(new { Companies = result, Countries = termsFacet.Terms, Ages = histogramFacet.Entries});
+        }
+
+        [HttpGet]
+        [Route("api/Search/SearchCompanies")]
+        public IHttpActionResult SearchCompanies(string country, int? age)
+        {
+            var query = _client.Search<Company>();
+
+            if (!string.IsNullOrEmpty(country))
+            {
+                query = query.Filter(c => c.Employees, c => c.Country.MatchCaseInsensitive(country));
+                query = query.OrderBy(c => c.Employees, c => c.Name, c => c.Country.MatchCaseInsensitive(country));
+            }
+            if (age.HasValue)
+            {
+                var startNumber = age.Value;
+                var endNumber = age.Value + 10;
+                query = query.Filter(c => c.Employees, c => c.Age.InRange(startNumber, endNumber));
+
+                if (!string.IsNullOrEmpty(country))
+                {
+                    query = query.ThenBy(c => c.Employees, c => c.Age, c => c.Age.InRange(startNumber, endNumber));
+                }
+                else
+                {
+                    query = query.OrderBy(c => c.Employees, c => c.Age, c => c.Age.InRange(startNumber, endNumber));
+                }
+            }
+            var result = query.GetResult();
+
+            return Json(result);
+        }
+
+        #endregion
+
         #region Others
 
         /// <summary>
@@ -563,6 +616,25 @@ namespace Site.Controllers.Api
                 {
                     Id = a.ContentLink.ID,
                     Title = a.PageName
+                })
+                .Take(100)
+                .GetResult();
+
+            return Json(result);
+        }
+
+        /// <summary>
+        /// Get all companies
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("api/Search/AllCompanies")]
+        public IHttpActionResult AllCompanies()
+        {
+            var result = _client.Search<Company>()
+                .Select(c => new
+                {
+                    c.Name
                 })
                 .Take(100)
                 .GetResult();

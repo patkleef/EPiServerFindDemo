@@ -58,5 +58,9 @@ namespace Site.Controllers
         {
             return View("~/Views/TypedSearch/Index.cshtml");
         }
+        public ViewResult NestedQueries()
+        {
+            return View("~/Views/NestedQueries/Index.cshtml");
+        }
     }
 }

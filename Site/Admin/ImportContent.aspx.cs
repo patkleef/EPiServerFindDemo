@@ -49,10 +49,9 @@ namespace Site.Admin
         /// <param name="e"></param>
         protected void ReindexExternObjectButton_Click(object sender, EventArgs e)
         {
-            _client.Delete<User>(x => x.GetType().Name.Exists() | !x.GetType().Name.Exists());
+            _client.Delete<Employee>(x => x.GetType().Name.Exists() | !x.GetType().Name.Exists());
             _client.Delete<Company>(x => x.GetType().Name.Exists() | !x.GetType().Name.Exists());
 
-            ImportUsers();
             ImportCompanies();
         }
 
@@ -76,10 +75,9 @@ namespace Site.Admin
             // Import article pages
             var numberOfArticles = ImportArticles(articlesPage.ContentLink.ID);
 
-            var numberOfUsers = ImportUsers();
             var numberOfCompanies = ImportCompanies();
 
-            ImportResult.Text = string.Format("{0} article imported, {1} users imported, {2} companies imported", numberOfArticles, numberOfUsers, numberOfCompanies);
+            ImportResult.Text = string.Format("{0} article imported, {1} companies imported", numberOfArticles, numberOfCompanies);
         }
 
         /// <summary>
@@ -92,6 +90,7 @@ namespace Site.Admin
             for (var i = 0; i < 20; i++)
             {
                 var company = new Company();
+                company.Key = Guid.NewGuid();
                 company.Name = Faker.Company.Name();
                 company.Bs = Faker.Company.BS();
                 company.CatchPhrase = Faker.Company.CatchPhrase();
@@ -99,6 +98,7 @@ namespace Site.Admin
                 company.Zipcode = Address.UkPostCode();
                 company.City = Address.City();
                 company.Phone = Phone.Number();
+                company.Employees = GetEmployees();
 
                 _client.Index(company);
                 number++;
@@ -110,12 +110,13 @@ namespace Site.Admin
         /// Import users
         /// </summary>
         /// <returns></returns>
-        private int ImportUsers()
+        private List<Employee> GetEmployees()
         {
-            var number = 0;
+            var list = new List<Employee>();
             for (var i = 0; i < 20; i++)
             {
-                var user = new User();
+                var user = new Employee();
+                user.Key = Guid.NewGuid();
                 user.Name = Name.FullName();
                 user.Username = Internet.UserName();
                 user.EmailAddress = Internet.Email();
@@ -123,11 +124,12 @@ namespace Site.Admin
                 user.Street = Address.StreetAddress();
                 user.Zipcode = Address.UkPostCode();
                 user.City = Address.City();
-                
-                _client.Index(user);
-                number++;
+                user.Country = Address.Country();
+                user.Age = RandomNumber.Next(18, 65);
+
+                list.Add(user);
             }
-            return number;
+            return list;
         }
 
         /// <summary>

@@ -1,0 +1,50 @@
+﻿@{
+    Layout = "/Views/Shared/Layout/_Layout.cshtml";
+}
+
+<h1>Nested queries</h1>
+
+<div id="results-nestedqueries" class="search-container-separator">
+
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Countries</h3>
+            <ul data-bind="foreach: facetCountries">
+                <li><a data-bind="text: Term + '(' + Count + ')', event: { click: $parent.facetCountryClicked }, style: { fontWeight: $parent.selectedCountry() == Term ? 'bold' : 'normal' }"></a></li>
+            </ul>
+            <h3>Age</h3>
+            <ul data-bind="foreach: facetAges">
+                <li><a data-bind="text: $parent.formatAgeFacet(Key) + ' (' + Count + ')', event: { click: $parent.facetAgeClicked }, style: { fontWeight: $parent.selectedAge() == Key ? 'bold' : 'normal' }"></a></li>
+            </ul>
+        </div>
+        <div class="col-md-8">
+            <h3>Results</h3>
+            <div data-bind="foreach: results" class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div data-bind="attr: { id: 'header-' + Key }" class="panel-heading" role="tab">
+                        <h4 class="panel-title">
+                            <a data-bind="text: 'Company: ' + Name, attr: { href: '#' + Key, 'aria-controls': Key}" role="button" data-toggle="collapse" data-parent="#accordion" aria-expanded="true">
+                            </a>
+                        </h4>
+                    </div>
+                    <div data-bind="attr: { id: Key, 'aria-labelledby': 'header-' + Key}" class="panel-collapse collapse" role="tabpanel">
+                        <div class="panel-body">
+                            <strong>Employees</strong>
+                            <ul data-bind="foreach: Employees">
+                                <li data-bind="text: Name + ' - Age: ' + Age"></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div data-bind="visible: results().length == 0" class="alert alert-info search-container-separator" role="alert">
+                Sorry no results were found.
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+<script src="/Static/ViewModels/nestedqueriesviewmodel.js"></script>
+}

@@ -83,6 +83,11 @@ namespace Site
                      "TypedSearch",
                      new { controller = "Page", action = "TypedSearch" }
                  );
+            routes.MapRoute(
+                     "NestedQueries",
+                     "NestedQueries",
+                     new { controller = "Page", action = "NestedQueries" }
+                 );
         }
     }
 
